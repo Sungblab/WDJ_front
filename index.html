@@ -605,14 +605,11 @@
           const token = localStorage.getItem("token");
           if (token) {
             try {
-              const response = await fetch(
-                "https://port-0-wdj-back-lz8rcy4y4e052996.sel4.cloudtype.app/api/user",
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
+              const response = await fetch("https://localhost:8080/api/user", {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
               if (!response.ok) {
                 throw new Error("Login session expired");
               }
@@ -633,16 +630,13 @@
           const username = document.getElementById("loginUsername").value;
           const password = document.getElementById("loginPassword").value;
           try {
-            const response = await fetch(
-              "https://port-0-wdj-back-lz8rcy4y4e052996.sel4.cloudtype.app/api/login",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, password }),
-              }
-            );
+            const response = await fetch("https://localhost:8080/api/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ username, password }),
+            });
             const data = await response.json();
             if (response.ok) {
               localStorage.setItem("token", data.token);
@@ -671,7 +665,7 @@
         async function fetchNotices() {
           try {
             const response = await fetch(
-              "https://port-0-wdj-back-lz8rcy4y4e052996.sel4.cloudtype.app/api/notices?limit=3"
+              "https://localhost:8080/api/notices?limit=3"
             );
             if (!response.ok) {
               throw new Error("서버 응답 오류");
@@ -846,7 +840,7 @@
           try {
             const token = localStorage.getItem("token");
             const response = await fetch(
-              "https://port-0-wdj-back-lz8rcy4y4e052996.sel4.cloudtype.app/api/petitions?status=active&limit=3",
+              "https://localhost:8080/api/petitions?status=active&limit=3",
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
