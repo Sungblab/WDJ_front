@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>완대전</title>
+    <link
+      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Spoqa Han Sans Neo", "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#E6F0FF",
+                100: "#CCE0FF",
+                200: "#99C2FF",
+                300: "#66A3FF",
+                400: "#3385FF",
+                500: "#0066FF",
+                600: "#0052CC",
+                700: "#003D99",
+                800: "#002966",
+                900: "#001433",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      #mobile-menu {
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+      }
+      #mobile-menu.active {
+        max-height: 400px;
+        opacity: 1;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <header class="bg-blue-600 shadow-md">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="flex justify-between items-center py-4 md:justify-start md:space-x-10"
+        >
+          <div class="flex justify-start lg:w-0 lg:flex-1">
+            <a
+              href="/front-end/index.html"
+              class="text-3xl font-bold text-white hover:text-gray-200 transition duration-300"
+            >
+              완·대·전
+            </a>
+          </div>
+          <div class="-mr-2 -my-2 md:hidden">
+            <button
+              id="mobile-menu-button"
+              type="button"
+              class="bg-blue-500 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-200 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-expanded="false"
+            >
+              <span class="sr-only">메뉴 열기</span>
+              <svg
+                class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+          <nav class="hidden md:flex space-x-10">
+            <a
+              href="notice.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >공지사항</a
+            >
+            <a
+              href="community.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >커뮤니티</a
+            >
+            <a
+              href="petition.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >청원·제안</a
+            >
+            <a
+              href="utility.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >학급 도우미</a
+            >
+            <a
+              href="about.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >소개</a
+            >
+          </nav>
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+      >
+        <div
+          class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-blue-500 divide-y-2 divide-blue-400"
+        >
+          <div class="pt-5 pb-6 px-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <a href="index.html" class="text-2xl font-bold text-white"
+                  >완·대·전</a
+                >
+              </div>
+              <div class="-mr-2">
+                <button
+                  id="mobile-menu-close"
+                  type="button"
+                  class="bg-blue-500 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-200 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                >
+                  <span class="sr-only">메뉴 닫기</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="mt-6">
+              <nav class="grid gap-y-8">
+                <a
+                  href="notice.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >공지사항</span
+                  >
+                </a>
+                <a
+                  href="community.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >커뮤니티</span
+                  >
+                </a>
+                <a
+                  href="petition.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >청원·제안</span
+                  >
+                </a>
+                <a
+                  href="utility.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >학급 도우미</span
+                  >
+                </a>
+                <a
+                  href="about.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >소개</span
+                  >
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container mx-auto mt-8 px-8">
+      <h1 class="text-4xl font-bold mb-6 text-blue-700">완대전 소개</h1>
+
+      <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-blue-700">완·대·전이란?</h2>
+        <p class="text-gray-700 mb-4">
+          완·대·전은 "완도고등학교 대신 전해드립니다"의 줄임말로, 완도고등학교
+          학생들을 위한 종합 커뮤니티 플랫폼입니다. 우리 학교 학생들의 소통과
+          정보 공유를 위해 탄생한 이 서비스는, 학교 생활을 더욱 풍요롭고
+          효율적으로 만들어주는 디지털 공간입니다.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-blue-700">탄생 배경</h2>
+        <p class="text-gray-700 mb-4">
+          완·대·전의 아이디어는 "전남과학고등학교의 과구리" 서비스에서 영감을
+          받아 탄생했습니다. 우리 학교만의 특색 있는 온라인 커뮤니티의 필요성을
+          느낀 프로그래밍 동아리 CODELAP 동아리 부원들이 완도고등학교 학생들을
+          위한 맞춤형 웹 서비스를 개발하게 되었습니다.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-blue-700">
+          완·대·전의 목표
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>학우들 간의 원활한 소통 증진하기</li>
+          <li>학교 생활의 질적 향상 도모하기</li>
+          <li>건전한 온라인 커뮤니티 문화 조성하기</li>
+          <li>학생들의 공동체 역량 강화하기</li>
+          <li>학교 생활에 필요한 정보의 효율적인 공유하기</li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-blue-700">
+          웹사이트 디자인 테마
+        </h2>
+        <p class="text-gray-700 mb-4">
+          완·대·전의 웹 디자인은 학교의 정체성과 현대적인 감각을 조화롭게
+          반영하고 있습니다.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>메인 컬러: 진리를 상징하는 청색 (완도고등학교 교색)</li>
+          <li>보조 컬러: 밝은 하늘색 (청명함과 희망을 표현)</li>
+          <li>
+            디자인 콘셉트: 모던하고 깔끔한 UI로 사용자 친화적인 환경 제공합니다.
+          </li>
+          <li>반응형 디자인: 다양한 디바이스에서 최적화된 경험 제공합니다</li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-blue-700">주요 기능</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-gray-100 p-4 rounded-lg">
+            <h3 class="text-xl font-semibold mb-2 text-wande-blue">공지사항</h3>
+            <p class="text-gray-700">
+              학교 및 학생회의 중요 공지를 한눈에 확인할 수 있습니다.
+            </p>
+          </div>
+          <div class="bg-gray-100 p-4 rounded-lg">
+            <h3 class="text-xl font-semibold mb-2 text-wande-blue">커뮤니티</h3>
+            <p class="text-gray-700">
+              학생들 간의 자유로운 소통과 정보 교환이 이루어지는 공간입니다.
+            </p>
+          </div>
+          <div class="bg-gray-100 p-4 rounded-lg">
+            <h3 class="text-xl font-semibold mb-2 text-wande-blue">
+              청원·제안
+            </h3>
+            <p class="text-gray-700">
+              학교 생활 개선을 위한 아이디어를 제안하고 공유할 수 있습니다.
+            </p>
+          </div>
+          <div class="bg-gray-100 p-4 rounded-lg">
+            <h3 class="text-xl font-semibold mb-2 text-wande-blue">
+              학급 도우미
+            </h3>
+            <p class="text-gray-700">
+              급식 메뉴, 학사 일정 등 학교 생활에 필요한 정보를 제공하며.
+              <br />수업에 필요한 프로그램을 제공합니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-blue-700">
+          함께 만들어가는 완·대·전
+        </h2>
+        <p class="text-gray-700 mb-4">
+          완·대·전은 완도고등학교 학생 여러분의 참여로 더욱 풍성해집니다.
+          여러분의 소중한 의견과 제안이 이 플랫폼을 더욱 유용하고 의미 있는
+          공간으로 만들어갑니다. 함께 만들어가는 우리의 디지털 홈, 완·대·전에서
+          여러분의 학창 시절을 더욱 빛나게 만들어보세요!
+        </p>
+      </section>
+
+      <h1 class="text-4xl font-bold mb-6 text-blue-700">개발자 연혁</h1>
+      <section id="devSection" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-blue-700">개발자 연혁</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="flex flex-col items-center">
+            <img
+              src="https://i.namu.wiki/i/dghdv43J6YYklY4WwM5RwCNEIYaRCzb24BaFNwA2ZMn3VpS0NX9zVaoL6n5L-knrIgBu2gz3mE2o8XEcmINa2w.svg"
+              alt="sungblab"
+              class="dev-image mb-4 w-48 h-48 md:w-40 md:h-40"
+            />
+            <h3 class="text-xl font-semibold">SUNGBLAB</h3>
+            <p class="text-gray-600">General service developer</p>
+            <p class="text-sm text-gray-500 mt-2">
+              안녕하세요, 반갑습니다! CODELAP 1기 동아리 단장 김성빈 이라고
+              합니다. 전남과학고등학교의 "과구리" 서비스를 벤치마킹해 "완·대·전
+              " 서비스를 만들게 되었습니다. 전체적인 개발과 구상, 디자인및
+              서비스 실현 을 담당했습니다.
+            </p>
+          </div>
+          <div class="flex flex-col items-center">
+            <img
+              src="https://i.namu.wiki/i/dghdv43J6YYklY4WwM5RwCNEIYaRCzb24BaFNwA2ZMn3VpS0NX9zVaoL6n5L-knrIgBu2gz3mE2o8XEcmINa2w.svg"
+              alt="sungblab"
+              class="dev-image mb-4 w-48 h-48 md:w-40 md:h-40"
+            />
+            <h3 class="text-xl font-semibold">엄준식</h3>
+            <p class="text-gray-600">Developer / 준식</p>
+            <p class="text-sm text-gray-500 mt-2">엄준식</p>
+          </div>
+          <!-- 추가 개발자 정보를 이 형식으로 계속해서 추가하세요 -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h4 class="text-2xl font-bold mb-4">완대전</h4>
+            <p class="text-gray-300 mb-4">
+              완도고등학교 학생들을 위한 유용한 웹사이트
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="https://www.instagram.com/wdj_hs/ "
+                target="_blank"
+                class="text-gray-300 hover:text-white transition duration-300"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <p class="text-gray-300">IG: wdj_hs</p>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold mb-4">빠른 링크</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="notice.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  공지사항
+                </a>
+              </li>
+              <li>
+                <a
+                  href="community.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  커뮤니티
+                </a>
+              </li>
+              <li>
+                <a
+                  href="petition.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  청원·제안
+                </a>
+              </li>
+              <li>
+                <a
+                  href="utility.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  학급 도우미
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold mb-4">연락처</h4>
+            <p class="text-gray-300 mb-2">이메일: ksb19558@naver.com</p>
+            <p class="text-gray-300 mb-4">연락 인스타그램 : wdj_hs</p>
+            <a
+              href="privacy-policy.html"
+              class="text-blue-400 hover:text-blue-300 transition duration-300"
+            >
+              개인정보 처리방침
+            </a>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-700 mt-8 pt-8 text-sm text-center text-gray-400"
+        >
+          <p>&copy; 2024 완대전. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenuClose = document.getElementById("mobile-menu-close");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        mobileMenuButton.addEventListener("click", () => {
+          mobileMenu.classList.toggle("active");
+        });
+
+        mobileMenuClose.addEventListener("click", () => {
+          mobileMenu.classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>

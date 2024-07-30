@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>완대전</title>
+    <link
+      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Spoqa Han Sans Neo", "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#E6F0FF",
+                100: "#CCE0FF",
+                200: "#99C2FF",
+                300: "#66A3FF",
+                400: "#3385FF",
+                500: "#0066FF",
+                600: "#0052CC",
+                700: "#003D99",
+                800: "#002966",
+                900: "#001433",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      #mobile-menu {
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+      }
+      #mobile-menu.active {
+        max-height: 400px;
+        opacity: 1;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <header class="bg-blue-600 shadow-md">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="flex justify-between items-center py-4 md:justify-start md:space-x-10"
+        >
+          <div class="flex justify-start lg:w-0 lg:flex-1">
+            <a
+              href="/front-end/index.html"
+              class="text-3xl font-bold text-white hover:text-gray-200 transition duration-300"
+            >
+              완·대·전
+            </a>
+          </div>
+          <div class="-mr-2 -my-2 md:hidden">
+            <button
+              id="mobile-menu-button"
+              type="button"
+              class="bg-blue-500 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-200 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-expanded="false"
+            >
+              <span class="sr-only">메뉴 열기</span>
+              <svg
+                class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+          <nav class="hidden md:flex space-x-10">
+            <a
+              href="notice.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >공지사항</a
+            >
+            <a
+              href="community.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >커뮤니티</a
+            >
+            <a
+              href="petition.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >청원·제안</a
+            >
+            <a
+              href="utility.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >학급 도우미</a
+            >
+            <a
+              href="about.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >소개</a
+            >
+          </nav>
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+      >
+        <div
+          class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-blue-500 divide-y-2 divide-blue-400"
+        >
+          <div class="pt-5 pb-6 px-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <a href="index.html" class="text-2xl font-bold text-white"
+                  >완·대·전</a
+                >
+              </div>
+              <div class="-mr-2">
+                <button
+                  id="mobile-menu-close"
+                  type="button"
+                  class="bg-blue-500 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-200 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                >
+                  <span class="sr-only">메뉴 닫기</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="mt-6">
+              <nav class="grid gap-y-8">
+                <a
+                  href="notice.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >공지사항</span
+                  >
+                </a>
+                <a
+                  href="community.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >커뮤니티</span
+                  >
+                </a>
+                <a
+                  href="petition.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >청원·제안</span
+                  >
+                </a>
+                <a
+                  href="utility.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >학급 도우미</span
+                  >
+                </a>
+                <a
+                  href="about.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >소개</span
+                  >
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container mx-auto mt-8 px-8">
+      <h1 class="text-3xl font-bold mb-6 text-blue-700">공지사항</h1>
+      <div id="adminControls" class="mb-6 hidden">
+        <button
+          onclick="showNoticeForm()"
+          class="bg-green-500 text-white px-4 py-2 rounded"
+        >
+          새 공지사항 작성
+        </button>
+      </div>
+      <div id="noticeForm" class="mb-6 hidden">
+        <h2 class="text-2xl font-bold mb-4">공지사항 작성/수정</h2>
+        <form id="noticeSubmitForm">
+          <input type="hidden" id="noticeId" />
+          <div class="mb-4">
+            <label for="noticeTitle" class="block mb-2">제목</label>
+            <input
+              type="text"
+              id="noticeTitle"
+              name="title"
+              required
+              class="w-full p-2 border rounded"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="noticeContent" class="block mb-2">내용</label>
+            <textarea
+              id="noticeContent"
+              name="content"
+              required
+              class="w-full p-2 border rounded"
+              rows="5"
+            ></textarea>
+          </div>
+          <div class="mb-4">
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                id="noticeImportant"
+                name="important"
+                class="mr-2"
+              />
+              <span>중요 공지사항</span>
+            </label>
+          </div>
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            저장
+          </button>
+          <button
+            type="button"
+            onclick="cancelNoticeForm()"
+            class="bg-gray-500 text-white px-4 py-2 rounded ml-2"
+          >
+            취소
+          </button>
+        </form>
+      </div>
+      <div id="noticeList" class="space-y-4">
+        <!-- 공지사항 목록이 여기에 동적으로 추가됩니다 -->
+      </div>
+      <div id="pagination" class="mt-6 flex justify-center space-x-2">
+        <!-- 페이지네이션 버튼이 여기에 동적으로 추가됩니다 -->
+      </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h4 class="text-2xl font-bold mb-4">완대전</h4>
+            <p class="text-gray-300 mb-4">
+              완도고등학교 학생들을 위한 유용한 웹사이트
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="https://www.instagram.com/wdj_hs/ "
+                target="_blank"
+                class="text-gray-300 hover:text-white transition duration-300"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <p class="text-gray-300">IG: wdj_hs</p>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold mb-4">빠른 링크</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="notice.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  공지사항
+                </a>
+              </li>
+              <li>
+                <a
+                  href="community.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  커뮤니티
+                </a>
+              </li>
+              <li>
+                <a
+                  href="petition.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  청원·제안
+                </a>
+              </li>
+              <li>
+                <a
+                  href="utility.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  학급 도우미
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold mb-4">연락처</h4>
+            <p class="text-gray-300 mb-2">이메일: ksb19558@naver.com</p>
+            <p class="text-gray-300 mb-4">연락 인스타그램 : wdj_hs</p>
+            <a
+              href="privacy-policy.html"
+              class="text-blue-400 hover:text-blue-300 transition duration-300"
+            >
+              개인정보 처리방침
+            </a>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-700 mt-8 pt-8 text-sm text-center text-gray-400"
+        >
+          <p>&copy; 2024 완대전. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      let currentPage = 1;
+      const limit = 10;
+      let isAdmin = false;
+
+      async function checkLoginStatus() {
+        const token = localStorage.getItem("token");
+        if (token) {
+          try {
+            const response = await fetch("http://localhost:3000/api/user", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            if (response.ok) {
+              const userData = await response.json();
+              isAdmin = userData.isAdmin;
+              document
+                .getElementById("adminControls")
+                .classList.toggle("hidden", !isAdmin);
+            }
+          } catch (error) {
+            console.error("로그인 상태 확인 실패:", error);
+          }
+        }
+      }
+
+      async function fetchNotices(page) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/notices?page=${page}&limit=${limit}`
+          );
+          if (!response.ok) {
+            throw new Error("서버 응답 오류");
+          }
+          const data = await response.json();
+          displayNotices(data.notices);
+          displayPagination(data.totalPages, data.currentPage);
+        } catch (error) {
+          console.error("공지사항을 불러오는 데 실패했습니다:", error);
+          document.getElementById("noticeList").innerHTML =
+            '<p class="text-red-500">공지사항을 불러오는 데 실패했습니다.</p>';
+        }
+      }
+
+      function displayNotices(notices) {
+        const noticeList = document.getElementById("noticeList");
+        noticeList.innerHTML = "";
+        notices.forEach((notice) => {
+          const noticeElement = document.createElement("div");
+          noticeElement.className = "bg-white p-4 rounded shadow mb-4";
+          noticeElement.innerHTML = `
+      <h2 class="text-xl font-semibold mb-2">${notice.title}</h2>
+      <p class="text-gray-600 mb-2">${notice.content.substring(0, 100)}...</p>
+      <div class="text-sm text-gray-500">
+        <span>작성자: 관리자</span>
+        <span class="ml-4">작성일: ${new Date(
+          notice.createdAt
+        ).toLocaleDateString()}</span>
+      </div>
+      <a href="#" onclick="viewNotice('${
+        notice._id
+      }')" class="text-blue-500 hover:underline mt-2 inline-block">자세히 보기</a>
+      ${
+        isAdmin
+          ? `
+          <button onclick="editNotice('${notice._id}')" class="ml-2 text-yellow-500 hover:underline">수정</button>
+          <button onclick="deleteNotice('${notice._id}')" class="ml-2 text-red-500 hover:underline">삭제</button>
+      `
+          : ""
+      }
+    `;
+          noticeList.appendChild(noticeElement);
+        });
+      }
+
+      function displayPagination(totalPages, currentPage) {
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+          const button = document.createElement("button");
+          button.innerText = i;
+          button.className = `px-3 py-1 rounded ${
+            i === currentPage ? "bg-blue-500 text-white" : "bg-gray-200"
+          }`;
+          button.onclick = () => fetchNotices(i);
+          pagination.appendChild(button);
+        }
+      }
+
+      async function viewNotice(id) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/notices/${id}`
+          );
+          if (!response.ok) {
+            throw new Error("서버 응답 오류");
+          }
+          const notice = await response.json();
+          displayNoticeDetail(notice);
+        } catch (error) {
+          console.error(
+            "공지사항 상세 정보를 불러오는 데 실패했습니다:",
+            error
+          );
+        }
+      }
+
+      function displayNoticeDetail(notice) {
+        const noticeList = document.getElementById("noticeList");
+        noticeList.innerHTML = `
+    <div class="bg-white p-6 rounded shadow">
+      <h2 class="text-2xl font-bold mb-4">${notice.title}</h2>
+      <div class="border-t pt-4">
+        <p>${notice.content}</p>
+      </div>
+      <div class="mt-4 text-sm text-gray-600">
+        <p>작성자: 관리자</p>
+        <p>작성일: ${new Date(notice.createdAt).toLocaleDateString()}</p>
+      </div>
+      <button onclick="fetchNotices(currentPage)" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">목록으로 돌아가기</button>
+      ${
+        isAdmin
+          ? `
+          <button onclick="editNotice('${notice._id}')" class="mt-4 ml-2 bg-yellow-500 text-white px-4 py-2 rounded">수정</button>
+          <button onclick="deleteNotice('${notice._id}')" class="mt-4 ml-2 bg-red-500 text-white px-4 py-2 rounded">삭제</button>
+      `
+          : ""
+      }
+    </div>
+  `;
+      }
+
+      function showNoticeForm(noticeId = null) {
+        document.getElementById("noticeForm").classList.remove("hidden");
+        document.getElementById("noticeList").classList.add("hidden");
+        document.getElementById("pagination").classList.add("hidden");
+
+        if (noticeId) {
+          // 수정 모드
+          document.getElementById("noticeId").value = noticeId;
+          // 여기에 공지사항 데이터를 가져와서 폼에 채우는 로직 추가
+        } else {
+          // 새 공지사항 작성 모드
+          document.getElementById("noticeSubmitForm").reset();
+          document.getElementById("noticeId").value = "";
+        }
+      }
+
+      function cancelNoticeForm() {
+        document.getElementById("noticeForm").classList.add("hidden");
+        document.getElementById("noticeList").classList.remove("hidden");
+        document.getElementById("pagination").classList.remove("hidden");
+      }
+
+      async function submitNoticeForm(event) {
+        event.preventDefault();
+        const form = event.target;
+        const noticeId = document.getElementById("noticeId").value;
+        const formData = new FormData(form);
+        const noticeData = Object.fromEntries(formData.entries());
+        noticeData.important = formData.get("important") === "on";
+
+        const url = noticeId
+          ? `http://localhost:3000/api/notices/${noticeId}`
+          : "http://localhost:3000/api/notices";
+        const method = noticeId ? "PUT" : "POST";
+
+        try {
+          const response = await fetch(url, {
+            method: method,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(noticeData),
+          });
+
+          if (!response.ok) {
+            throw new Error("서버 응답 오류");
+          }
+
+          const result = await response.json();
+          console.log("서버 응답:", result);
+
+          cancelNoticeForm();
+          fetchNotices(currentPage);
+        } catch (error) {
+          console.error("공지사항 저장 실패:", error);
+          alert("공지사항 저장에 실패했습니다.");
+        }
+      }
+
+      async function editNotice(id) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/notices/${id}`
+          );
+          if (!response.ok) {
+            throw new Error("서버 응답 오류");
+          }
+          const notice = await response.json();
+          showNoticeForm(id);
+
+          document.getElementById("noticeTitle").value = notice.title;
+          document.getElementById("noticeDepartment").value =
+            notice.department || "";
+          document.getElementById("noticeAuthor").value = notice.author || "";
+          document.getElementById("noticeContent").value = notice.content;
+          document.getElementById("noticeImportant").checked = notice.important;
+        } catch (error) {
+          console.error(
+            "공지사항 수정 정보를 불러오는 데 실패했습니다:",
+            error
+          );
+        }
+      }
+
+      async function deleteNotice(id) {
+        if (confirm("정말로 이 공지사항을 삭제하시겠습니까?")) {
+          try {
+            const response = await fetch(
+              `http://localhost:3000/api/notices/${id}`,
+              {
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("서버 응답 오류");
+            }
+
+            fetchNotices(currentPage);
+          } catch (error) {
+            console.error("공지사항 삭제 실패:", error);
+            alert("공지사항 삭제에 실패했습니다.");
+          }
+        }
+      }
+
+      // 페이지 로드 시 실행
+      document.addEventListener("DOMContentLoaded", () => {
+        checkLoginStatus();
+        fetchNotices(currentPage);
+        document
+          .getElementById("noticeSubmitForm")
+          .addEventListener("submit", submitNoticeForm);
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenuClose = document.getElementById("mobile-menu-close");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        mobileMenuButton.addEventListener("click", () => {
+          mobileMenu.classList.toggle("active");
+        });
+
+        mobileMenuClose.addEventListener("click", () => {
+          mobileMenu.classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administrator Login Page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      body {
+        font-family: "Spoqa Han Sans Neo", "sans-serif";
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-900 text-white min-h-screen flex items-center justify-center"
+  >
+    <div class="w-full max-w-md">
+      <form
+        id="loginForm"
+        class="bg-gray-800 shadow-md rounded-lg px-12 pt-10 pb-12 mb-4"
+      >
+        <h2 class="text-3xl font-bold mb-6 text-center text-blue-400">
+          Login Administrator
+        </h2>
+        <div class="mb-6">
+          <label
+            class="block text-gray-300 text-sm font-bold mb-2"
+            for="username"
+          >
+            ID
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="Please enter your ID"
+          />
+        </div>
+        <div class="mb-6">
+          <label
+            class="block text-gray-300 text-sm font-bold mb-2"
+            for="password"
+          >
+            PASSWORD
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            type="password"
+            placeholder="Please enter your PIN number."
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+            type="submit"
+          >
+            LOGIN
+          </button>
+        </div>
+      </form>
+      <p class="text-center text-gray-500 text-xs">
+        &copy;2024 WDJ Administrator System. All rights reserved.
+      </p>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const response = await fetch("http://localhost:3000/api/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ username, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              localStorage.setItem("token", data.token);
+              window.location.href = "admin-dashboard.html";
+            } else {
+              alert(data.message || "Login failed.");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while logging in.");
+          }
+        });
+    </script>
+  </body>
+</html>

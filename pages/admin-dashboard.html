@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 대시보드</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      body {
+        font-family: "Spoqa Han Sans Neo", "sans-serif";
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-white min-h-screen">
+    <div class="flex h-screen bg-gray-900">
+      <!-- 사이드바 -->
+      <aside class="bg-gray-800 text-white w-64 flex flex-col">
+        <div class="p-4">
+          <h1 class="text-2xl font-bold text-blue-400">WDJ 관리자 대시보드</h1>
+        </div>
+        <nav class="flex-1 overflow-y-auto">
+          <a
+            href="#"
+            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500"
+            >대시보드</a
+          >
+          <a
+            href="#"
+            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500"
+            >사용자 관리</a
+          >
+          <a
+            href="#"
+            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500"
+            >빈칸</a
+          >
+        </nav>
+        <div class="p-4">
+          <button
+            id="logoutBtn"
+            class="w-full bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-200"
+          >
+            로그아웃
+          </button>
+        </div>
+      </aside>
+
+      <!-- 메인 콘텐츠 -->
+      <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-900">
+        <div class="container mx-auto px-6 py-8">
+          <h3 class="text-gray-300 text-3xl font-bold mb-6">대시보드</h3>
+
+          <!-- 통계 그리드 -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+          >
+            <!-- 사용자 수 통계 -->
+            <div class="bg-gray-800 shadow rounded-lg p-4">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                  <svg
+                    class="h-8 w-8 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold text-gray-300">사용자</h4>
+                  <div class="text-3xl font-bold text-white" id="userCount">
+                    0
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 필요에 따라 더 많은 통계 상자를 여기에 추가하세요 -->
+          </div>
+
+          <!-- 사용자 관리 및 콘텐츠 관리 -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-gray-800 shadow rounded-lg p-6">
+              <h2 class="text-2xl font-semibold mb-4 text-gray-300">
+                사용자 관리
+              </h2>
+              <div id="userList" class="space-y-4">
+                <!-- 사용자 목록이 여기에 동적으로 추가됩니다 -->
+              </div>
+            </div>
+            <div class="bg-gray-800 shadow rounded-lg p-6">
+              <h2 class="text-2xl font-semibold mb-4 text-gray-300">
+                승인 대기 중인 사용자
+              </h2>
+              <div id="pendingUserList" class="space-y-4">
+                <!-- 승인 대기 중인 사용자 목록이 여기에 동적으로 추가됩니다 -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        function fetchAndDisplayUsers() {
+          fetch("http://localhost:3000/api/admin/users", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("관리자 권한이 없습니다.");
+              }
+              return response.json();
+            })
+            .then((users) => {
+              const userList = document.getElementById("userList");
+              userList.innerHTML = "";
+              users.forEach((user) => {
+                const userElement = document.createElement("div");
+                userElement.className =
+                  "flex justify-between items-center bg-gray-700 p-3 rounded";
+                userElement.innerHTML = `
+                  <span class="font-medium text-gray-300">${user.username} (${
+                  user.realName
+                })</span>
+                  <div>
+                    <button class="bg-red-600 text-white px-3 py-1 rounded mr-2 delete-user hover:bg-red-700 transition duration-300" data-id="${
+                      user._id
+                    }">삭제</button>
+                    <button class="bg-yellow-600 text-white px-3 py-1 rounded mr-2 toggle-admin hover:bg-yellow-700 transition duration-300" data-id="${
+                      user._id
+                    }" data-is-admin="${user.isAdmin}">
+                      ${user.isAdmin ? "관리자 해제" : "관리자로 지정"}
+                    </button>
+                    <button class="bg-blue-600 text-white px-3 py-1 rounded reset-password hover:bg-blue-700 transition duration-300" data-id="${
+                      user._id
+                    }">
+                      비밀번호 초기화
+                    </button>
+                  </div>
+                `;
+                userList.appendChild(userElement);
+              });
+
+              document.getElementById("userCount").textContent = users.length;
+
+              addUserManagementListeners();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert(error.message);
+              window.location.href = "/front-end/pages/admin-login.html";
+            });
+        }
+
+        function fetchAndDisplayPendingUsers() {
+          fetch("http://localhost:3000/api/admin/users/pending", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  "승인 대기 중인 사용자를 가져오는데 실패했습니다."
+                );
+              }
+              return response.json();
+            })
+            .then((pendingUsers) => {
+              const pendingUserList =
+                document.getElementById("pendingUserList");
+              pendingUserList.innerHTML = "";
+              pendingUsers.forEach((user) => {
+                const userElement = document.createElement("div");
+                userElement.className =
+                  "flex justify-between items-center bg-gray-700 p-3 rounded";
+                userElement.innerHTML = `
+                  <span class="font-medium text-gray-300">${user.username} (${user.realName})</span>
+                  <button class="bg-green-600 text-white px-3 py-1 rounded approve-user hover:bg-green-700 transition duration-300" data-id="${user._id}">
+                    승인
+                  </button>
+                `;
+                pendingUserList.appendChild(userElement);
+              });
+
+              addUserApprovalListeners();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert(error.message);
+            });
+        }
+
+        function addUserManagementListeners() {
+          document.querySelectorAll(".delete-user").forEach((button) => {
+            button.addEventListener("click", function () {
+              const userId = this.getAttribute("data-id");
+              if (confirm("이 사용자를 삭제하시겠습니까?")) {
+                deleteUser(userId);
+              }
+            });
+          });
+
+          document.querySelectorAll(".toggle-admin").forEach((button) => {
+            button.addEventListener("click", function () {
+              const userId = this.getAttribute("data-id");
+              const isAdmin = this.getAttribute("data-is-admin") === "true";
+              toggleAdminStatus(userId, !isAdmin);
+            });
+          });
+
+          document.querySelectorAll(".reset-password").forEach((button) => {
+            button.addEventListener("click", function () {
+              const userId = this.getAttribute("data-id");
+              if (confirm("이 사용자의 비밀번호를 초기화하시겠습니까?")) {
+                resetPassword(userId);
+              }
+            });
+          });
+        }
+
+        function addUserApprovalListeners() {
+          document.querySelectorAll(".approve-user").forEach((button) => {
+            button.addEventListener("click", function () {
+              const userId = this.getAttribute("data-id");
+              approveUser(userId);
+            });
+          });
+        }
+
+        function deleteUser(userId) {
+          fetch(`http://localhost:3000/api/users/${userId}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("사용자 삭제에 실패했습니다.");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              alert(data.message);
+              fetchAndDisplayUsers();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert(error.message);
+            });
+        }
+
+        function toggleAdminStatus(userId, newAdminStatus) {
+          fetch(`http://localhost:3000/api/users/${userId}/admin`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ isAdmin: newAdminStatus }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("관리자 상태 변경에 실패했습니다.");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              alert(data.message);
+              fetchAndDisplayUsers();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert(error.message);
+            });
+        }
+
+        function approveUser(userId) {
+          fetch(`http://localhost:3000/api/admin/users/${userId}/approve`, {
+            method: "PATCH",
+            headers: { Authorization: `Bearer ${token}` },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("사용자 승인에 실패했습니다.");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              alert(data.message);
+              fetchAndDisplayPendingUsers();
+              fetchAndDisplayUsers();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert(error.message);
+            });
+        }
+
+        function resetPassword(userId) {
+          fetch(
+            `http://localhost:3000/api/admin/users/${userId}/reset-password`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ newPassword: "1234" }),
+            }
+          )
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("비밀번호 초기화에 실패했습니다.");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              alert(data.message || "비밀번호가 성공적으로 초기화되었습니다.");
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert(error.message);
+            });
+        }
+
+        // 초기 로드
+        fetchAndDisplayUsers();
+        fetchAndDisplayPendingUsers();
+
+        // 로그아웃 버튼 리스너
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+          localStorage.removeItem("token");
+          window.location.href = "/front-end/pages/admin-login.html";
+        });
+      });
+    </script>
+  </body>
+</html>

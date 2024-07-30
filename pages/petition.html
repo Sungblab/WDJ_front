@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>완대전</title>
+    <link
+      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Spoqa Han Sans Neo", "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#E6F0FF",
+                100: "#CCE0FF",
+                200: "#99C2FF",
+                300: "#66A3FF",
+                400: "#3385FF",
+                500: "#0066FF",
+                600: "#0052CC",
+                700: "#003D99",
+                800: "#002966",
+                900: "#001433",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      #mobile-menu {
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+      }
+      #mobile-menu.active {
+        max-height: 400px;
+        opacity: 1;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <header class="bg-blue-600 shadow-md">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="flex justify-between items-center py-4 md:justify-start md:space-x-10"
+        >
+          <div class="flex justify-start lg:w-0 lg:flex-1">
+            <a
+              href="/front-end/index.html"
+              class="text-3xl font-bold text-white hover:text-gray-200 transition duration-300"
+            >
+              완·대·전
+            </a>
+          </div>
+          <div class="-mr-2 -my-2 md:hidden">
+            <button
+              id="mobile-menu-button"
+              type="button"
+              class="bg-blue-500 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-200 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-expanded="false"
+            >
+              <span class="sr-only">메뉴 열기</span>
+              <svg
+                class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+          <nav class="hidden md:flex space-x-10">
+            <a
+              href="notice.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >공지사항</a
+            >
+            <a
+              href="community.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >커뮤니티</a
+            >
+            <a
+              href="petition.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >청원·제안</a
+            >
+            <a
+              href="utility.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >학급 도우미</a
+            >
+            <a
+              href="about.html"
+              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
+              >소개</a
+            >
+          </nav>
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+      >
+        <div
+          class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-blue-500 divide-y-2 divide-blue-400"
+        >
+          <div class="pt-5 pb-6 px-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <a href="index.html" class="text-2xl font-bold text-white"
+                  >완·대·전</a
+                >
+              </div>
+              <div class="-mr-2">
+                <button
+                  id="mobile-menu-close"
+                  type="button"
+                  class="bg-blue-500 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-200 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                >
+                  <span class="sr-only">메뉴 닫기</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="mt-6">
+              <nav class="grid gap-y-8">
+                <a
+                  href="notice.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >공지사항</span
+                  >
+                </a>
+                <a
+                  href="community.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >커뮤니티</span
+                  >
+                </a>
+                <a
+                  href="petition.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >청원·제안</span
+                  >
+                </a>
+                <a
+                  href="utility.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >학급 도우미</span
+                  >
+                </a>
+                <a
+                  href="about.html"
+                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
+                >
+                  <span class="ml-3 text-base font-medium text-white"
+                    >소개</span
+                  >
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container mx-auto mt-8 px-8">
+      <div
+        id="login-message"
+        class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 hidden"
+      >
+        로그인이 필요한 서비스입니다. 로그인 후 이용해 주세요.
+      </div>
+
+      <!-- 관리자용 메뉴 추가 -->
+      <div id="admin-menu" class="bg-gray-200 p-4 mb-4 rounded-lg hidden">
+        <h2 class="text-xl font-semibold mb-2">관리자 메뉴</h2>
+        <button
+          id="sync-petitions"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg"
+        >
+          청원 동기화
+        </button>
+      </div>
+
+      <section
+        id="new-petition"
+        class="bg-white rounded-lg shadow-md p-6 mb-8 hidden"
+      >
+        <h2 class="text-2xl font-semibold mb-4 text-center">새 청원 작성</h2>
+        <p class="mb-4 text-gray-600 text-center">
+          완도고등학교 학생회는 '학생이 물으면 학교가 답한다'는 철학을
+          지향합니다.<br />
+          여러분의 목소리가 모여 20일 동안 50명 이상의 학생들이 추천한 청원 및
+          제안에 대해서는 학생회 관계자가 답하겠습니다.
+        </p>
+        <h2 class="text-2xl font-semibold mb-4">학생회 청원 요건</h2>
+        <p class="mt-4 text-gray-600">
+          1.욕설 및 비속어를 사용한 청원은 관리자에 의해 삭제될 수 있습니다.<br />
+          2.폭력적이고 선정적인 내용을 담은 청원은 관리자에 의해 삭제될 수
+          있습니다.<br />
+          2.청소년에게 유해한 내용을 담은 청원은 관리자에 의해 삭제될 수
+          있습니다.<br />
+          3.허위 사실이나 타인의 명예를 훼손하는 내용이 포함된 청원은 관리자에
+          의해 '숨김'처리 또는 삭제될 수 있습니다.<br />
+          4.동일 이용자에 의해 동일한 내용으로 중복 게시된 청원은 최초 1개
+          청원만 남기고 '숨김'처리 또는 삭제될 수 있습니다.<br />
+          5.한번 작성된 청원은 수정 및 삭제가 불가능합니다. 최초 청원 취지와
+          다른 내용으로 변경되는 것을 방지하여 청원 참여자의 의견을 보호하기
+          위한 조치이니 신중하게 작성하여 주시기 바랍니다.
+        </p>
+        <form id="petition-form">
+          <div class="mb-4 mt-4">
+            <label for="title" class="block text-gray-700 font-bold mb-2"
+              >제목</label
+            >
+            <input
+              type="text"
+              id="title"
+              name="title"
+              class="w-full px-3 py-2 border rounded-lg"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="content" class="block text-gray-700 font-bold mb-2"
+              >내용</label
+            >
+            <textarea
+              id="content"
+              name="content"
+              rows="5"
+              class="w-full px-3 py-2 border rounded-lg"
+              required
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          >
+            제출하기
+          </button>
+        </form>
+      </section>
+
+      <section id="petition-lists" class="space-y-8">
+        <div id="pending-petitions" class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-semibold mb-4">등록 대기중인 청원</h2>
+          <ul class="space-y-4">
+            <!-- 등록 대기중인 청원 목록이 여기에 동적으로 추가됩니다 -->
+          </ul>
+        </div>
+
+        <div id="active-petitions" class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-semibold mb-4">진행중인 청원</h2>
+          <ul class="space-y-4">
+            <!-- 진행중인 청원 목록이 여기에 동적으로 추가됩니다 -->
+          </ul>
+        </div>
+
+        <div id="expired-petitions" class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-semibold mb-4">만료된 청원</h2>
+          <ul class="space-y-4">
+            <!-- 만료된 청원 목록이 여기에 동적으로 추가됩니다 -->
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h4 class="text-2xl font-bold mb-4">완대전</h4>
+            <p class="text-gray-300 mb-4">
+              완도고등학교 학생들을 위한 유용한 웹사이트
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="https://www.instagram.com/wdj_hs/ "
+                target="_blank"
+                class="text-gray-300 hover:text-white transition duration-300"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <p class="text-gray-300">IG: wdj_hs</p>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold mb-4">빠른 링크</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="notice.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  공지사항
+                </a>
+              </li>
+              <li>
+                <a
+                  href="community.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  커뮤니티
+                </a>
+              </li>
+              <li>
+                <a
+                  href="petition.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  청원·제안
+                </a>
+              </li>
+              <li>
+                <a
+                  href="utility.html"
+                  class="text-gray-300 hover:text-white transition duration-300"
+                >
+                  학급 도우미
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold mb-4">연락처</h4>
+            <p class="text-gray-300 mb-2">이메일: ksb19558@naver.com</p>
+            <p class="text-gray-300 mb-4">연락 인스타그램 : wdj_hs</p>
+            <a
+              href="privacy-policy.html"
+              class="text-blue-400 hover:text-blue-300 transition duration-300"
+            >
+              개인정보 처리방침
+            </a>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-700 mt-8 pt-8 text-sm text-center text-gray-400"
+        >
+          <p>&copy; 2024 완대전. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenuClose = document.getElementById("mobile-menu-close");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const newPetitionSection = document.getElementById("new-petition");
+        const loginMessage = document.getElementById("login-message");
+        const petitionForm = document.getElementById("petition-form");
+        const pendingPetitionsList = document.querySelector(
+          "#pending-petitions ul"
+        );
+        const activePetitionsList = document.querySelector(
+          "#active-petitions ul"
+        );
+        const expiredPetitionsList = document.querySelector(
+          "#expired-petitions ul"
+        );
+        const adminMenu = document.getElementById("admin-menu");
+        const syncPetitionsButton = document.getElementById("sync-petitions");
+
+        let user = null;
+
+        mobileMenuButton.addEventListener("click", () => {
+          mobileMenu.classList.toggle("active");
+        });
+
+        mobileMenuClose.addEventListener("click", () => {
+          mobileMenu.classList.remove("active");
+        });
+
+        async function checkLoginStatus() {
+          const token = localStorage.getItem("token");
+          if (token) {
+            try {
+              const response = await fetch("http://localhost:3000/api/user", {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              if (response.ok) {
+                user = await response.json();
+                newPetitionSection.classList.remove("hidden");
+                loginMessage.classList.add("hidden");
+                if (user.isAdmin) {
+                  adminMenu.classList.remove("hidden");
+                } else {
+                  adminMenu.classList.add("hidden");
+                }
+              } else {
+                throw new Error("Failed to fetch user data");
+              }
+            } catch (error) {
+              console.error("Error fetching user data:", error);
+              localStorage.removeItem("token");
+              user = null;
+              newPetitionSection.classList.add("hidden");
+              loginMessage.classList.remove("hidden");
+              adminMenu.classList.add("hidden");
+            }
+          } else {
+            user = null;
+            newPetitionSection.classList.add("hidden");
+            loginMessage.classList.remove("hidden");
+            adminMenu.classList.add("hidden");
+          }
+        }
+
+        checkLoginStatus();
+
+        petitionForm.addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const title = document.getElementById("title").value;
+          const content = document.getElementById("content").value;
+          const token = localStorage.getItem("token");
+
+          try {
+            const response = await fetch(
+              "http://localhost:3000/api/petitions",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ title, content }),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            alert(result.message);
+            petitionForm.reset();
+            fetchAllPetitions();
+          } catch (error) {
+            console.error("Error submitting petition:", error);
+            alert("Failed to submit petition. Please try again later.");
+          }
+        });
+
+        async function fetchPetitions(status) {
+          try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(
+              `http://localhost:3000/api/petitions?status=${status}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            if (!response.ok) {
+              throw new Error(`HTTP 오류! 상태: ${response.status}`);
+            }
+            const data = await response.json();
+            return data.petitions;
+          } catch (error) {
+            console.error(`${status} 청원 가져오기 오류:`, error);
+            displayErrorMessage(
+              `${status} 청원을 불러오는 데 실패했습니다. 나중에 다시 시도해 주세요.`
+            );
+            return [];
+          }
+        }
+
+        function displayPetitions(petitions, listElement) {
+          listElement.innerHTML = "";
+          petitions.forEach((petition) => {
+            const li = document.createElement("li");
+            li.className = "bg-gray-200 p-4 rounded-lg";
+            li.innerHTML = `
+        <h3 class="font-bold">${petition.title}</h3>
+        <p>동의 수: ${petition.supporters.length}</p>
+        <p>상태: ${petition.status}</p>
+        <button class="view-details-button bg-gray-500 text-white px-2 py-1 rounded-lg mt-2" data-id="${
+          petition._id
+        }">자세히 보기</button>
+        ${
+          petition.status !== "expired"
+            ? `<button class="support-button bg-blue-500 text-white px-2 py-1 rounded-lg mt-2 ml-2" data-id="${petition._id}">동의하기</button>`
+            : ""
+        }
+        ${
+          user && user.isAdmin
+            ? `
+          ${
+            petition.status === "pending"
+              ? `<button class="approve-button bg-green-500 text-white px-2 py-1 rounded-lg mt-2 ml-2" data-id="${petition._id}">승인</button>
+               <button class="reject-button bg-red-500 text-white px-2 py-1 rounded-lg mt-2 ml-2" data-id="${petition._id}">거부</button>`
+              : ""
+          }
+          <button class="delete-button bg-red-500 text-white px-2 py-1 rounded-lg mt-2 ml-2" data-id="${
+            petition._id
+          }">삭제</button>
+        `
+            : ""
+        }
+        <div class="petition-details hidden mt-4 p-4 bg-white rounded-lg">
+          <p>${petition.content}</p>
+        </div>
+      `;
+            listElement.appendChild(li);
+          });
+
+          listElement
+            .querySelectorAll(".view-details-button")
+            .forEach((button) => {
+              button.addEventListener("click", function () {
+                const detailsDiv =
+                  this.parentNode.querySelector(".petition-details");
+                detailsDiv.classList.toggle("hidden");
+                this.textContent = detailsDiv.classList.contains("hidden")
+                  ? "자세히 보기"
+                  : "접기";
+              });
+            });
+
+          listElement.querySelectorAll(".support-button").forEach((button) => {
+            button.addEventListener("click", async function () {
+              const petitionId = this.dataset.id;
+              const token = localStorage.getItem("token");
+              try {
+                const response = await fetch(
+                  `http://localhost:3000/api/petitions/${petitionId}/support`,
+                  {
+                    method: "POST",
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+                const result = await response.json();
+                if (response.ok) {
+                  alert(result.message);
+                  fetchAllPetitions();
+                } else {
+                  alert(result.message || "동의 처리 중 오류가 발생했습니다.");
+                }
+              } catch (error) {
+                console.error("Error:", error);
+                alert("서버 오류가 발생했습니다.");
+              }
+            });
+          });
+
+          // 삭제 버튼 이벤트 리스너 추가
+          listElement.querySelectorAll(".delete-button").forEach((button) => {
+            button.addEventListener("click", async function () {
+              const petitionId = this.dataset.id;
+              if (confirm("정말로 이 청원을 삭제하시겠습니까?")) {
+                try {
+                  const response = await fetch(
+                    `http://localhost:3000/api/petitions/${petitionId}`,
+                    {
+                      method: "DELETE",
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
+                    }
+                  );
+                  const result = await response.json();
+                  if (response.ok) {
+                    alert(result.message);
+                    fetchAllPetitions();
+                  } else {
+                    alert(
+                      result.message || "청원 삭제 중 오류가 발생했습니다."
+                    );
+                  }
+                } catch (error) {
+                  console.error("Error:", error);
+                  alert("서버 오류가 발생했습니다.");
+                }
+              }
+            });
+          });
+
+          listElement
+            .querySelectorAll(".approve-button, .reject-button")
+            .forEach((button) => {
+              button.addEventListener("click", async function () {
+                const petitionId = this.dataset.id;
+                const action = this.classList.contains("approve-button")
+                  ? "active"
+                  : "rejected";
+                const token = localStorage.getItem("token");
+                try {
+                  const response = await fetch(
+                    `http://localhost:3000/api/petitions/${petitionId}/status`,
+                    {
+                      method: "PATCH",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                      },
+                      body: JSON.stringify({ status: action }),
+                    }
+                  );
+                  const result = await response.json();
+                  if (response.ok) {
+                    alert(result.message);
+                    fetchAllPetitions();
+                  } else {
+                    alert(
+                      result.message ||
+                        `청원 ${
+                          action === "active" ? "승인" : "거부"
+                        } 중 오류가 발생했습니다.`
+                    );
+                  }
+                } catch (error) {
+                  console.error("Error:", error);
+                  alert("서버 오류가 발생했습니다.");
+                }
+              });
+            });
+        }
+
+        function displayErrorMessage(message) {
+          const errorMessageElement = document.getElementById("error-message");
+          if (errorMessageElement) {
+            errorMessageElement.textContent = message;
+            errorMessageElement.classList.remove("hidden");
+          } else {
+            console.warn("오류 메시지를 표시할 요소를 찾을 수 없습니다.");
+            alert(message);
+          }
+        }
+
+        async function fetchAllPetitions() {
+          const statuses = ["pending", "active", "expired"];
+          for (const status of statuses) {
+            const petitions = await fetchPetitions(status);
+            displayPetitions(
+              petitions,
+              document.querySelector(`#${status}-petitions ul`)
+            );
+          }
+        }
+
+        syncPetitionsButton.addEventListener("click", fetchAllPetitions);
+
+        fetchAllPetitions();
+      });
+    </script>
+  </body>
+</html>
