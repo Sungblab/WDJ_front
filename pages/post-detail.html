@@ -275,30 +275,54 @@
       >
         <!-- 게시물 내용이 여기에 동적으로 추가됩니다 -->
       </div>
-      <div class="flex items-center mb-4">
-        <button
-          id="likeButton"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex items-center"
-        >
-          <svg
-            class="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+
+      <div class="space-y-6 mb-8">
+        <div class="flex space-x-2">
+          <button
+            id="deletePostButton"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            style="display: none"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-            ></path>
-          </svg>
-          좋아요 <span id="likeCount" class="ml-2">0</span>
-        </button>
+            게시물 삭제
+          </button>
+          <button
+            id="revealAuthorButton"
+            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+            style="display: none"
+          >
+            익명 작성자 확인
+          </button>
+        </div>
+
+        <div class="flex items-center">
+          <button
+            id="likeButton"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex items-center"
+          >
+            <svg
+              class="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+              ></path>
+            </svg>
+            좋아요 <span id="likeCount" class="ml-2">0</span>
+          </button>
+        </div>
       </div>
 
-      <div>
+      <!-- 구분선 추가 -->
+      <hr class="my-8 border-t border-gray-300" />
+
+      <!-- 댓글 섹션 -->
+      <div class="mt-8">
         <h3 class="text-xl font-bold mb-4">댓글</h3>
         <form id="commentForm" class="mb-6">
           <textarea
@@ -322,6 +346,15 @@
         </form>
         <div id="commentList" class="space-y-4">
           <!-- 댓글 목록이 여기에 동적으로 추가됩니다 -->
+        </div>
+
+        <div id="adminControls" style="display: none">
+          <button
+            id="revealAuthorButton"
+            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-2"
+          >
+            익명 작성자 확인
+          </button>
         </div>
       </div>
     </main>
@@ -441,8 +474,9 @@
         }
       }
 
-      // 게시물 상세 정보 표시 함수 수정
       function displayPostDetail(post) {
+        console.log("Received post data:", post); // 디버깅을 위한 로그 추가
+
         const postContent = document.getElementById("postContent");
         postContent.innerHTML = `
     <h2 class="text-2xl font-bold mb-4">${post.title}</h2>
@@ -453,22 +487,142 @@
     <p class="mb-4">${post.content}</p>
   `;
 
-        // 작성자 또는 관리자인 경우 삭제 버튼 표시
-        if (
-          currentUser &&
-          (currentUser.id === post.author._id || currentUser.isAdmin)
-        ) {
-          postContent.innerHTML += `
-      <button id="deletePostButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-        게시물 삭제
-      </button>
-    `;
-          document
-            .getElementById("deletePostButton")
-            .addEventListener("click", deletePost);
+        const deleteButton = document.getElementById("deletePostButton");
+        const revealAuthorButton =
+          document.getElementById("revealAuthorButton");
+
+        // 현재 사용자가 관리자이거나 게시물 작성자인 경우 삭제 버튼 표시
+        if (currentUser && (currentUser.isAdmin || post.isAuthor)) {
+          console.log("Showing delete button"); // 디버깅을 위한 로그 추가
+          deleteButton.style.display = "inline-block";
+          deleteButton.addEventListener("click", deletePost);
+        } else {
+          console.log("Hiding delete button"); // 디버깅을 위한 로그 추가
+          deleteButton.style.display = "none";
+        }
+
+        // 관리자를 위한 익명 작성자 확인 버튼 (익명 게시물인 경우에만)
+        if (currentUser && currentUser.isAdmin && post.isAnonymous) {
+          revealAuthorButton.style.display = "inline-block";
+          revealAuthorButton.addEventListener("click", () =>
+            revealAuthor(post._id)
+          );
+        } else {
+          revealAuthorButton.style.display = "none";
         }
 
         document.getElementById("likeCount").textContent = post.likes.length;
+      }
+
+      function displayComments(comments) {
+        const commentList = document.getElementById("commentList");
+        commentList.innerHTML = comments
+          .map(
+            (comment) => `
+        <div class="bg-gray-100 p-4 mb-2 rounded">
+          <p>${comment.content}</p>
+          <p class="text-sm text-gray-500">
+            작성자: ${comment.isAnonymous ? "익명" : comment.author.username} |
+            작성일: ${new Date(comment.createdAt).toLocaleString()}
+          </p>
+          ${
+            currentUser &&
+            (currentUser.id === comment.author._id || currentUser.isAdmin)
+              ? `<button class="deleteComment text-red-500" data-id="${comment._id}">삭제</button>`
+              : ""
+          }
+        </div>
+      `
+          )
+          .join("");
+
+        // 이벤트 위임을 사용하여 댓글 삭제 버튼에 이벤트 리스너 추가
+        commentList.addEventListener("click", function (e) {
+          if (e.target.classList.contains("deleteComment")) {
+            deleteComment(e.target.dataset.id);
+          }
+        });
+      }
+
+      async function deleteComment(commentId) {
+        if (!confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+          return;
+        }
+
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.delete(
+            `${API_BASE_URL}/api/comments/${commentId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            alert(response.data.message);
+            fetchComments(); // 댓글 목록 새로고침
+          }
+        } catch (error) {
+          console.error("댓글 삭제 실패:", error);
+          alert(
+            "댓글 삭제에 실패했습니다. " +
+              (error.response
+                ? error.response.data.message
+                : "알 수 없는 오류가 발생했습니다.")
+          );
+        }
+      }
+
+      async function deletePost() {
+        if (!confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
+          return;
+        }
+
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.delete(
+            `${API_BASE_URL}/api/posts/${postId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            alert(response.data.message);
+            window.location.href = "community.html"; // 삭제 후 커뮤니티 페이지로 이동
+          }
+        } catch (error) {
+          console.error("게시물 삭제 실패:", error);
+          alert(
+            "게시물 삭제에 실패했습니다. " +
+              (error.response
+                ? error.response.data.message
+                : "알 수 없는 오류가 발생했습니다.")
+          );
+        }
+      }
+
+      async function revealAuthor(postId) {
+        try {
+          const response = await axios.get(
+            `${API_BASE_URL}/api/admin/posts/${postId}/reveal-author`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+          alert(
+            `실제 작성자: ${response.data.username} (${response.data.nickname})`
+          );
+        } catch (error) {
+          console.error("작성자 정보 확인 실패:", error);
+          alert("작성자 정보를 확인하는데 실패했습니다.");
+        }
       }
 
       // 좋아요 기능
@@ -507,34 +661,34 @@
         }
       }
 
-      // 댓글 목록 표시
+      // 댓글 목록 표시 함수 수정
       function displayComments(comments) {
         const commentList = document.getElementById("commentList");
         commentList.innerHTML = comments
           .map(
             (comment) => `
-      <div class="bg-gray-100 p-4 mb-2 rounded">
-        <p>${comment.content}</p>
-        <p class="text-sm text-gray-500">
-          작성자: ${comment.isAnonymous ? "익명" : comment.author.username} | 
-          작성일: ${new Date(comment.createdAt).toLocaleString()}
-        </p>
-        ${
-          currentUser &&
-          (currentUser.id === comment.author._id || currentUser.isAdmin)
-            ? `<button class="deleteComment text-red-500" data-id="${comment._id}">삭제</button>`
-            : ""
-        }
-      </div>
-    `
+    <div class="bg-gray-100 p-4 mb-2 rounded">
+      <p>${comment.content}</p>
+      <p class="text-sm text-gray-500">
+        작성자: ${comment.isAnonymous ? "익명" : comment.author.username} |
+        작성일: ${new Date(comment.createdAt).toLocaleString()}
+      </p>
+      ${
+        currentUser &&
+        (currentUser.id === comment.author._id || currentUser.isAdmin)
+          ? `<button class="deleteComment text-red-500" data-id="${comment._id}">삭제</button>`
+          : ""
+      }
+    </div>
+  `
           )
           .join("");
 
-        // 댓글 삭제 버튼에 이벤트 리스너 추가
-        document.querySelectorAll(".deleteComment").forEach((button) => {
-          button.addEventListener("click", (e) =>
-            deleteComment(e.target.dataset.id)
-          );
+        // 이벤트 위임을 사용하여 댓글 삭제 버튼에 이벤트 리스너 추가
+        commentList.addEventListener("click", function (e) {
+          if (e.target.classList.contains("deleteComment")) {
+            deleteComment(e.target.dataset.id);
+          }
         });
       }
 
@@ -563,50 +717,80 @@
 
       // 댓글 삭제
       async function deleteComment(commentId) {
+        if (!confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+          return;
+        }
+
         try {
-          await axios.delete(`${API_BASE_URL}/api/comments/${commentId}`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
-          fetchComments();
+          const token = localStorage.getItem("token");
+          const response = await axios.delete(
+            `${API_BASE_URL}/api/comments/${commentId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            alert(response.data.message);
+            fetchComments();
+          }
         } catch (error) {
           console.error("댓글 삭제 실패:", error);
+          alert(
+            "댓글 삭제에 실패했습니다. " +
+              (error.response
+                ? error.response.data.message
+                : "알 수 없는 오류가 발생했습니다.")
+          );
         }
       }
 
-      // 게시물 삭제 (작성자 또는 관리자 전용)
+      // 게시물 삭제 함수
       async function deletePost() {
         if (!confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
           return;
         }
 
         try {
+          const token = localStorage.getItem("token");
           const response = await axios.delete(
             `${API_BASE_URL}/api/posts/${postId}`,
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Authorization: `Bearer ${token}`,
               },
             }
           );
 
           if (response.status === 200) {
-            alert("게시물이 성공적으로 삭제되었습니다.");
-            window.location.href = "community.html"; // 커뮤니티 페이지로 리다이렉트
+            alert(response.data.message);
+            window.location.href = "community.html"; // 삭제 후 커뮤니티 페이지로 이동
           }
         } catch (error) {
           console.error("게시물 삭제 실패:", error);
           if (error.response && error.response.status === 403) {
-            alert("게시물을 삭제할 권한이 없습니다.");
+            alert("게시물 삭제 권한이 없습니다.");
           } else {
-            alert("게시물 삭제 중 오류가 발생했습니다. 다시 시도해주세요.");
+            alert(
+              "게시물 삭제에 실패했습니다. " +
+                (error.response
+                  ? error.response.data.message
+                  : "알 수 없는 오류가 발생했습니다.")
+            );
           }
         }
       }
 
-      // 이벤트 리스너 설정
+      // 페이지 로드 시 currentUser 설정
       document.addEventListener("DOMContentLoaded", () => {
+        const userJSON = localStorage.getItem("user");
+        if (userJSON) {
+          currentUser = JSON.parse(userJSON);
+          console.log("Current user:", currentUser); // 디버깅을 위한 로그 추가
+        }
+
         fetchPostDetail();
         fetchComments();
         document
