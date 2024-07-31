@@ -4,6 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>완대전</title>
+    <meta
+      name="description"
+      content="완도고등학교 학생들을 위한 웹 커뮤니티 사이트입니다."
+    />
+
+    <!-- Open Graph 태그 (소셜 미디어 공유용) -->
+    <meta property="og:title" content="완대전" />
+    <meta
+      property="og:description"
+      content="완도고등학교 학생들을 위한 웹 커뮤니티 사이트입니다."
+    />
+    <meta property="og:image" content="https://wdj.kr/content.png" />
+    <meta property="og:url" content="https://wdj.kr/" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/android-icon-192x192.png"
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
     <link
       href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
       rel="stylesheet"
@@ -209,10 +268,12 @@
         </div>
       </div>
     </header>
-    <main class="container mx-auto mt-8 px-8 mb-16">
-      <div class="grid md:grid-cols-3 gap-8 mb-8">
+    <main class="w-full sm:container mx-auto mt-8 mb-16 px-0 sm:px-8">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mb-8"
+      >
         <!-- 공지사항 섹션 -->
-        <section class="bg-white rounded-lg shadow-md p-6">
+        <section class="bg-white rounded-lg shadow-md p-4 sm:p-6">
           <h3 class="text-2xl font-bold mb-4 text-blue-700">공지사항</h3>
           <ul id="noticeList" class="space-y-2">
             <!-- 공지사항이 여기에 동적으로 추가됩니다 -->
@@ -225,7 +286,7 @@
         </section>
 
         <!-- 오늘의 급식 섹션 -->
-        <section class="bg-white rounded-lg shadow-md p-6">
+        <section class="bg-white rounded-lg shadow-md p-4 sm:p-6">
           <h2 class="text-2xl font-bold mb-6 text-blue-700">오늘의 급식</h2>
           <div id="mealCarousel" class="relative">
             <div class="overflow-hidden">
@@ -293,7 +354,10 @@
           </div>
         </section>
 
-        <section id="authSection" class="bg-white rounded-lg shadow-md p-6">
+        <section
+          id="authSection"
+          class="bg-white rounded-lg shadow-md p-4 sm:p-6"
+        >
           <div id="loginSection">
             <h3 class="text-2xl font-bold mb-4 text-blue-700">로그인</h3>
             <form id="loginForm" class="mb-4">
@@ -378,7 +442,7 @@
 
       <!-- 환영합니다 섹션 -->
       <section
-        class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg p-8 mb-12 text-white"
+        class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg p-6 sm:p-8 mb-8 sm:mb-12 text-white"
       >
         <h2 class="text-4xl font-bold mb-4">환영합니다!</h2>
         <p class="text-xl">
@@ -387,9 +451,11 @@
         </p>
       </section>
 
-      <div class="grid md:grid-cols-3 gap-8">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8"
+      >
         <!-- 학사일정 섹션 -->
-        <section class="bg-white rounded-lg shadow-md p-6">
+        <section class="bg-white rounded-lg shadow-md p-4 sm:p-6">
           <h3 class="text-2xl font-bold mb-4 text-blue-700">학사일정</h3>
           <div class="flex justify-between items-center mb-4">
             <button
@@ -435,7 +501,7 @@
               </svg>
             </button>
           </div>
-          <div class="h-64 overflow-y-auto pr-2">
+          <div class="h-48 sm:h-64 overflow-y-auto pr-2">
             <ul id="scheduleList" class="space-y-3">
               <!-- 학사일정 항목들이 여기에 동적으로 추가됩니다 -->
             </ul>
@@ -443,7 +509,7 @@
         </section>
 
         <!-- 커뮤니티 섹션 -->
-        <section class="bg-white rounded-lg shadow-md p-6">
+        <section class="bg-white rounded-lg shadow-md p-4 sm:p-6">
           <h3 class="text-2xl font-bold mb-4 text-blue-700">커뮤니티</h3>
           <ul id="communityList" class="space-y-2">
             <!-- 커뮤니티 글 목록이 여기에 동적으로 추가됩니다 -->
@@ -456,7 +522,7 @@
         </section>
 
         <!-- 청원·제안 섹션 -->
-        <section class="bg-white rounded-lg shadow-md p-6">
+        <section class="bg-white rounded-lg shadow-md p-4 sm:p-6">
           <h3 class="text-2xl font-bold mb-4 text-blue-700">청원·제안</h3>
           <ul id="petitionList" class="space-y-2">
             <!-- 청원 목록이 여기에 동적으로 추가됩니다 -->
@@ -734,7 +800,7 @@
           const dateDisplay = document.createElement("p");
           dateDisplay.textContent = `${today.getFullYear()}년 ${
             today.getMonth() + 1
-          }월 ${today.getDate()}일 급식 정보`;
+          }월 ${today.getDate()}일`;
           dateDisplay.className =
             "text-lg font-semibold text-center mb-4 text-blue-600";
           document.getElementById("mealCarousel").prepend(dateDisplay);
