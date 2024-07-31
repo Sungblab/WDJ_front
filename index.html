@@ -445,23 +445,14 @@
         <!-- 커뮤니티 섹션 -->
         <section class="bg-white rounded-lg shadow-md p-6">
           <h3 class="text-2xl font-bold mb-4 text-blue-700">커뮤니티</h3>
-          <ul class="space-y-2">
-            <li>
-              <a href="#" class="text-gray-700 hover:text-blue-500"
-                >학교 앞 새로 생긴 카페 어떤가요?</a
-              >
-            </li>
-            <li>
-              <a href="#" class="text-gray-700 hover:text-blue-500"
-                >이번 체육대회 종목 투표해주세요!</a
-              >
-            </li>
-            <li>
-              <a href="#" class="text-gray-700 hover:text-blue-500"
-                >전교생 소풍 장소 추천 받습니다.</a
-              >
-            </li>
+          <ul id="communityList" class="space-y-2">
+            <!-- 커뮤니티 글 목록이 여기에 동적으로 추가됩니다 -->
           </ul>
+          <a
+            href="pages/community.html"
+            class="text-blue-500 hover:underline mt-4 inline-block"
+            >더 보기</a
+          >
         </section>
 
         <!-- 청원·제안 섹션 -->
@@ -605,7 +596,7 @@
           const token = localStorage.getItem("token");
           if (token) {
             try {
-              const response = await fetch("http://localhost:8080/api/user", {
+              const response = await fetch("http://localhost:3000/api/user", {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
@@ -630,7 +621,7 @@
           const username = document.getElementById("loginUsername").value;
           const password = document.getElementById("loginPassword").value;
           try {
-            const response = await fetch("http://localhost:8080/api/login", {
+            const response = await fetch("http://localhost:3000/api/login", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -665,7 +656,7 @@
         async function fetchNotices() {
           try {
             const response = await fetch(
-              "http://localhost:8080/api/notices?limit=3"
+              "http://localhost:3000/api/notices?limit=3"
             );
             if (!response.ok) {
               throw new Error("서버 응답 오류");
@@ -692,6 +683,12 @@
 
         async function getMealInfo() {
           try {
+            const today = new Date();
+            const formattedDate = today
+              .toISOString()
+              .slice(0, 10)
+              .replace(/-/g, "");
+
             const response = await axios.get(
               "https://open.neis.go.kr/hub/mealServiceDietInfo",
               {
@@ -700,7 +697,7 @@
                   Type: "json",
                   ATPT_OFCDC_SC_CODE: OFFICE_CODE,
                   SD_SCHUL_CODE: SCHOOL_CODE,
-                  MLSV_YMD: SPECIFIC_DATE,
+                  MLSV_YMD: formattedDate,
                 },
               }
             );
@@ -726,9 +723,12 @@
           const mealTypes = ["조식", "중식", "석식"];
           const mealIds = ["breakfast", "lunch", "dinner"];
 
-          // 날짜 표시 업데이트
+          // 오늘 날짜 표시 업데이트
+          const today = new Date();
           const dateDisplay = document.createElement("p");
-          dateDisplay.textContent = `2023년 5월 12일 급식 정보`;
+          dateDisplay.textContent = `${today.getFullYear()}년 ${
+            today.getMonth() + 1
+          }월 ${today.getDate()}일 급식 정보`;
           dateDisplay.className =
             "text-lg font-semibold text-center mb-4 text-blue-600";
           document.getElementById("mealCarousel").prepend(dateDisplay);
@@ -840,7 +840,7 @@
           try {
             const token = localStorage.getItem("token");
             const response = await fetch(
-              "http://localhost:8080/api/petitions?status=active&limit=3",
+              "http://localhost:3000/api/petitions?status=active&limit=3",
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -903,12 +903,60 @@
           updateMonthSchedule();
         });
 
+        // 커뮤니티 글 목록 가져오기
+        async function fetchCommunityPosts() {
+          try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+              throw new Error("인증 토큰이 없습니다.");
+            }
+
+            const response = await fetch(
+              "http://localhost:3000/api/posts?limit=5&board=all",
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("서버 응답 오류");
+            }
+
+            const data = await response.json();
+            const communityList = document.getElementById("communityList");
+            communityList.innerHTML = "";
+            data.posts.forEach((post) => {
+              const li = document.createElement("li");
+              li.className = "flex items-center justify-between";
+              li.innerHTML = `
+                <a href="pages/post-detail.html?id=${
+                  post._id
+                }" class="text-gray-700 hover:text-blue-500 transition duration-300">${
+                post.title
+              }</a>
+                <span class="text-sm text-gray-500">${
+                  post.isAnonymous ? "익명" : post.author.nickname
+                }</span>
+              `;
+              communityList.appendChild(li);
+            });
+          } catch (error) {
+            console.error("커뮤니티 글을 불러오는 데 실패했습니다:", error);
+            const communityList = document.getElementById("communityList");
+            communityList.innerHTML =
+              '<li class="text-red-500">커뮤니티 글을 불러오는 데 실패했습니다.</li>';
+          }
+        }
+
         // 페이지 로드 시 실행할 함수들
         checkLoginStatus();
         fetchNotices();
         getMealInfo();
         updateMonthSchedule();
         updatePetitionSection();
+        fetchCommunityPosts(); // 커뮤니티 글 목록 가져오기 추가
       });
     </script>
   </body>
