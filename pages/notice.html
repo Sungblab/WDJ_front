@@ -363,11 +363,14 @@
         const token = localStorage.getItem("token");
         if (token) {
           try {
-            const response = await fetch("http://localhost:3000/api/user", {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
+            const response = await fetch(
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/user",
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
             if (response.ok) {
               const userData = await response.json();
               isAdmin = userData.isAdmin;
@@ -384,7 +387,7 @@
       async function fetchNotices(page) {
         try {
           const response = await fetch(
-            `http://localhost:3000/api/notices?page=${page}&limit=${limit}`
+            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices?page=${page}&limit=${limit}`
           );
           if (!response.ok) {
             throw new Error("서버 응답 오류");
@@ -447,7 +450,7 @@
       async function viewNotice(id) {
         try {
           const response = await fetch(
-            `http://localhost:3000/api/notices/${id}`
+            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices/${id}`
           );
           if (!response.ok) {
             throw new Error("서버 응답 오류");
@@ -518,8 +521,8 @@
         noticeData.important = formData.get("important") === "on";
 
         const url = noticeId
-          ? `http://localhost:3000/api/notices/${noticeId}`
-          : "http://localhost:3000/api/notices";
+          ? `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices/${noticeId}`
+          : "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices";
         const method = noticeId ? "PUT" : "POST";
 
         try {
@@ -550,7 +553,7 @@
       async function editNotice(id) {
         try {
           const response = await fetch(
-            `http://localhost:3000/api/notices/${id}`
+            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices/${id}`
           );
           if (!response.ok) {
             throw new Error("서버 응답 오류");
@@ -576,7 +579,7 @@
         if (confirm("정말로 이 공지사항을 삭제하시겠습니까?")) {
           try {
             const response = await fetch(
-              `http://localhost:3000/api/notices/${id}`,
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices/${id}`,
               {
                 method: "DELETE",
                 headers: {
