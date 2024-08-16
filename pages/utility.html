@@ -319,6 +319,7 @@
             ></canvas>
           </div>
           <p id="pickedNumbers" class="mt-4 text-lg">뽑은 번호:</p>
+          <div id="statistics" class="mt-4"></div>
         </div>
       </div>
       <div class="container mx-auto px-4 py-8">
@@ -339,32 +340,48 @@
               height="300"
               class="mx-auto"
             ></canvas>
-            <div class="mt-4 flex justify-center space-x-2">
+            <div class="mt-4 flex justify-center items-center space-x-2">
               <input
                 type="number"
-                id="timerInput"
+                id="timerHours"
+                class="border rounded px-2 py-1 w-16 text-center"
+                value="0"
+                min="0"
+                max="23"
+                placeholder="시"
+              />
+              <span>시</span>
+              <input
+                type="number"
+                id="timerMinutes"
                 class="border rounded px-2 py-1 w-16 text-center"
                 value="5"
-                min="1"
-                max="60"
+                min="0"
+                max="59"
+                placeholder="분"
               />
-              <span class="py-2">분</span>
+              <span>분</span>
+              <input
+                type="number"
+                id="timerSeconds"
+                class="border rounded px-2 py-1 w-16 text-center"
+                value="0"
+                min="0"
+                max="59"
+                placeholder="초"
+              />
+              <span>초</span>
+            </div>
+            <div class="mt-4 flex justify-center space-x-2">
               <button
                 id="startTimer"
-                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600"
               >
                 시작
               </button>
               <button
-                id="pauseTimer"
-                class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
-                disabled
-              >
-                일시정지
-              </button>
-              <button
                 id="resetTimer"
-                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600"
               >
                 리셋
               </button>
@@ -391,18 +408,10 @@
                 시작
               </button>
               <button
-                id="pauseStopwatch"
+                id="stopStopwatch"
                 class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
-                disabled
               >
-                일시정지
-              </button>
-              <button
-                id="lapStopwatch"
-                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                disabled
-              >
-                랩
+                정지
               </button>
               <button
                 id="resetStopwatch"
@@ -410,59 +419,162 @@
               >
                 리셋
               </button>
+              <button
+                id="lapStopwatch"
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                랩
+              </button>
             </div>
             <div id="lapTimes" class="mt-4 max-h-40 overflow-y-auto"></div>
           </div>
         </div>
       </div>
-      <div class="container mx-auto px-4 py-8">
-        <h2 class="text-3xl font-bold mb-6 text-blue-700">무작위 팀 생성기</h2>
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <div class="mb-4">
-            <label
-              for="totalStudents"
-              class="block text-sm font-medium text-gray-700"
-              >전체 학생 수</label
-            >
+      <div
+        class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6"
+      >
+        <h1 class="text-3xl font-bold mb-6 text-center text-blue-600">
+          팀 생성기
+        </h1>
+
+        <div class="mb-6">
+          <label class="inline-flex items-center">
             <input
-              type="number"
-              id="totalStudents"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-              value="20"
-              min="1"
-              max="100"
+              type="radio"
+              class="form-radio"
+              name="mode"
+              value="simple"
+              checked
             />
-          </div>
-          <div class="mb-4">
-            <label
-              for="teamCount"
-              class="block text-sm font-medium text-gray-700"
-              >팀 수</label
-            >
+            <span class="ml-2">간단 모드</span>
+          </label>
+          <label class="inline-flex items-center ml-6">
             <input
-              type="number"
-              id="teamCount"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-              value="4"
-              min="1"
-              max="10"
+              type="radio"
+              class="form-radio"
+              name="mode"
+              value="advanced"
             />
+            <span class="ml-2">고급 모드</span>
+          </label>
+        </div>
+
+        <div id="simpleMode">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label
+                for="totalStudents"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >전체 학생 수</label
+              >
+              <input
+                type="number"
+                id="totalStudents"
+                min="2"
+                value="20"
+                class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label
+                for="simpleTeamCount"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >팀 수</label
+              >
+              <input
+                type="number"
+                id="simpleTeamCount"
+                min="2"
+                value="4"
+                class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
           </div>
+        </div>
+
+        <div id="advancedMode" style="display: none">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label
+                for="studentNames"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >학생 이름 (쉼표로 구분)</label
+              >
+              <textarea
+                id="studentNames"
+                rows="4"
+                class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+                placeholder="홍길동, 김철수, 이영희, ..."
+              ></textarea>
+            </div>
+            <div>
+              <label
+                for="teamNames"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >팀 이름 (쉼표로 구분, 선택사항)</label
+              >
+              <textarea
+                id="teamNames"
+                rows="4"
+                class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+                placeholder="레드팀, 블루팀, 그린팀, ..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label
+                for="advancedTeamCount"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >팀 수</label
+              >
+              <input
+                type="number"
+                id="advancedTeamCount"
+                min="2"
+                value="4"
+                class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label
+                for="constraints"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >제약 조건 (이름:팀번호, 쉼표로 구분) - 팀 조장을 특정하는
+                기능</label
+              >
+              <input
+                type="text"
+                id="constraints"
+                class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+                placeholder="홍길동:1, 김철수:2, 이영희:!2"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center space-x-4 mb-6">
           <button
             id="generateTeams"
-            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+            class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
             팀 생성
           </button>
-          <div class="mt-8">
-            <canvas
-              id="teamsCanvas"
-              width="800"
-              height="400"
-              class="mx-auto border rounded-lg"
-            ></canvas>
-          </div>
+          <button
+            id="saveTeamsImage"
+            class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+          >
+            결과 이미지 저장
+          </button>
         </div>
+
+        <canvas
+          id="teamsCanvas"
+          width="800"
+          height="400"
+          class="mx-auto border rounded-lg"
+        ></canvas>
       </div>
     </main>
 
@@ -557,11 +669,6 @@
 
       const canvas = document.getElementById("animationCanvas");
       const ctx = canvas.getContext("2d");
-      const maxNumberInput = document.getElementById("maxNumber");
-      const allowDuplicatesCheckbox =
-        document.getElementById("allowDuplicates");
-      const pickButton = document.getElementById("pickButton");
-      const pickedNumbersDisplay = document.getElementById("pickedNumbers");
 
       let pickedNumbers = [];
       let isAnimating = false;
@@ -569,36 +676,81 @@
       function drawScene() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Draw hills
+        // 배경 (하늘)
+        let gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, "#87CEEB");
+        gradient.addColorStop(1, "#E0F6FF");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 언덕
         ctx.fillStyle = "#4CAF50";
         ctx.beginPath();
         ctx.moveTo(0, 400);
         ctx.quadraticCurveTo(200, 350, 400, 400);
         ctx.quadraticCurveTo(600, 450, 800, 400);
+        ctx.lineTo(800, 400);
+        ctx.lineTo(0, 400);
+        ctx.closePath();
         ctx.fill();
 
-        // Draw cannon
-        ctx.fillStyle = "#FF9800";
+        // 대포 그리기
+        drawCannon();
+      }
+
+      function drawCannon() {
+        // 대포 바퀴
+        ctx.fillStyle = "#8B4513";
         ctx.beginPath();
-        ctx.moveTo(50, 400);
-        ctx.lineTo(150, 300);
-        ctx.lineTo(250, 400);
+        ctx.arc(100, 380, 20, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 대포 몸체
+        ctx.fillStyle = "#333";
+        ctx.beginPath();
+        ctx.moveTo(60, 380);
+        ctx.lineTo(140, 380);
+        ctx.lineTo(130, 340);
+        ctx.lineTo(70, 340);
+        ctx.closePath();
+        ctx.fill();
+
+        // 대포 포신
+        ctx.fillStyle = "#666";
+        ctx.beginPath();
+        ctx.moveTo(100, 340);
+        ctx.lineTo(180, 300);
+        ctx.lineTo(180, 320);
+        ctx.lineTo(100, 360);
+        ctx.closePath();
         ctx.fill();
       }
 
-      function drawNumber(number, x, y) {
-        // Draw number ball
-        ctx.fillStyle = "#4CAF50";
+      function drawNumber(number, x, y, size = 50) {
+        // 공 그리기
+        ctx.fillStyle = `hsl(${number * 20}, 70%, 50%)`;
         ctx.beginPath();
-        ctx.arc(x, y, 50, 0, Math.PI * 2);
+        ctx.arc(x, y, size, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw number
-        ctx.fillStyle = "#FFEB3B";
-        ctx.font = "bold 40px Arial";
+        // 그림자 효과
+        ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
+        ctx.shadowBlur = 5;
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 3;
+
+        // 번호 그리기
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = `bold ${size * 0.7}px Arial`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(number, x, y);
+
+        // 그림자 초기화
+        ctx.shadowColor = "transparent";
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
       }
 
       function easeOutBounce(t) {
@@ -618,9 +770,9 @@
 
       function animateNumber(number) {
         let startTime;
-        const duration = 400; // 2 seconds
-        const startX = 150;
-        const startY = 300;
+        const duration = 300;
+        const startX = 180;
+        const startY = 310;
         const endX = 400;
         const endY = 200;
 
@@ -635,13 +787,15 @@
               startY -
               200 * Math.sin(progress * Math.PI) +
               (endY - startY) * easeOutBounce(progress);
-            drawNumber(number, x, y);
+            let size = 50 - 20 * progress; // 공이 멀어질수록 작아지는 효과
+            drawNumber(number, x, y, size);
             requestAnimationFrame(animate);
           } else {
             drawScene();
-            drawNumber(number, endX, endY);
+            drawNumber(number, endX, endY, 30);
             isAnimating = false;
-            pickButton.disabled = false;
+            document.getElementById("pickButton").disabled = false;
+            updateStatistics();
           }
         }
 
@@ -651,8 +805,9 @@
       function pickNumber() {
         if (isAnimating) return;
 
-        const maxNumber = parseInt(maxNumberInput.value);
-        const allowDuplicates = allowDuplicatesCheckbox.checked;
+        const maxNumber = parseInt(document.getElementById("maxNumber").value);
+        const allowDuplicates =
+          document.getElementById("allowDuplicates").checked;
 
         if (!allowDuplicates && pickedNumbers.length >= maxNumber) {
           alert("모든 번호를 뽑았습니다!");
@@ -665,360 +820,618 @@
         } while (!allowDuplicates && pickedNumbers.includes(number));
 
         pickedNumbers.push(number);
-        pickedNumbersDisplay.textContent =
+        document.getElementById("pickedNumbers").textContent =
           "뽑은 번호: " + pickedNumbers.join(", ");
 
         isAnimating = true;
-        pickButton.disabled = true;
+        document.getElementById("pickButton").disabled = true;
         animateNumber(number);
       }
 
-      const resetButton = document.getElementById("resetButton");
-
       function resetGame() {
         pickedNumbers = [];
-        pickedNumbersDisplay.textContent = "뽑은 번호: ";
+        document.getElementById("pickedNumbers").textContent = "뽑은 번호: ";
         drawScene();
-        drawNumber(1, 400, 200);
+        updateStatistics();
       }
 
-      resetButton.addEventListener("click", resetGame);
+      function updateStatistics() {
+        const statsContainer = document.getElementById("statistics");
+        statsContainer.innerHTML = "";
 
-      pickButton.addEventListener("click", pickNumber);
+        if (pickedNumbers.length > 0) {
+          const counts = {};
+          const maxNumber = parseInt(
+            document.getElementById("maxNumber").value
+          );
+          for (let i = 1; i <= maxNumber; i++) {
+            counts[i] = 0;
+          }
+          pickedNumbers.forEach((num) => {
+            counts[num]++;
+          });
+
+          const sortedCounts = Object.entries(counts).sort(
+            (a, b) => b[1] - a[1]
+          );
+          const mostPicked = sortedCounts[0];
+          const leastPicked =
+            sortedCounts.filter((item) => item[1] > 0).pop() ||
+            sortedCounts[sortedCounts.length - 1];
+
+          let statsHTML = '<h3 class="text-xl font-bold mb-2">통계</h3>';
+          statsHTML += '<ul class="list-disc pl-5 space-y-2">';
+          statsHTML += `<li>총 뽑은 횟수: ${pickedNumbers.length}</li>`;
+          statsHTML += `<li>가장 많이 뽑힌 번호: ${mostPicked[0]} (${mostPicked[1]}회)</li>`;
+          statsHTML += `<li>가장 적게 뽑힌 번호: ${leastPicked[0]} (${leastPicked[1]}회)</li>`;
+          statsHTML += `<li>평균 뽑힌 횟수: ${(
+            pickedNumbers.length / maxNumber
+          ).toFixed(2)}회</li>`;
+          statsHTML += "</ul>";
+
+          // 번호별 뽑힌 횟수 차트
+          statsHTML +=
+            '<div class="mt-4"><h4 class="text-lg font-semibold mb-2">번호별 뽑힌 횟수</h4>';
+          statsHTML += '<div class="flex flex-wrap">';
+          for (let i = 1; i <= maxNumber; i++) {
+            const height = counts[i] * 20; // 20px per count
+            statsHTML += `<div class="w-8 mr-1 mb-1 flex flex-col items-center">
+                      <div class="bg-blue-500" style="height: ${height}px; width: 20px;"></div>
+                      <span class="text-xs">${i}</span>
+                  </div>`;
+          }
+          statsHTML += "</div></div>";
+
+          statsContainer.innerHTML = statsHTML;
+        }
+      }
+
+      document
+        .getElementById("pickButton")
+        .addEventListener("click", pickNumber);
+      document
+        .getElementById("resetButton")
+        .addEventListener("click", resetGame);
 
       // 초기 화면 그리기
       drawScene();
-      drawNumber(1, 400, 200);
 
-      document.addEventListener("DOMContentLoaded", function () {
-        const timerCanvas = document.getElementById("timerCanvas");
-        const stopwatchCanvas = document.getElementById("stopwatchCanvas");
-        const timerCtx = timerCanvas.getContext("2d");
-        const stopwatchCtx = stopwatchCanvas.getContext("2d");
+      // 타이머 관련 변수
+      let timerDuration = 0;
+      let timerRemaining = 0;
+      let timerInterval;
+      let isTimerRunning = false;
 
-        const timerInput = document.getElementById("timerInput");
-        const startTimerBtn = document.getElementById("startTimer");
-        const pauseTimerBtn = document.getElementById("pauseTimer");
-        const resetTimerBtn = document.getElementById("resetTimer");
+      // 스톱워치 관련 변수
+      let stopwatchTime = 0;
+      let stopwatchInterval;
+      let isStopwatchRunning = false;
+      let lapTimes = [];
 
-        const startStopwatchBtn = document.getElementById("startStopwatch");
-        const pauseStopwatchBtn = document.getElementById("pauseStopwatch");
-        const lapStopwatchBtn = document.getElementById("lapStopwatch");
-        const resetStopwatchBtn = document.getElementById("resetStopwatch");
-        const lapTimesContainer = document.getElementById("lapTimes");
+      // 캔버스 관련 변수
+      const timerCanvas = document.getElementById("timerCanvas");
+      const stopwatchCanvas = document.getElementById("stopwatchCanvas");
+      const timerCtx = timerCanvas.getContext("2d");
+      const stopwatchCtx = stopwatchCanvas.getContext("2d");
 
-        let timerInterval;
-        let stopwatchInterval;
-        let timerTime = 0;
-        let stopwatchTime = 0;
-        let isTimerRunning = false;
-        let isStopwatchRunning = false;
-        let lapCount = 0;
-
-        function drawCircle(ctx, radius, color) {
-          ctx.beginPath();
-          ctx.arc(150, 150, radius, 0, 2 * Math.PI);
-          ctx.fillStyle = color;
-          ctx.fill();
-        }
-
-        function drawArc(ctx, radius, startAngle, endAngle, color) {
-          ctx.beginPath();
-          ctx.arc(150, 150, radius, startAngle, endAngle);
-          ctx.strokeStyle = color;
-          ctx.lineWidth = 10;
-          ctx.stroke();
-        }
-
-        function drawText(ctx, text, y) {
-          ctx.font = "bold 36px Arial";
-          ctx.fillStyle = "#333";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(text, 150, y);
-        }
-
-        function updateTimerDisplay() {
-          const totalSeconds = parseInt(timerInput.value) * 60;
-          const progress = (totalSeconds - timerTime) / totalSeconds;
-          const minutes = Math.floor(timerTime / 60);
-          const seconds = timerTime % 60;
-
-          timerCtx.clearRect(0, 0, 300, 300);
-          drawCircle(timerCtx, 140, "#f0f0f0");
-          drawArc(
-            timerCtx,
-            135,
-            -Math.PI / 2,
-            -Math.PI / 2 + progress * 2 * Math.PI,
-            "#3b82f6"
-          );
-          drawText(
-            timerCtx,
-            `${minutes.toString().padStart(2, "0")}:${seconds
-              .toString()
-              .padStart(2, "0")}`,
-            150
-          );
-
-          // 분 단위 표시 추가
-          timerCtx.font = "bold 24px Arial";
-          timerCtx.fillText("", 150, 190);
-        }
-
-        function updateStopwatchDisplay() {
-          const minutes = Math.floor(stopwatchTime / 6000);
-          const seconds = Math.floor((stopwatchTime % 6000) / 100);
-          const milliseconds = stopwatchTime % 100;
-
-          stopwatchCtx.clearRect(0, 0, 300, 300);
-          drawCircle(stopwatchCtx, 140, "#f0f0f0");
-          drawArc(
-            stopwatchCtx,
-            135,
-            -Math.PI / 2,
-            -Math.PI / 2 + ((stopwatchTime % 6000) / 6000) * 2 * Math.PI,
-            "#3b82f6"
-          );
-          drawText(
-            stopwatchCtx,
-            `${minutes.toString().padStart(2, "0")}:${seconds
-              .toString()
-              .padStart(2, "0")}.${milliseconds.toString().padStart(2, "0")}`,
-            150
-          );
-        }
-
-        function startTimer() {
-          if (!isTimerRunning) {
-            isTimerRunning = true;
-            timerTime = parseInt(timerInput.value) * 60;
-            updateTimerDisplay();
-            timerInterval = setInterval(() => {
-              if (timerTime > 0) {
-                timerTime--;
-                updateTimerDisplay();
-              } else {
-                clearInterval(timerInterval);
-                isTimerRunning = false;
-                alert("타이머가 종료되었습니다!");
-                resetTimer();
-              }
-            }, 1000);
-            startTimerBtn.disabled = true;
-            pauseTimerBtn.disabled = false;
+      // 타이머 함수
+      function startTimer() {
+        if (!isTimerRunning) {
+          if (timerRemaining === 0) {
+            timerDuration = getTimerInput();
+            timerRemaining = timerDuration;
           }
-        }
-
-        function pauseTimer() {
+          timerInterval = setInterval(updateTimer, 1000);
+          isTimerRunning = true;
+          document.getElementById("startTimer").textContent = "일시정지";
+        } else {
           clearInterval(timerInterval);
           isTimerRunning = false;
-          startTimerBtn.disabled = false;
-          pauseTimerBtn.disabled = true;
+          document.getElementById("startTimer").textContent = "시작";
         }
+      }
 
-        function resetTimer() {
-          clearInterval(timerInterval);
-          isTimerRunning = false;
-          timerTime = parseInt(timerInput.value) * 60;
-          updateTimerDisplay();
-          startTimerBtn.disabled = false;
-          pauseTimerBtn.disabled = true;
-        }
-
-        function startStopwatch() {
-          if (!isStopwatchRunning) {
-            isStopwatchRunning = true;
-            stopwatchInterval = setInterval(() => {
-              stopwatchTime++;
-              updateStopwatchDisplay();
-            }, 10);
-            startStopwatchBtn.disabled = true;
-            pauseStopwatchBtn.disabled = false;
-            lapStopwatchBtn.disabled = false;
-          }
-        }
-
-        function pauseStopwatch() {
-          clearInterval(stopwatchInterval);
-          isStopwatchRunning = false;
-          startStopwatchBtn.disabled = false;
-          pauseStopwatchBtn.disabled = true;
-        }
-
-        function resetStopwatch() {
-          clearInterval(stopwatchInterval);
-          isStopwatchRunning = false;
-          stopwatchTime = 0;
-          updateStopwatchDisplay();
-          startStopwatchBtn.disabled = false;
-          pauseStopwatchBtn.disabled = true;
-          lapStopwatchBtn.disabled = true;
-          lapCount = 0;
-          lapTimesContainer.innerHTML = "";
-        }
-
-        function lapStopwatch() {
-          if (isStopwatchRunning) {
-            lapCount++;
-            const minutes = Math.floor(stopwatchTime / 6000);
-            const seconds = Math.floor((stopwatchTime % 6000) / 100);
-            const milliseconds = stopwatchTime % 100;
-            const lapTime = `${minutes.toString().padStart(2, "0")}:${seconds
-              .toString()
-              .padStart(2, "0")}.${milliseconds.toString().padStart(2, "0")}`;
-            const lapElement = document.createElement("div");
-            lapElement.textContent = `랩 ${lapCount}: ${lapTime}`;
-            lapTimesContainer.insertBefore(
-              lapElement,
-              lapTimesContainer.firstChild
-            );
-          }
-        }
-
-        startTimerBtn.addEventListener("click", startTimer);
-        pauseTimerBtn.addEventListener("click", pauseTimer);
-        resetTimerBtn.addEventListener("click", resetTimer);
-
-        startStopwatchBtn.addEventListener("click", startStopwatch);
-        pauseStopwatchBtn.addEventListener("click", pauseStopwatch);
-        resetStopwatchBtn.addEventListener("click", resetStopwatch);
-        lapStopwatchBtn.addEventListener("click", lapStopwatch);
-
+      function resetTimer() {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        timerRemaining = 0;
+        document.getElementById("startTimer").textContent = "시작";
         updateTimerDisplay();
+      }
+
+      function updateTimer() {
+        if (timerRemaining > 0) {
+          timerRemaining--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+          document.getElementById("startTimer").textContent = "시작";
+          playAlarm();
+        }
+      }
+
+      function getTimerInput() {
+        const hours =
+          parseInt(document.getElementById("timerHours").value) || 0;
+        const minutes =
+          parseInt(document.getElementById("timerMinutes").value) || 0;
+        const seconds =
+          parseInt(document.getElementById("timerSeconds").value) || 0;
+        return hours * 3600 + minutes * 60 + seconds;
+      }
+
+      function updateTimerDisplay() {
+        timerCtx.clearRect(0, 0, timerCanvas.width, timerCanvas.height);
+
+        const centerX = timerCanvas.width / 2;
+        const centerY = timerCanvas.height / 2;
+        const radius = Math.min(centerX, centerY) - 10;
+
+        // 배경 원
+        timerCtx.beginPath();
+        timerCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        timerCtx.fillStyle = "#f0f0f0";
+        timerCtx.fill();
+
+        // 진행 상태
+        if (timerDuration > 0) {
+          const progress = 1 - timerRemaining / timerDuration;
+          timerCtx.beginPath();
+          timerCtx.arc(
+            centerX,
+            centerY,
+            radius,
+            -Math.PI / 2,
+            -Math.PI / 2 + progress * 2 * Math.PI
+          );
+          timerCtx.strokeStyle = "#3b82f6";
+          timerCtx.lineWidth = 15;
+          timerCtx.stroke();
+        }
+
+        // 시간 표시
+        const hours = Math.floor(timerRemaining / 3600);
+        const minutes = Math.floor((timerRemaining % 3600) / 60);
+        const seconds = timerRemaining % 60;
+
+        timerCtx.font = "bold 48px Arial";
+        timerCtx.fillStyle = "#333";
+        timerCtx.textAlign = "center";
+        timerCtx.textBaseline = "middle";
+        timerCtx.fillText(
+          `${hours.toString().padStart(2, "0")}:${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`,
+          centerX,
+          centerY
+        );
+      }
+
+      // 스톱워치 함수
+      function startStopwatch() {
+        if (!isStopwatchRunning) {
+          stopwatchInterval = setInterval(updateStopwatch, 10);
+          isStopwatchRunning = true;
+          document.getElementById("startStopwatch").textContent = "일시정지";
+        } else {
+          clearInterval(stopwatchInterval);
+          isStopwatchRunning = false;
+          document.getElementById("startStopwatch").textContent = "시작";
+        }
+      }
+
+      function stopStopwatch() {
+        if (isStopwatchRunning) {
+          clearInterval(stopwatchInterval);
+          isStopwatchRunning = false;
+          document.getElementById("startStopwatch").textContent = "시작";
+        }
+      }
+
+      function resetStopwatch() {
+        clearInterval(stopwatchInterval);
+        isStopwatchRunning = false;
+        stopwatchTime = 0;
+        lapTimes = [];
+        document.getElementById("startStopwatch").textContent = "시작";
         updateStopwatchDisplay();
+        updateLapTimesDisplay();
+      }
+
+      function updateStopwatch() {
+        stopwatchTime++;
+        updateStopwatchDisplay();
+      }
+
+      function lapStopwatch() {
+        if (isStopwatchRunning) {
+          lapTimes.push(stopwatchTime);
+          updateLapTimesDisplay();
+        }
+      }
+
+      function updateStopwatchDisplay() {
+        stopwatchCtx.clearRect(
+          0,
+          0,
+          stopwatchCanvas.width,
+          stopwatchCanvas.height
+        );
+
+        const centerX = stopwatchCanvas.width / 2;
+        const centerY = stopwatchCanvas.height / 2;
+        const radius = Math.min(centerX, centerY) - 10;
+
+        // 배경 원
+        stopwatchCtx.beginPath();
+        stopwatchCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        stopwatchCtx.fillStyle = "#f0f0f0";
+        stopwatchCtx.fill();
+
+        // 진행 상태 (1초마다 한 바퀴)
+        const progress = (stopwatchTime % 100) / 100;
+        stopwatchCtx.beginPath();
+        stopwatchCtx.arc(
+          centerX,
+          centerY,
+          radius,
+          -Math.PI / 2,
+          -Math.PI / 2 + progress * 2 * Math.PI
+        );
+        stopwatchCtx.strokeStyle = "#3b82f6";
+        stopwatchCtx.lineWidth = 15;
+        stopwatchCtx.stroke();
+
+        // 시간 표시
+        const minutes = Math.floor(stopwatchTime / 6000);
+        const seconds = Math.floor((stopwatchTime % 6000) / 100);
+        const milliseconds = stopwatchTime % 100;
+
+        stopwatchCtx.font = "bold 48px Arial";
+        stopwatchCtx.fillStyle = "#333";
+        stopwatchCtx.textAlign = "center";
+        stopwatchCtx.textBaseline = "middle";
+        stopwatchCtx.fillText(
+          `${minutes.toString().padStart(2, "0")}:${seconds
+            .toString()
+            .padStart(2, "0")}.${milliseconds.toString().padStart(2, "0")}`,
+          centerX,
+          centerY
+        );
+      }
+
+      function updateLapTimesDisplay() {
+        const lapTimesContainer = document.getElementById("lapTimes");
+        lapTimesContainer.innerHTML = "";
+
+        lapTimes.forEach((lapTime, index) => {
+          const lapElement = document.createElement("div");
+          lapElement.textContent = `Lap ${index + 1}: ${formatTime(lapTime)}`;
+          lapTimesContainer.appendChild(lapElement);
+        });
+      }
+
+      function formatTime(time) {
+        const minutes = Math.floor(time / 6000);
+        const seconds = Math.floor((time % 6000) / 100);
+        const milliseconds = time % 100;
+        return `${minutes.toString().padStart(2, "0")}:${seconds
+          .toString()
+          .padStart(2, "0")}.${milliseconds.toString().padStart(2, "0")}`;
+      }
+
+      // 알람 소리 재생
+      function playAlarm() {
+        alert("타이머가 종료되었습니다!");
+      }
+
+      // 이벤트 리스너 설정
+      document
+        .getElementById("startTimer")
+        .addEventListener("click", startTimer);
+      document
+        .getElementById("resetTimer")
+        .addEventListener("click", resetTimer);
+      document
+        .getElementById("startStopwatch")
+        .addEventListener("click", startStopwatch);
+      document
+        .getElementById("stopStopwatch")
+        .addEventListener("click", stopStopwatch);
+      document
+        .getElementById("resetStopwatch")
+        .addEventListener("click", resetStopwatch);
+      document
+        .getElementById("lapStopwatch")
+        .addEventListener("click", lapStopwatch);
+
+      // 초기 표시 업데이트
+      updateTimerDisplay();
+      updateStopwatchDisplay();
+
+      // 입력 필드 변경 시 타이머 업데이트
+      ["timerHours", "timerMinutes", "timerSeconds"].forEach((id) => {
+        document.getElementById(id).addEventListener("input", () => {
+          if (!isTimerRunning) {
+            timerDuration = getTimerInput();
+            timerRemaining = timerDuration;
+            updateTimerDisplay();
+          }
+        });
       });
 
-      document.addEventListener("DOMContentLoaded", function () {
-        const totalStudentsInput = document.getElementById("totalStudents");
-        const teamCountInput = document.getElementById("teamCount");
-        const generateTeamsBtn = document.getElementById("generateTeams");
-        const teamsCanvas = document.getElementById("teamsCanvas");
-        const ctx = teamsCanvas.getContext("2d");
+      const modeRadios = document.querySelectorAll('input[name="mode"]');
+      const simpleModeDiv = document.getElementById("simpleMode");
+      const advancedModeDiv = document.getElementById("advancedMode");
+      const totalStudentsInput = document.getElementById("totalStudents");
+      const studentNamesInput = document.getElementById("studentNames");
+      const teamNamesInput = document.getElementById("teamNames");
+      const simpleTeamCountInput = document.getElementById("simpleTeamCount");
+      const advancedTeamCountInput =
+        document.getElementById("advancedTeamCount");
+      const constraintsInput = document.getElementById("constraints");
+      const generateTeamsBtn = document.getElementById("generateTeams");
 
-        generateTeamsBtn.addEventListener("click", generateAndDrawTeams);
+      const teamsCanvas = document.getElementById("teamsCanvas");
+      const teamsCtx = teamsCanvas.getContext("2d");
 
-        function generateAndDrawTeams() {
-          const totalStudents = parseInt(totalStudentsInput.value);
-          const teamCount = parseInt(teamCountInput.value);
+      let currentTeams = [];
 
-          if (teamCount > totalStudents) {
+      modeRadios.forEach((radio) => {
+        radio.addEventListener("change", toggleMode);
+      });
+
+      generateTeamsBtn.addEventListener("click", generateAndDrawTeams);
+
+      function toggleMode() {
+        if (this.value === "simple") {
+          simpleModeDiv.style.display = "block";
+          advancedModeDiv.style.display = "none";
+        } else {
+          simpleModeDiv.style.display = "none";
+          advancedModeDiv.style.display = "block";
+        }
+      }
+
+      function generateAndDrawTeams() {
+        try {
+          const isSimpleMode =
+            document.querySelector('input[name="mode"]:checked').value ===
+            "simple";
+          let studentNames, teamCount, teamNames, constraints;
+
+          if (isSimpleMode) {
+            const totalStudents = parseInt(totalStudentsInput.value);
+            teamCount = parseInt(simpleTeamCountInput.value);
+            studentNames = Array.from(
+              { length: totalStudents },
+              (_, i) => `학생${i + 1}`
+            );
+            teamNames = [];
+            constraints = {};
+          } else {
+            studentNames = studentNamesInput.value
+              .split(",")
+              .map((name) => name.trim())
+              .filter((name) => name);
+            teamCount = parseInt(advancedTeamCountInput.value);
+            teamNames = teamNamesInput.value
+              .split(",")
+              .map((name) => name.trim())
+              .filter((name) => name);
+            constraints = parseConstraints(constraintsInput.value);
+          }
+
+          if (teamCount > studentNames.length) {
             alert("팀 수가 전체 학생 수보다 많을 수 없습니다.");
             return;
           }
 
-          const teams = createRandomTeams(totalStudents, teamCount);
-          drawTeams(teams);
-        }
-
-        function createRandomTeams(totalStudents, teamCount) {
-          let students = Array.from({ length: totalStudents }, (_, i) => i + 1);
-          students = students.sort(() => Math.random() - 0.5);
-
-          const teams = Array.from({ length: teamCount }, () => []);
-          const baseTeamSize = Math.floor(totalStudents / teamCount);
-          const extraStudents = totalStudents % teamCount;
-
-          let studentIndex = 0;
-          for (let i = 0; i < teamCount; i++) {
-            const teamSize =
-              i < extraStudents ? baseTeamSize + 1 : baseTeamSize;
-            teams[i] = students.slice(studentIndex, studentIndex + teamSize);
-            studentIndex += teamSize;
-          }
-
-          return teams;
-        }
-
-        function drawTeams(teams) {
-          ctx.clearRect(0, 0, teamsCanvas.width, teamsCanvas.height);
-
-          const teamWidth = teamsCanvas.width / teams.length;
-          const maxTeamSize = Math.max(...teams.map((team) => team.length));
-
-          // 배경 그라데이션
-          const gradient = ctx.createLinearGradient(
-            0,
-            0,
-            teamsCanvas.width,
-            teamsCanvas.height
+          currentTeams = createRandomTeams(
+            studentNames,
+            teamCount,
+            constraints
           );
-          gradient.addColorStop(0, "#f3e7e9");
-          gradient.addColorStop(1, "#e3eeff");
-          ctx.fillStyle = gradient;
-          ctx.fillRect(0, 0, teamsCanvas.width, teamsCanvas.height);
+          animateTeamFormation(currentTeams, teamNames);
+        } catch (error) {
+          handleError(error);
+        }
+      }
 
-          teams.forEach((team, teamIndex) => {
-            const teamX = teamIndex * teamWidth;
-
-            // 팀 배경
-            ctx.fillStyle = `hsla(${
-              (teamIndex * 360) / teams.length
-            }, 70%, 60%, 0.2)`;
-            ctx.beginPath();
-            ctx.roundRect(
-              teamX + 10,
-              10,
-              teamWidth - 20,
-              teamsCanvas.height - 20,
-              15
-            );
-            ctx.fill();
-
-            // 팀 제목
-            ctx.fillStyle = `hsl(${
-              (teamIndex * 360) / teams.length
-            }, 70%, 40%)`;
-            ctx.font = "bold 24px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText(`Team ${teamIndex + 1}`, teamX + teamWidth / 2, 50);
-
-            // 학생 아이콘 그리기
-            team.forEach((student, studentIndex) => {
-              const cols = Math.ceil(Math.sqrt(team.length));
-              const rows = Math.ceil(team.length / cols);
-              const cellWidth = (teamWidth - 40) / cols;
-              const cellHeight = (teamsCanvas.height - 100) / rows;
-
-              const col = studentIndex % cols;
-              const row = Math.floor(studentIndex / cols);
-
-              const studentX = teamX + 20 + col * cellWidth + cellWidth / 2;
-              const studentY = 80 + row * cellHeight + cellHeight / 2;
-
-              // 학생 아이콘 배경
-              ctx.fillStyle = `hsla(${
-                (teamIndex * 360) / teams.length
-              }, 70%, 60%, 0.8)`;
-              ctx.beginPath();
-              ctx.arc(
-                studentX,
-                studentY,
-                Math.min(cellWidth, cellHeight) / 2 - 5,
-                0,
-                2 * Math.PI
-              );
-              ctx.fill();
-
-              // 학생 번호
-              ctx.fillStyle = "white";
-              ctx.font = "bold 16px Arial";
-              ctx.textAlign = "center";
-              ctx.textBaseline = "middle";
-              ctx.fillText(student.toString(), studentX, studentY);
-            });
-          });
-
-          // 장식용 원 추가
-          for (let i = 0; i < 20; i++) {
-            const x = Math.random() * teamsCanvas.width;
-            const y = Math.random() * teamsCanvas.height;
-            const radius = Math.random() * 10 + 5;
-            ctx.fillStyle = `hsla(${Math.random() * 360}, 70%, 60%, 0.1)`;
-            ctx.beginPath();
-            ctx.arc(x, y, radius, 0, 2 * Math.PI);
-            ctx.fill();
+      function parseConstraints(constraintsString) {
+        const constraints = {};
+        constraintsString.split(",").forEach((constraint) => {
+          const [name, team] = constraint.split(":").map((s) => s.trim());
+          if (name && team) {
+            constraints[name] = team.startsWith("!")
+              ? { not: parseInt(team.slice(1)) }
+              : parseInt(team);
           }
+        });
+        return constraints;
+      }
+
+      function createRandomTeams(students, teamCount, constraints) {
+        let unassignedStudents = [...students];
+        const teams = Array.from({ length: teamCount }, () => []);
+
+        // 제약 조건에 따라 학생 배정
+        Object.entries(constraints).forEach(([student, teamConstraint]) => {
+          const studentIndex = unassignedStudents.indexOf(student);
+          if (studentIndex !== -1) {
+            if (typeof teamConstraint === "number") {
+              teams[teamConstraint - 1].push(student);
+            }
+            unassignedStudents.splice(studentIndex, 1);
+          }
+        });
+
+        // 나머지 학생들 무작위 배정
+        unassignedStudents = unassignedStudents.sort(() => Math.random() - 0.5);
+        let teamIndex = 0;
+        unassignedStudents.forEach((student) => {
+          while (
+            constraints[student] &&
+            constraints[student].not === teamIndex + 1
+          ) {
+            teamIndex = (teamIndex + 1) % teamCount;
+          }
+          teams[teamIndex].push(student);
+          teamIndex = (teamIndex + 1) % teamCount;
+        });
+
+        return teams;
+      }
+
+      // 애니메이션 함수
+      function animateTeamFormation(teams, teamNames) {
+        const duration = 1000; // 애니메이션 지속 시간 (밀리초)
+        const frameRate = 60;
+        const frames = duration / (1000 / frameRate);
+        let frame = 0;
+
+        function animate() {
+          const progress = frame / frames;
+          drawTeams(teams, teamNames, progress);
+          frame++;
+
+          if (frame <= frames) {
+            requestAnimationFrame(animate);
+          }
+        }
+
+        animate();
+      }
+
+      function drawTeams(teams, teamNames, progress = 1) {
+        teamsCtx.clearRect(0, 0, teamsCanvas.width, teamsCanvas.height);
+
+        const teamWidth = teamsCanvas.width / teams.length;
+        const maxTeamSize = Math.max(...teams.map((team) => team.length));
+
+        // 배경 그라데이션
+        const gradient = teamsCtx.createLinearGradient(
+          0,
+          0,
+          teamsCanvas.width,
+          teamsCanvas.height
+        );
+        gradient.addColorStop(0, "#f3e7e9");
+        gradient.addColorStop(1, "#e3eeff");
+        teamsCtx.fillStyle = gradient;
+        teamsCtx.fillRect(0, 0, teamsCanvas.width, teamsCanvas.height);
+
+        teams.forEach((team, teamIndex) => {
+          const teamX = teamIndex * teamWidth;
+
+          // 팀 배경
+          teamsCtx.fillStyle = `hsla(${
+            (teamIndex * 360) / teams.length
+          }, 70%, 60%, ${0.2 * progress})`;
+          teamsCtx.beginPath();
+          teamsCtx.roundRect(
+            teamX + 10,
+            10,
+            teamWidth - 20,
+            teamsCanvas.height - 20,
+            15
+          );
+          teamsCtx.fill();
+
+          // 팀 이름
+          const teamName = teamNames[teamIndex] || `Team ${teamIndex + 1}`;
+          teamsCtx.fillStyle = `hsl(${
+            (teamIndex * 360) / teams.length
+          }, 70%, 40%)`;
+          teamsCtx.font = "bold 24px Arial";
+          teamsCtx.textAlign = "center";
+          teamsCtx.fillText(teamName, teamX + teamWidth / 2, 50);
+
+          // 학생 아이콘 그리기
+          team.forEach((student, studentIndex) => {
+            const cols = Math.ceil(Math.sqrt(team.length));
+            const rows = Math.ceil(team.length / cols);
+            const cellWidth = (teamWidth - 40) / cols;
+            const cellHeight = (teamsCanvas.height - 100) / rows;
+
+            const col = studentIndex % cols;
+            const row = Math.floor(studentIndex / cols);
+
+            const targetX = teamX + 20 + col * cellWidth + cellWidth / 2;
+            const targetY = 80 + row * cellHeight + cellHeight / 2;
+
+            // 애니메이션 적용
+            const startX = teamsCanvas.width / 2;
+            const startY = teamsCanvas.height / 2;
+            const currentX = startX + (targetX - startX) * progress;
+            const currentY = startY + (targetY - startY) * progress;
+
+            // 학생 아이콘 배경
+            teamsCtx.fillStyle = `hsla(${
+              (teamIndex * 360) / teams.length
+            }, 70%, 60%, ${0.8 * progress})`;
+            teamsCtx.beginPath();
+            teamsCtx.arc(
+              currentX,
+              currentY,
+              Math.min(cellWidth, cellHeight) / 2 - 5,
+              0,
+              2 * Math.PI
+            );
+            teamsCtx.fill();
+
+            // 학생 이름
+            teamsCtx.fillStyle = "white";
+            teamsCtx.font = "bold 12px Arial";
+            teamsCtx.textAlign = "center";
+            teamsCtx.textBaseline = "middle";
+            teamsCtx.fillText(student, currentX, currentY);
+          });
+        });
+      }
+
+      const saveTeamsImageBtn = document.getElementById("saveTeamsImage");
+      saveTeamsImageBtn.addEventListener("click", saveTeamsAsImage);
+
+      function saveTeamsAsImage() {
+        const canvas = document.getElementById("teamsCanvas");
+
+        // 캔버스 내용을 이미지 URL로 변환
+        const imageURL = canvas.toDataURL("image/png");
+
+        // 다운로드 링크 생성
+        const downloadLink = document.createElement("a");
+        downloadLink.href = imageURL;
+        downloadLink.download = "team_formation.png";
+
+        // 링크를 문서에 추가하고 클릭 이벤트 발생
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      }
+
+      // 에러 처리 함수
+      function handleError(error) {
+        console.error("An error occurred:", error);
+        alert("팀 생성 중 오류가 발생했습니다. 콘솔을 확인해주세요.");
+      }
+
+      // 이벤트 리스너 추가
+      document.addEventListener("DOMContentLoaded", () => {
+        const generateTeamsBtn = document.getElementById("generateTeams");
+        generateTeamsBtn.addEventListener("click", generateAndDrawTeams);
+
+        // 초기 모드 설정
+        const initialMode = document.querySelector(
+          'input[name="mode"]:checked'
+        ).value;
+        if (initialMode === "simple") {
+          simpleModeDiv.style.display = "block";
+          advancedModeDiv.style.display = "none";
+        } else {
+          simpleModeDiv.style.display = "none";
+          advancedModeDiv.style.display = "block";
         }
       });
     </script>
