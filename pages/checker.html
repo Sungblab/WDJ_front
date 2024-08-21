@@ -408,6 +408,8 @@
       </footer>
 
       <script>
+        const API_BASE_URL =
+        "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app";
         let currentPage = 1;
         let totalPages = 1;
         let attemptCount = 0;
@@ -418,28 +420,36 @@
         });
         
         async function checkAuthStatus() {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                redirectToLogin();
-                return;
-            }
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.log('토큰이 없음');
+        redirectToLogin();
+        return;
+    }
+
+    try {
+        const response = await axios.get('/api/check-auth', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
         
-            try {
-                const response = await axios.get('/api/check-auth', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                
-                if (response.data.isAuthenticated) {
-                    showGrammarChecker(response.data.user);
-                } else {
-                    redirectToLogin();
-                }
-            } catch (error) {
-                console.error('인증 확인 중 오류 발생:', error);
-                redirectToLogin();
-            }
+        console.log('인증 응답:', response.data);
+
+        if (response.data.isAuthenticated) {
+            console.log('인증 성공');
+            showGrammarChecker(response.data.user);
+        } else {
+            console.log('인증 실패');
+            redirectToLogin();
         }
-        
+    } catch (error) {
+        console.error('인증 확인 중 오류 발생:', error);
+        if (error.response) {
+            console.error('응답 상태:', error.response.status);
+            console.error('응답 데이터:', error.response.data);
+        }
+        redirectToLogin();
+    }
+}
         function redirectToLogin() {
             window.location.href = '/index.html?redirect=' + encodeURIComponent(window.location.pathname);
         }
