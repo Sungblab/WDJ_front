@@ -408,8 +408,7 @@
       </footer>
 
       <script>
-        const API_BASE_URL =
-        "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app";
+        const API_BASE_URL = "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app";
         let currentPage = 1;
         let totalPages = 1;
         let attemptCount = 0;
@@ -420,32 +419,31 @@
         });
         
         async function checkAuthStatus() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        showLoginMessage();
-        return;
-    }
+            const token = localStorage.getItem('token');
+            if (!token) {
+                showLoginMessage();
+                return;
+            }
 
-    try {
-        const response = await axios.get('/api/check-auth', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        
-        if (response.data.isAuthenticated) {
-            showGrammarChecker(response.data.user);
-        } else {
-            showLoginMessage();
+            try {
+                const response = await axios.get(`${API_BASE_URL}/api/check-auth`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.data.isAuthenticated) {
+                    showGrammarChecker(response.data.user);
+                } else {
+                    showLoginMessage();
+                }
+            } catch (error) {
+                console.error('인증 확인 중 오류 발생:', error);
+                showLoginMessage();
+            }
         }
-    } catch (error) {
-        console.error('인증 확인 중 오류 발생:', error);
-        showLoginMessage();
-    }
-}
 
-function showLoginMessage() {
-    document.getElementById('loadingMessage').textContent = '로그인이 필요합니다. 메인 페이지에서 로그인 해주세요.';
-}
-
+        function showLoginMessage() {
+            document.getElementById('loadingMessage').textContent = '로그인이 필요합니다. 메인 페이지에서 로그인 해주세요.';
+        }
         
         function showGrammarChecker(user) {
             document.getElementById('loadingMessage').classList.add('hidden');
