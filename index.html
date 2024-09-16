@@ -948,11 +948,20 @@
         });
 
         // 커뮤니티 글 목록 가져오기
-        // 커뮤니티 글 목록 가져오기
         async function fetchCommunityPosts() {
           try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+              throw new Error("인증 토큰이 없습니다.");
+            }
+
             const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/posts?limit=5&board=all"
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/posts?limit=5&board=all",
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
             );
 
             if (!response.ok) {
@@ -966,15 +975,15 @@
               const li = document.createElement("li");
               li.className = "flex items-center justify-between";
               li.innerHTML = `
-        <a href="pages/post-detail.html?id=${
-          post._id
-        }" class="text-gray-700 hover:text-blue-500 transition duration-300">${
+                <a href="pages/post-detail.html?id=${
+                  post._id
+                }" class="text-gray-700 hover:text-blue-500 transition duration-300">${
                 post.title
               }</a>
-        <span class="text-sm text-gray-500">${
-          post.isAnonymous ? "익명" : post.author.nickname
-        }</span>
-      `;
+                <span class="text-sm text-gray-500">${
+                  post.isAnonymous ? "익명" : post.author.nickname
+                }</span>
+              `;
               communityList.appendChild(li);
             });
           } catch (error) {
