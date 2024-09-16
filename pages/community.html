@@ -445,9 +445,7 @@
           updatePagination(response.currentPage, response.totalPages);
         } catch (error) {
           console.error("글 목록 불러오기 실패:", error);
-          displayError(
-            "글 목록을 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요."
-          );
+          displayError("로그인이 필요한 기능입니다.");
         }
       }
 

@@ -286,72 +286,103 @@
           >
         </section>
 
-        <!-- 오늘의 급식 섹션 -->
+        <!-- 급식 섹션 -->
         <section class="bg-white rounded-lg shadow-md p-4 sm:p-6">
-          <h2 class="text-2xl font-bold mb-6 text-blue-700">오늘의 급식</h2>
-          <div id="mealCarousel" class="relative">
-            <div class="overflow-hidden">
-              <div
-                id="mealSlider"
-                class="flex transition-transform duration-300 ease-in-out"
+          <h2 class="text-2xl font-bold mb-6 text-blue-700">급식</h2>
+          <div id="mealInfo" class="relative">
+            <div class="flex items-center justify-between mb-4">
+              <button
+                id="prevDate"
+                aria-label="이전 날짜"
+                class="text-blue-500 hover:text-blue-700 transition duration-300"
               >
-                <div id="breakfast" class="meal-slide w-full flex-shrink-0">
-                  <h3 class="text-lg font-semibold mb-2">조식</h3>
-                  <ul class="space-y-2 text-gray-700"></ul>
-                  <p class="mt-2 text-sm text-gray-600"></p>
-                </div>
-                <div id="lunch" class="meal-slide w-full flex-shrink-0">
-                  <h3 class="text-lg font-semibold mb-2">중식</h3>
-                  <ul class="space-y-2 text-gray-700"></ul>
-                  <p class="mt-2 text-sm text-gray-600"></p>
-                </div>
-                <div id="dinner" class="meal-slide w-full flex-shrink-0">
-                  <h3 class="text-lg font-semibold mb-2">석식</h3>
-                  <ul class="space-y-2 text-gray-700"></ul>
-                  <p class="mt-2 text-sm text-gray-600"></p>
-                </div>
-              </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <h3
+                id="currentDate"
+                class="text-lg font-semibold text-blue-600"
+              ></h3>
+              <button
+                id="nextDate"
+                aria-label="다음 날짜"
+                class="text-blue-500 hover:text-blue-700 transition duration-300"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
             </div>
-            <button
-              id="prevMeal"
-              aria-label="이전 급식"
-              class="absolute left-4 top-1 transform text-blue-500 top-1 hover:text-blue-700 transition duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <div class="flex items-center justify-between mb-4">
+              <button
+                id="prevMeal"
+                aria-label="이전 급식"
+                class="text-blue-500 hover:text-blue-700 transition duration-300"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-            <button
-              id="nextMeal"
-              aria-label="다음 급식"
-              class="absolute right-4 top-1 transform top-1 transform text-blue-500 top-1 hover:text-blue-700 transition duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <h3
+                id="mealType"
+                class="text-lg font-semibold text-blue-600"
+              ></h3>
+              <button
+                id="nextMeal"
+                aria-label="다음 급식"
+                class="text-blue-500 hover:text-blue-700 transition duration-300"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div id="mealContent" class="mt-4"></div>
           </div>
         </section>
 
@@ -699,14 +730,19 @@
           }
         }
 
-        async function getMealInfo() {
+        let currentMealIndex = 0;
+        const mealTypes = [
+          { type: "조식", name: "아침" },
+          { type: "중식", name: "점심" },
+          { type: "석식", name: "저녁" },
+        ];
+
+        async function getMealInfo(date) {
           try {
-            const today = new Date();
-            const formattedDate = today
+            const formattedDate = date
               .toISOString()
               .slice(0, 10)
               .replace(/-/g, "");
-
             const response = await axios.get(
               "https://open.neis.go.kr/hub/mealServiceDietInfo",
               {
@@ -724,77 +760,67 @@
               throw new Error(response.data.RESULT.MESSAGE);
             }
 
-            if (!response.data.mealServiceDietInfo) {
-              throw new Error("급식 정보가 없습니다.");
-            }
-
-            const meals = response.data.mealServiceDietInfo[1].row;
-            updateMealInfo(meals);
+            const meals = response.data.mealServiceDietInfo
+              ? response.data.mealServiceDietInfo[1].row
+              : [];
+            updateMealInfo(meals, date);
           } catch (error) {
             console.error("급식 정보를 가져오는 데 실패했습니다:", error);
-            document.getElementById("mealCarousel").innerHTML =
-              "<p class='text-red-500 text-center'>급식 정보를 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>";
+            updateMealInfo([], date);
           }
         }
 
-        function updateMealInfo(meals) {
-          const mealTypes = ["조식", "중식", "석식"];
-          const mealIds = ["breakfast", "lunch", "dinner"];
+        function updateMealInfo(meals, date) {
+          const currentDateElement = document.getElementById("currentDate");
+          const mealType = document.getElementById("mealType");
+          const mealContent = document.getElementById("mealContent");
 
-          // 오늘 날짜 표시 업데이트
-          const today = new Date();
-          const dateDisplay = document.createElement("p");
-          dateDisplay.textContent = `${today.getFullYear()}년 ${
-            today.getMonth() + 1
-          }월 ${today.getDate()}일`;
-          dateDisplay.className =
-            "text-lg font-semibold text-center mb-4 text-blue-600";
-          document.getElementById("mealCarousel").prepend(dateDisplay);
+          currentDateElement.textContent = `${date.getFullYear()}년 ${
+            date.getMonth() + 1
+          }월 ${date.getDate()}일`;
+          const currentMeal = mealTypes[currentMealIndex];
+          mealType.textContent = `${currentMeal.name}`;
 
-          mealTypes.forEach((type, index) => {
-            const meal = meals.find((m) => m.MMEAL_SC_NM === type);
-            const mealElement = document.getElementById(mealIds[index]);
-            const list = mealElement.querySelector("ul");
-            const calInfo = mealElement.querySelector("p");
+          const meal = meals.find((m) => m.MMEAL_SC_NM === currentMeal.type);
 
-            if (meal) {
-              const dishes = meal.DDISH_NM.split("<br/>");
-              list.innerHTML = dishes
-                .map((dish) => `<li>${dish.trim()}</li>`)
-                .join("");
-              calInfo.textContent = `칼로리: ${meal.CAL_INFO}`;
-            } else {
-              list.innerHTML = "<li>급식 정보가 없습니다.</li>";
-              calInfo.textContent = "";
-            }
-          });
+          if (meal) {
+            const dishes = meal.DDISH_NM.split("<br/>");
+            mealContent.innerHTML = `
+        <ul class="list-disc pl-5 space-y-1">
+          ${dishes.map((dish) => `<li>${dish.trim()}</li>`).join("")}
+        </ul>
+        <p class="text-sm text-gray-600 mt-2">칼로리: ${meal.CAL_INFO}</p>
+      `;
+          } else {
+            mealContent.innerHTML =
+              '<p class="text-gray-500">급식 정보가 없습니다.</p>';
+          }
         }
 
-        let currentSlide = 0;
-        const slider = document.getElementById("mealSlider");
-        const slides = document.querySelectorAll(".meal-slide");
-        const totalSlides = slides.length;
-
-        function updateSlider() {
-          slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        function moveMeal(direction) {
+          currentMealIndex =
+            (currentMealIndex + direction + mealTypes.length) %
+            mealTypes.length;
+          getMealInfo(currentDate);
         }
 
-        document.getElementById("nextMeal").addEventListener("click", () => {
-          currentSlide = (currentSlide + 1) % totalSlides;
-          updateSlider();
-        });
-
-        document.getElementById("prevMeal").addEventListener("click", () => {
-          currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-          updateSlider();
-        });
-
-        function formatDate(dateString) {
-          const year = dateString.slice(0, 4);
-          const month = dateString.slice(4, 6);
-          const day = dateString.slice(6, 8);
-          return `${month}월 ${day}일`;
+        function moveDate(direction) {
+          currentDate.setDate(currentDate.getDate() + direction);
+          getMealInfo(currentDate);
         }
+
+        document
+          .getElementById("nextMeal")
+          .addEventListener("click", () => moveMeal(1));
+        document
+          .getElementById("prevMeal")
+          .addEventListener("click", () => moveMeal(-1));
+        document
+          .getElementById("nextDate")
+          .addEventListener("click", () => moveDate(1));
+        document
+          .getElementById("prevDate")
+          .addEventListener("click", () => moveDate(-1));
 
         async function getSchoolSchedule(year, month) {
           const fromDate = `${year}${String(month).padStart(2, "0")}01`;
@@ -922,20 +948,11 @@
         });
 
         // 커뮤니티 글 목록 가져오기
+        // 커뮤니티 글 목록 가져오기
         async function fetchCommunityPosts() {
           try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-              throw new Error("인증 토큰이 없습니다.");
-            }
-
             const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/posts?limit=5&board=all",
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/posts?limit=5&board=all"
             );
 
             if (!response.ok) {
@@ -949,15 +966,15 @@
               const li = document.createElement("li");
               li.className = "flex items-center justify-between";
               li.innerHTML = `
-                <a href="pages/post-detail.html?id=${
-                  post._id
-                }" class="text-gray-700 hover:text-blue-500 transition duration-300">${
+        <a href="pages/post-detail.html?id=${
+          post._id
+        }" class="text-gray-700 hover:text-blue-500 transition duration-300">${
                 post.title
               }</a>
-                <span class="text-sm text-gray-500">${
-                  post.isAnonymous ? "익명" : post.author.nickname
-                }</span>
-              `;
+        <span class="text-sm text-gray-500">${
+          post.isAnonymous ? "익명" : post.author.nickname
+        }</span>
+      `;
               communityList.appendChild(li);
             });
           } catch (error) {
@@ -971,7 +988,7 @@
         // 페이지 로드 시 실행할 함수들
         checkLoginStatus();
         fetchNotices();
-        getMealInfo();
+        getMealInfo(currentDate);
         updateMonthSchedule();
         updatePetitionSection();
         fetchCommunityPosts(); // 커뮤니티 글 목록 가져오기 추가
