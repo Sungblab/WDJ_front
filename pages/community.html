@@ -286,16 +286,16 @@
 
       <!-- 검색 기능 -->
       <div class="mb-6">
-        <form id="searchForm" class="flex">
+        <form id="searchForm" class="flex flex-col sm:flex-row">
           <input
             type="text"
             id="searchInput"
             placeholder="검색어를 입력하세요"
-            class="flex-grow p-2 border rounded-l"
+            class="w-full sm:w-auto flex-grow p-2 border rounded-t sm:rounded-l sm:rounded-t-none mb-2 sm:mb-0"
           />
           <button
             type="submit"
-            class="bg-blue-500 text-white px-4 py-2 rounded-r"
+            class="w-full sm:w-auto bg-blue-500 text-white px-4 py-2 rounded-b sm:rounded-r sm:rounded-b-none"
           >
             검색
           </button>
@@ -367,7 +367,7 @@
       </div>
     </div>
 
-    <footer class="bg-gray-800 text-white py-8">
+    <footer class="bg-gray-800 text-white py-8 mt-8">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="flex justify-center">
           <div class="text-center">
