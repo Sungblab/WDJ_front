@@ -385,7 +385,7 @@
         </form>
       </div>
 
-      <!-- 정렬 옵션 설정 -->
+      <!-- 정렬 션 설정 -->
       <div class="flex justify-between items-center mb-6">
         <div class="flex space-x-4">
           <select
@@ -641,28 +641,43 @@
 
       // 전역 변수 및 상수 정의
       const API_BASE_URL =
-        "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app";
+        "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api";
       let postsPerPage = 15;
       let currentPage = 1;
 
       // API 요청 함수
       async function apiRequest(url, method = "GET", body = null) {
-        const token = localStorage.getItem("token");
-        const headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        };
-        const options = {
-          method,
-          headers,
-          body: body ? JSON.stringify(body) : null,
-        };
-        const response = await fetch(`${API_BASE_URL}${url}`, options);
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "API request failed");
+        try {
+          const token = localStorage.getItem("token");
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : "",
+          };
+
+          const options = {
+            method,
+            headers,
+            body: body ? JSON.stringify(body) : null,
+          };
+
+          const response = await fetch(`${API_BASE_URL}${url}`, options);
+
+          // 응답이 JSON이 아닌 경우 처리
+          const contentType = response.headers.get("content-type");
+          if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("서버가 JSON 응답을 반환하지 않았습니다");
+          }
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "API 요�� 실패");
+          }
+
+          return response.json();
+        } catch (error) {
+          console.error("API 요청 오류:", error);
+          throw error;
         }
-        return response.json();
       }
 
       // 게시글 목록 가져오기
