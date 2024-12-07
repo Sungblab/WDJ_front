@@ -1098,7 +1098,7 @@
             throw new Error(error.message || "댓글 작성에 실패했습니다.");
           }
 
-          // 폼 ��기화
+          // 폼 초기화
           document.getElementById("commentContent").value = "";
           if (isAnonymous) {
             document.getElementById("anonymousNick").value = "";
@@ -1211,7 +1211,7 @@
             throw new Error(error.message || "댓글 삭제에 실패했습니다.");
           }
 
-          // 댓글 목록 ���로고침
+          // 댓글 목록 새로고침
           fetchPostDetail();
         } catch (error) {
           alert(error.message || "댓글 삭제 중 오류가 발생했습니다.");
@@ -1414,33 +1414,6 @@
           location.href = "community.html";
         } catch (error) {
           alert(error.message || "게시글 삭제 중 오류가 발생했습니다.");
-        }
-      }
-
-      async function submitPost(e) {
-        e.preventDefault();
-        try {
-          const title = document.getElementById("postTitle").value;
-          const content = document.getElementById("postContent").value;
-          const isAnonymous = document.getElementById("isAnonymous").checked;
-
-          if (!title.trim() || !content.trim()) {
-            throw new Error("제목과 내�을 모두 입력해주세요");
-          }
-
-          const response = await apiRequest("/posts", "POST", {
-            title,
-            content,
-            board: "all",
-            isAnonymous,
-          });
-
-          document.getElementById("writePostModal").classList.add("hidden");
-          alert("게시글이 성공적으로 작성되었습니다.");
-          location.href = "community.html";
-        } catch (error) {
-          console.error("게시글 작성 중 오류:", error);
-          alert(error.message || "게시글 작성 중 오류가 발생했습니다.");
         }
       }
     </script>
