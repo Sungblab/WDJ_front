@@ -858,12 +858,15 @@
           const token = localStorage.getItem("token");
           if (token) {
             try {
-              const response = await fetch("http://127.0.0.1:3000/api/user", {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-                credentials: "include",
-              });
+              const response = await fetch(
+                "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/user",
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                  credentials: "include",
+                }
+              );
               if (!response.ok) {
                 throw new Error("Login session expired");
               }
@@ -887,14 +890,17 @@
           const password = document.getElementById("loginPassword").value;
 
           try {
-            const response = await fetch("http://127.0.0.1:3000/api/login", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
-              body: JSON.stringify({ username, password }),
-            });
+            const response = await fetch(
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/login",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ username, password }),
+              }
+            );
 
             const data = await response.json();
 
@@ -932,7 +938,7 @@
         async function fetchNotices() {
           try {
             const response = await fetch(
-              "http://127.0.0.1:3000/api/notices?limit=3"
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices?limit=3"
             );
             if (!response.ok) {
               throw new Error("서버 응답 오류");
@@ -971,7 +977,7 @@
               .slice(0, 10)
               .replace(/-/g, "");
             const response = await fetch(
-              `http://127.0.0.1:3000/api/meals?date=${formattedDate}`
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/meals?date=${formattedDate}`
             );
 
             if (!response.ok) {
@@ -1048,7 +1054,7 @@
         async function getSchoolSchedule(year, month) {
           try {
             const response = await fetch(
-              `http://127.0.0.1:3000/api/schedule?year=${year}&month=${month}`
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/schedule?year=${year}&month=${month}`
             );
 
             if (!response.ok) {
@@ -1087,7 +1093,7 @@
           try {
             const token = localStorage.getItem("token");
             const response = await fetch(
-              "http://127.0.0.1:3000/api/petitions?status=active&limit=3",
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/petitions?status=active&limit=3",
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -1154,7 +1160,7 @@
         async function fetchCommunityPosts() {
           try {
             const response = await fetch(
-              "http://127.0.0.1:3000/api/posts/preview"
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/posts/preview"
             );
             if (!response.ok) {
               throw new Error("서버 응답 오류");
