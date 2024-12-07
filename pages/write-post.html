@@ -651,7 +651,7 @@
           }
         });
 
-        // ESC 키��� 메뉴 닫기
+        // ESC 키 메뉴 닫기
         document.addEventListener("keydown", (e) => {
           if (e.key === "Escape" && mobileMenu.classList.contains("active")) {
             toggleMobileMenu(false);
@@ -887,7 +887,7 @@
         loadPostData();
       }
 
-      // 이미지 업로드 관련 스크립트 �정
+      // 이미지 업로드 관련 스크립트 수정
       document
         .getElementById("imageUploadBtn")
         .addEventListener("click", () => {
@@ -916,9 +916,12 @@
 
             const data = await response.json();
 
+            // 이미지 URL을 그�로 사용
+            const imageUrl = data.url;
+
             // 에디터에 이미지 URL 삽입
             const content = document.getElementById("content");
-            const imageTag = `\n![이미지](${data.url})\n`;
+            const imageTag = `\n![이미지](${imageUrl})\n`;
             content.value += imageTag;
 
             // 이미지 미리보기 추가
@@ -926,10 +929,10 @@
             const imgPreview = document.createElement("div");
             imgPreview.className = "relative inline-block";
             imgPreview.innerHTML = `
-            <img src="${data.url}" class="h-20 w-20 object-cover rounded" />
-            <button type="button" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs" 
-              onclick="removeImage(this, '${data.url}')">×</button>
-          `;
+              <img src="${imageUrl}" class="h-20 w-20 object-cover rounded" />
+              <button type="button" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs" 
+                onclick="removeImage(this, '${imageUrl}')">×</button>
+            `;
             previewDiv.appendChild(imgPreview);
           } catch (error) {
             console.error("이미지 업로드 오류:", error);
