@@ -170,9 +170,9 @@
 
       .mobile-menu-link {
         display: block;
-        padding: 1rem;
+        padding: 0.75rem 1rem;
         color: white;
-        font-size: 1.125rem;
+        font-size: 1rem;
         border-radius: 0.5rem;
         transition: all 0.2s;
       }
@@ -212,19 +212,37 @@
       .nav-link:hover {
         transform: translateY(-1px);
       }
+
+      /* 모바일에서 리스트 아이템 텍스트 크기 조정 */
+      @media (max-width: 640px) {
+        #noticeList li,
+        #communityList li,
+        #petitionList li,
+        #scheduleList li {
+          font-size: 0.9rem;
+        }
+
+        #mealContent {
+          font-size: 0.9rem;
+        }
+
+        .text-sm {
+          font-size: 0.8rem;
+        }
+      }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
   </head>
   <body class="bg-gray-100 font-sans">
     <header
-      class="bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg py-2 mb-8 fixed w-full top-0 z-50"
+      class="bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg py-1 mb-8 fixed w-full top-0 z-50"
     >
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-3">
           <div class="flex justify-start lg:w-0 lg:flex-1">
             <a
-              href="index.html"
-              class="text-3xl font-bold text-white hover:text-gray-100 transition-all duration-300 transform hover:scale-105"
+              href="/index.html"
+              class="text-2xl font-bold text-white hover:text-gray-100 transition-all duration-300 transform hover:scale-105"
             >
               완·대·전
             </a>
@@ -302,17 +320,17 @@
 
       <div id="mobile-menu" class="md:hidden">
         <div class="mobile-menu-content">
-          <div class="flex justify-between items-center mb-8">
-            <a href="index.html" class="text-2xl font-bold text-white">
-              완·대·전
-            </a>
+          <div class="flex justify-between items-center mb-4">
+            <a href="/index.html" class="text-xl font-bold text-white"
+              >완·대·전</a
+            >
             <button
               id="mobile-menu-close"
-              class="p-2 rounded-lg text-white hover:bg-blue-500/50 transition-all duration-300"
+              class="p-1.5 rounded-lg text-white hover:bg-blue-500/50 transition-all duration-300"
               aria-label="메뉴 닫기"
             >
               <svg
-                class="w-6 h-6"
+                class="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -326,29 +344,36 @@
               </svg>
             </button>
           </div>
-
-          <nav class="space-y-4">
-            <a href="pages/notice.html" class="mobile-menu-link"> 공지사항 </a>
-            <a href="pages/community.html" class="mobile-menu-link">
-              커뮤니티
-            </a>
-            <a href="pages/petition.html" class="mobile-menu-link">
-              청원·제안
-            </a>
-            <a href="pages/utility.html" class="mobile-menu-link">
-              학급 도우미
-            </a>
-            <a href="pages/about.html" class="mobile-menu-link"> 소개 </a>
+          <nav class="space-y-2">
+            <a href="pages/notice.html" class="mobile-menu-link text-sm"
+              >공지사항</a
+            >
+            <a href="pages/community.html" class="mobile-menu-link text-sm"
+              >커뮤니티</a
+            >
+            <a href="pages/petition.html" class="mobile-menu-link text-sm"
+              >청원·제안</a
+            >
+            <a href="pages/utility.html" class="mobile-menu-link text-sm"
+              >학급 도우미</a
+            >
+            <a href="pages/about.html" class="mobile-menu-link text-sm">소개</a>
           </nav>
         </div>
       </div>
     </header>
-    <main class="w-full sm:container mx-auto mt-24 mb-16 px-4 sm:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <main
+      class="w-full sm:container mx-auto mt-20 sm:mt-24 mb-8 sm:mb-16 px-3 sm:px-8"
+    >
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8"
+      >
         <section
-          class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6"
+          class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 sm:p-6"
         >
-          <h3 class="text-2xl font-bold mb-4 text-blue-700 flex items-center">
+          <h3
+            class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-blue-700 flex items-center"
+          >
             <i class="fas fa-bullhorn mr-2"></i>
             공지사항
           </h3>
@@ -363,9 +388,11 @@
         </section>
 
         <section
-          class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6"
+          class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 sm:p-6"
         >
-          <h2 class="text-2xl font-bold mb-6 text-blue-700">급식</h2>
+          <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-blue-700">
+            급식
+          </h2>
           <div id="mealInfo" class="relative">
             <div class="flex items-center justify-between mb-4">
               <button
@@ -464,10 +491,12 @@
         </section>
 
         <section
-          class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6"
+          class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 sm:p-6"
         >
           <div id="loginSection">
-            <h3 class="text-2xl font-bold mb-6 text-blue-700 flex items-center">
+            <h3
+              class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-blue-700 flex items-center"
+            >
               <i class="fas fa-user-circle mr-2"></i>
               로그인
             </h3>
@@ -540,7 +569,7 @@
                 href="pages/admin-dashboard.html"
                 class="block w-full bg-purple-600 text-white text-center p-2 rounded hover:bg-purple-700 transition duration-300"
               >
-                관리자 페이지
+                관관리자 페이지
               </a>
             </div>
 
@@ -562,19 +591,23 @@
       </div>
 
       <section
-        class="bg-gradient-to-r from-blue-500 to-blue-700 rounded-2xl shadow-xl p-8 mb-12"
+        class="bg-gradient-to-r from-blue-500 to-blue-700 rounded-2xl shadow-xl p-6 sm:p-8 mb-8 sm:mb-12"
       >
-        <h2 class="text-4xl font-bold mb-4 text-white">환영합니다!</h2>
-        <p class="text-xl text-white/90">
+        <h2 class="text-2xl sm:text-4xl font-bold mb-2 sm:mb-4 text-white">
+          환영합니다!
+        </h2>
+        <p class="text-lg sm:text-xl text-white/90">
           완도고등학교 학생들을 위한 커뮤니티, 완대전에 오신 것을 환영합니다.
         </p>
       </section>
 
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8"
       >
         <section class="bg-white rounded-lg shadow-md p-4 sm:p-6">
-          <h3 class="text-2xl font-bold mb-4 text-blue-700">학사일정</h3>
+          <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-blue-700">
+            학사일정
+          </h3>
           <div class="flex justify-between items-center mb-4">
             <button
               id="prevMonth"
@@ -627,7 +660,9 @@
         </section>
 
         <section class="bg-white rounded-lg shadow-md p-4 sm:p-6">
-          <h3 class="text-2xl font-bold mb-4 text-blue-700">커뮤니티</h3>
+          <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-blue-700">
+            커뮤니티
+          </h3>
           <ul id="communityList" class="space-y-2">
             <!-- 커뮤니티 글 목록이 여기에 동적으로 추가됩니다 -->
           </ul>
@@ -639,7 +674,9 @@
         </section>
 
         <section class="bg-white rounded-lg shadow-md p-4 sm:p-6">
-          <h3 class="text-2xl font-bold mb-4 text-blue-700">청원·제안</h3>
+          <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-blue-700">
+            청원·제안
+          </h3>
           <ul id="petitionList" class="space-y-2">
             <!-- 청원 목록이 여기에 동적으로 추가됩니다 -->
           </ul>
@@ -653,19 +690,11 @@
     </main>
 
     <footer
-      class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-10"
+      class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-6 md:py-10"
     >
       <div class="container mx-auto px-6 lg:px-8">
         <!-- 모바일용 푸터 -->
-        <div class="md:hidden space-y-6">
-          <div class="text-center">
-            <h3 class="text-xl font-bold text-white mb-2">완·대·전</h3>
-            <p class="text-gray-400 text-sm">
-              완도고등학교 학생들을 위한<br />
-              온라인 커뮤니티 플랫폼
-            </p>
-          </div>
-
+        <div class="md:hidden space-y-3">
           <div class="flex justify-center space-x-4">
             <a
               href="pages/notice.html"
@@ -698,7 +727,7 @@
             <h3 class="text-xl font-bold text-white mb-2">완·대·전</h3>
             <p class="text-gray-400 text-sm leading-relaxed">
               완도고등학교 학생들을 위한<br />
-              더더 나은 학교생활을 만들어가는<br />
+              더 나은 학교생활을 만들어가는<br />
               온라인 커뮤니티 플랫폼
             </p>
           </div>
