@@ -825,6 +825,9 @@
       function displayPostDetail(post) {
         if (!post) return;
 
+        // 전역 변수에 게시글 데이터 저장
+        window.currentPost = post;
+
         const elements = {
           title: document.getElementById("postTitle"),
           author: document.getElementById("authorInfo"),
@@ -852,7 +855,7 @@
         if (elements.comments)
           elements.comments.textContent = post.comments?.length || 0;
         if (elements.content && post.content) {
-          // Markdown 이미지 태�를 HTML img 태그로 변환
+          // Markdown 이미지 태를 HTML img 태그로 변환
           const content = post.content.replace(
             /!\[이미지\]\((.*?)\)/g,
             '<img src="$1" class="max-w-full h-auto my-4 rounded-lg shadow-lg" alt="첨부 이미지" />'
@@ -1085,7 +1088,7 @@
             "Content-Type": "application/json",
           };
 
-          // 로그인한 사용자인 경우에만 토큰 추가
+          // 로���인한 사용자인 경우에만 토큰 추가
           if (!isAnonymous && token) {
             headers.Authorization = `Bearer ${token}`;
           }
@@ -1244,7 +1247,7 @@
           }
         });
 
-      // 추천천/비추천 처리 함수
+      // 추추천천/비추천 처리 함수
       async function handleVote(type) {
         const upvoteBtn = document.getElementById("upvoteButton");
         const downvoteBtn = document.getElementById("downvoteButton");
@@ -1314,9 +1317,9 @@
         const currentUser = JSON.parse(localStorage.getItem("user"));
         if (!currentUser?.isAdmin) return;
 
-        // 익명 게시글인 경우에만 관리자 컨트롤 표시
-        const post = window.currentPost; // 현재 게시글 데이터
-        if (post.isAnonymous) {
+        // 현재 게시글 데이터가 있고 익명 게시글인 경우에만 관리자 컨트롤 표시
+        const post = window.currentPost;
+        if (post && post.isAnonymous) {
           adminControls.classList.remove("hidden");
         }
       }
@@ -1393,7 +1396,7 @@
             "Content-Type": "application/json",
           };
 
-          // 로그인한 사용자인 경우 토큰 추가
+          // 로그인한 사용자인 경우 ��큰 추가
           const token = localStorage.getItem("token");
           if (token) {
             headers.Authorization = `Bearer ${token}`;
