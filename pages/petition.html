@@ -477,28 +477,28 @@
             <ul class="space-y-1.5">
               <li>
                 <a
-                  href="notice.html"
+                  href="pages/notice.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >공지사항</a
                 >
               </li>
               <li>
                 <a
-                  href="community.html"
+                  href="pages/community.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >커뮤니티</a
                 >
               </li>
               <li>
                 <a
-                  href="petition.html"
+                  href="pages/petition.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >청원·제안</a
                 >
               </li>
               <li>
                 <a
-                  href="utility.html"
+                  href="pages/utility.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >학급 도우미</a
                 >
@@ -593,14 +593,11 @@
           }
 
           try {
-            const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/user",
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
+            const response = await fetch("http://127.0.0.1:3000/api/user", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
 
             if (response.ok) {
               user = await response.json();
@@ -642,7 +639,7 @@
 
           try {
             const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/petitions",
+              "http://127.0.0.1:3000/api/petitions",
               {
                 method: "POST",
                 headers: {
@@ -679,7 +676,7 @@
 
           try {
             const response = await fetch(
-              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/petitions?status=${status}`,
+              `http://127.0.0.1:3000/api/petitions?status=${status}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -768,7 +765,7 @@
               const token = localStorage.getItem("token");
               try {
                 const response = await fetch(
-                  `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/petitions/${petitionId}/support`,
+                  `http://127.0.0.1:3000/api/petitions/${petitionId}/support`,
                   {
                     method: "POST",
                     headers: {
@@ -797,7 +794,7 @@
               if (confirm("정말로 이 청원을 삭제하시겠습니까?")) {
                 try {
                   const response = await fetch(
-                    `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/petitions/${petitionId}`,
+                    `http://127.0.0.1:3000/api/petitions/${petitionId}`,
                     {
                       method: "DELETE",
                       headers: {
@@ -835,7 +832,7 @@
                 const token = localStorage.getItem("token");
                 try {
                   const response = await fetch(
-                    `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/petitions/${petitionId}/status`,
+                    `http://127.0.0.1:3000/api/petitions/${petitionId}/status`,
                     {
                       method: "PATCH",
                       headers: {

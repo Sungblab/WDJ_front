@@ -614,7 +614,7 @@
           <div class="text-center">
             <h3 class="text-xl font-bold text-white mb-2">완·대·전</h3>
             <p class="text-gray-400 text-sm">
-              완도���등학교 학생들을 위한<br />
+              완도고등학교 학생들을 위한<br />
               온라인 커뮤니티 플랫폼
             </p>
           </div>
@@ -661,28 +661,28 @@
             <ul class="space-y-1.5">
               <li>
                 <a
-                  href="notice.html"
+                  href="pages/notice.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >공지사항</a
                 >
               </li>
               <li>
                 <a
-                  href="community.html"
+                  href="pages/community.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >커뮤니티</a
                 >
               </li>
               <li>
                 <a
-                  href="petition.html"
+                  href="pages/petition.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >청원·제안</a
                 >
               </li>
               <li>
                 <a
-                  href="utility.html"
+                  href="pages/utility.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >학급 도우미</a
                 >
@@ -720,7 +720,7 @@
         <div class="border-t border-gray-700 mt-8 pt-6">
           <div class="flex flex-col items-center space-y-3">
             <p class="text-xs text-gray-400 text-center">
-              &copy; 2024 완도고등학교 학생��. All rights reserved.
+              &copy; 2024 완도고등학교 학생회. All rights reserved.
             </p>
             <div class="flex space-x-4">
               <a
@@ -760,8 +760,7 @@
       });
 
       // 전역 변수 설정
-      const API_BASE_URL =
-        "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app";
+      const API_BASE_URL = "http://127.0.0.1:3000";
       let currentUser = JSON.parse(localStorage.getItem("user"));
       let postId = new URLSearchParams(window.location.search).get("id");
 
@@ -902,7 +901,7 @@
         }
       }
 
-      // 이벤트 리스너 설정 함수 ��
+      // 이벤트 리스너 설정 함수 수
       function setupEventListeners() {
         // 추천/비추천 버튼
         const upvoteBtn = document.getElementById("upvoteButton");
@@ -943,7 +942,7 @@
         }
       }
 
-      // 에러 시 함수 추가
+      // 에러 표시 함수 추가
       function showError(message) {
         const contentElement = document.getElementById("postContent");
         if (contentElement) {
@@ -1414,50 +1413,6 @@
           location.href = "community.html";
         } catch (error) {
           alert(error.message || "게시글 삭제 중 오류가 발생했습니다.");
-        }
-      }
-
-      // API 호출 시 에러 처리 개선
-      async function submitPost(e) {
-        e.preventDefault();
-
-        try {
-          const formData = new FormData(e.target);
-          const postData = {
-            title: formData.get("title"),
-            content: formData.get("content"),
-            board: formData.get("board"),
-            isAnonymous: formData.get("isAnonymous") === "true",
-            anonymousNick: formData.get("anonymousNick"),
-            anonymousPassword: formData.get("anonymousPassword"),
-          };
-
-          const token = localStorage.getItem("token");
-          const headers = {
-            "Content-Type": "application/json",
-          };
-
-          if (token) {
-            headers.Authorization = `Bearer ${token}`;
-          }
-
-          const response = await fetch(`${API_BASE_URL}/api/posts`, {
-            method: "POST",
-            headers,
-            body: JSON.stringify(postData),
-          });
-
-          if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "게시글 작성에 실패했습니다.");
-          }
-
-          const data = await response.json();
-          alert("게시글이 작성되었습니다.");
-          location.href = `post-detail.html?id=${data.postId}`;
-        } catch (error) {
-          console.error("게시글 작성 중 오류:", error);
-          alert(error.message || "게시글 작성 중 오류가 발생했습니다.");
         }
       }
     </script>

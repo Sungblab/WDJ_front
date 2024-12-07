@@ -517,28 +517,28 @@
             <ul class="space-y-1.5">
               <li>
                 <a
-                  href="notice.html"
+                  href="pages/notice.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >공지사항</a
                 >
               </li>
               <li>
                 <a
-                  href="community.html"
+                  href="pages/community.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >커뮤니티</a
                 >
               </li>
               <li>
                 <a
-                  href="petition.html"
+                  href="pages/petition.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >청원·제안</a
                 >
               </li>
               <li>
                 <a
-                  href="utility.html"
+                  href="pages/utility.html"
                   class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
                   >학급 도우미</a
                 >
@@ -646,8 +646,7 @@
       });
 
       // 기존 글쓰기 관련 스크립트
-      const API_BASE_URL =
-        "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app";
+      const API_BASE_URL = "http://127.0.0.1:3000";
       let currentUser = null;
 
       // 사용자 정보 가져오기 함수
@@ -702,6 +701,7 @@
                 title: document.getElementById("title").value.trim(),
                 content: document.getElementById("content").value.trim(),
                 isAnonymous: document.getElementById("isAnonymous").checked,
+                board: "general", // 또는 다른 게시판 카테고리
               };
 
               // 비로그인 사용자인 경우 추가 데이터
@@ -713,7 +713,7 @@
                   document.getElementById("anonymousPassword").value;
 
                 if (!formData.anonymousPassword) {
-                  alert("비밀번호를 입력해주세요.");
+                  showAlert("오류", "비밀번호를 입력해주세요.");
                   return;
                 }
               }
@@ -735,19 +735,23 @@
                 credentials: "include",
               });
 
-              const result = await response.json();
-
               if (!response.ok) {
+                const errorData = await response.json();
                 throw new Error(
-                  result.message || "게시글 작성에 실패했습니다."
+                  errorData.message || "게시글 작성에 실패했습니다."
                 );
               }
 
-              alert("게시글이 작성되었습니다.");
-              window.location.href = "community.html";
+              const result = await response.json();
+              showAlert("성공", "게시글이 작성되었습니다.", () => {
+                window.location.href = "community.html";
+              });
             } catch (error) {
               console.error("게시글 작성 중 오류:", error);
-              alert(error.message || "게시글 작성 중 오류가 발생했습니다.");
+              showAlert(
+                "오류",
+                error.message || "게시글 작성 중 오류가 발생했습니다."
+              );
             }
           });
       });
@@ -847,7 +851,7 @@
           console.error("게시글 로드 중 오류:", error);
           showAlert(
             "오류",
-            error.message || "게시글을 불러오는 중 오류가 발생했습니다.",
+            error.message || "게시글을 불러올럤는 중 오류가 발생했습니다.",
             () => {
               history.back();
             }
