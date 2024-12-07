@@ -17,56 +17,104 @@
     />
     <meta property="og:image" content="https://wdj.kr/content.png" />
     <meta property="og:url" content="https://wdj.kr/" />
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="/asset/icon/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="/asset/icon/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="/asset/icon/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="/asset/icon/apple-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="/asset/icon/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="/asset/icon/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="/asset/icon/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="/asset/icon/apple-icon-76x76.png"
+    />
     <link
       rel="apple-touch-icon"
       sizes="114x114"
-      href="/apple-icon-114x114.png"
+      href="/asset/icon/apple-icon-114x114.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="120x120"
-      href="/apple-icon-120x120.png"
+      href="/asset/icon/apple-icon-120x120.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="144x144"
-      href="/apple-icon-144x144.png"
+      href="/asset/icon/apple-icon-144x144.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="152x152"
-      href="/apple-icon-152x152.png"
+      href="/asset/icon/apple-icon-152x152.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="/apple-icon-180x180.png"
+      href="/asset/icon/apple-icon-180x180.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="192x192"
-      href="/android-icon-192x192.png"
+      href="/asset/icon/android-icon-192x192.png"
     />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/asset/icon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/asset/icon/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/asset/icon/favicon-16x16.png"
+    />
     <link rel="manifest" href="/manifest.json" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
     <meta name="theme-color" content="#ffffff" />
     <link
-      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
       rel="stylesheet"
-      type="text/css"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -74,7 +122,7 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ["Spoqa Han Sans Neo", "sans-serif"],
+              sans: ["Pretendard", "sans-serif"],
             },
             colors: {
               primary: {
@@ -99,48 +147,222 @@
       rel="stylesheet"
     />
     <style>
+      /* 기본 모바일 메뉴 스타일 */
       #mobile-menu {
-        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background-color: #2563eb;
+        transition: left 0.3s ease-in-out;
+        z-index: 50;
       }
+
       #mobile-menu.active {
-        max-height: 400px;
-        opacity: 1;
+        left: 0;
+      }
+
+      .mobile-menu-content {
+        padding: 2rem;
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      .mobile-menu-link {
+        display: block;
+        padding: 1rem;
+        color: white;
+        font-size: 1.125rem;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+
+      .mobile-menu-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-link {
+        padding: 0.5rem 0;
+        position: relative;
+        display: inline-block;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      .nav-link.active::after {
+        transform: scaleX(1);
+      }
+
+      .nav-link:hover {
+        transform: translateY(-1px);
+      }
+
+      /* 투표 버튼 기본 스타일 */
+      .vote-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+        min-width: 80px;
+        font-size: 0.85rem;
+      }
+
+      /* 투표 버튼 테이너 스타일 추가 */
+      .vote-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 0 1rem;
+      }
+
+      /* 투표 버튼 태 */
+      .vote-button:disabled {
+        opacity: 0.7;
+      }
+      .vote-button.active {
+        transform: scale(1.05);
+      }
+
+      /* 추천 버튼 */
+      .upvote-button {
+        background: linear-gradient(to right, #3b82f6, #2563eb);
+        color: white;
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+      }
+      .upvote-button:hover,
+      .upvote-button.active {
+        background: linear-gradient(to right, #2563eb, #1d4ed8);
+      }
+      .upvote-button.active {
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+      }
+
+      /* 비추천 버튼 */
+      .downvote-button {
+        background: linear-gradient(to right, #ef4444, #dc2626);
+        color: white;
+        box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+      }
+      .downvote-button:hover,
+      .downvote-button.active {
+        background: linear-gradient(to right, #dc2626, #b91c1c);
+      }
+      .downvote-button.active {
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+      }
+
+      /* 아이콘 크기 정 */
+      .vote-button i {
+        font-size: 0.9rem;
+      }
+
+      /* 모바일 반응형 */
+      @media (max-width: 640px) {
+        .vote-buttons {
+          flex-direction: row;
+          gap: 0.5rem;
+          padding: 0 0.5rem;
+        }
+        .vote-button {
+          flex: 1;
+          padding: 0.4rem 0.8rem;
+          min-width: 0;
+        }
       }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
   </head>
   <body class="bg-gray-100 font-sans">
-    <header class="bg-blue-600 shadow-md py-1 mb-8">
+    <header
+      class="bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg py-2 mb-8 fixed w-full top-0 z-50"
+    >
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          class="flex justify-between items-center py-4 md:justify-start md:space-x-10"
-        >
+        <div class="flex justify-between items-center py-3">
           <div class="flex justify-start lg:w-0 lg:flex-1">
             <a
               href="/index.html"
-              class="text-3xl font-bold text-white hover:text-gray-200 transition duration-300"
+              class="text-3xl font-bold text-white hover:text-gray-100 transition-all duration-300 transform hover:scale-105"
             >
               완·대·전
             </a>
           </div>
-          <div class="-mr-2 -my-2 md:hidden">
+          <nav class="hidden md:flex space-x-8">
+            <a
+              href="notice.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">공지사항</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+            <a
+              href="community.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">커뮤니티</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+            <a
+              href="petition.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">청원·제안</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+            <a
+              href="utility.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">학급 도우미</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+            <a
+              href="about.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">소개</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+          </nav>
+          <div class="md:hidden">
             <button
               id="mobile-menu-button"
-              type="button"
-              class="bg-blue-500 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-200 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-              aria-expanded="false"
+              class="rounded-lg p-2 inline-flex items-center justify-center text-white hover:bg-blue-500/50 transition-all duration-300"
+              aria-label="메뉴 열기"
             >
-              <span class="sr-only">메뉴 열기</span>
               <svg
-                class="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6"
                 fill="none"
-                viewBox="0 0 24 24"
                 stroke="currentColor"
-                aria-hidden="true"
+                viewBox="0 0 24 24"
               >
                 <path
                   stroke-linecap="round"
@@ -151,176 +373,174 @@
               </svg>
             </button>
           </div>
-          <nav class="hidden md:flex space-x-10">
-            <a
-              href="notice.html"
-              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
-              >공지사항</a
-            >
-            <a
-              href="community.html"
-              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
-              >커뮤니티</a
-            >
-            <a
-              href="petition.html"
-              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
-              >청원·제안</a
-            >
-            <a
-              href="utility.html"
-              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
-              >학급 도우미</a
-            >
-            <a
-              href="about.html"
-              class="text-base font-medium text-white hover:text-gray-200 transition duration-300"
-              >소개</a
-            >
-          </nav>
         </div>
       </div>
 
-      <div
-        id="mobile-menu"
-        class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
-      >
-        <div
-          class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-blue-500 divide-y-2 divide-blue-400"
-        >
-          <div class="pt-5 pb-6 px-5">
-            <div class="flex items-center justify-between">
-              <div>
-                <a href="/index.html" class="text-2xl font-bold text-white"
-                  >완·대·전</a
-                >
-              </div>
-              <div class="-mr-2">
+      <!-- 댓바일 메뉴 -->
+      <div id="mobile-menu" class="md:hidden">
+        <div class="mobile-menu-content">
+          <div class="flex justify-between items-center mb-8">
+            <a href="/index.html" class="text-2xl font-bold text-white"
+              >완·대·전</a
+            >
+            <button
+              id="mobile-menu-close"
+              class="p-2 rounded-lg text-white hover:bg-blue-500/50 transition-all duration-300"
+              aria-label="메뉴 닫기"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <nav class="space-y-4">
+            <a href="notice.html" class="mobile-menu-link">공지사항</a>
+            <a href="community.html" class="mobile-menu-link">커뮤니티</a>
+            <a href="petition.html" class="mobile-menu-link">청원·제안</a>
+            <a href="utility.html" class="mobile-menu-link">학급 도우미</a>
+            <a href="about.html" class="mobile-menu-link">소개</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-16">
+      <!-- 게시글 상세 내 컨테이너 -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- 게시글 헤더 -->
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-4">
+            <h1 class="text-2xl font-bold" id="postTitle"></h1>
+            <div class="flex items-center space-x-2">
+              <span class="text-gray-500">
+                <i class="far fa-eye"></i> <span id="viewCount">0</span>
+              </span>
+              <span class="text-gray-500">
+                <i class="far fa-comment"></i> <span id="commentCount">0</span>
+              </span>
+            </div>
+          </div>
+
+          <div
+            class="flex justify-between items-center text-sm text-gray-600 border-b pb-4"
+          >
+            <div class="flex items-center space-x-4">
+              <span id="authorInfo"></span>
+              <span id="postDate"></span>
+              <span id="ipAddress" class="text-gray-400"></span>
+            </div>
+            <!-- 관리자 전용 컨트롤 -->
+            <div id="adminControls" class="hidden space-x-2">
+              <button class="text-blue-500 hover:text-blue-700" id="viewRealIP">
+                <i class="fas fa-network-wired"></i> IP 보기
+              </button>
+              <button
+                class="text-yellow-500 hover:text-yellow-700"
+                id="viewRealAuthor"
+              >
+                <i class="fas fa-user-secret"></i> 작성자 보기
+              </button>
+            </div>
+          </div>
+
+          <!-- 게시글 내용 -->
+          <div
+            class="py-6 min-h-[200px] whitespace-pre-wrap"
+            id="postContent"
+          ></div>
+
+          <!-- 추천/비추천 버튼 -->
+          <div class="flex justify-center space-x-6 py-8 border-t vote-buttons">
+            <button
+              id="upvoteButton"
+              class="vote-button upvote-button"
+              data-voted="false"
+            >
+              <i class="fas fa-thumbs-up text-xl"></i>
+              <span class="vote-count">0</span>
+              <span class="font-bold ml-2">추천</span>
+            </button>
+            <button
+              id="downvoteButton"
+              class="vote-button downvote-button"
+              data-voted="false"
+            >
+              <i class="fas fa-thumbs-down text-xl"></i>
+              <span class="vote-count">0</span>
+              <span class="font-bold ml-2">비추천</span>
+            </button>
+          </div>
+          <div class="text-center mt-2">
+            <span class="text-lg font-bold" id="score">0</span>
+          </div>
+
+          <!-- 게시글 더 부분에 추가 -->
+          <div class="flex justify-between items-center mt-4">
+            <div class="flex space-x-2">
+              <button
+                onclick="history.back()"
+                class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+              >
+                목록으로
+              </button>
+            </div>
+            <div class="flex space-x-2">
+              <button
+                id="editPostBtn"
+                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 hidden"
+              >
+                수정
+              </button>
+              <button
+                id="deletePostBtn"
+                class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 hidden"
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+
+          <!-- 비밀번호 모달 추가 -->
+          <div
+            id="passwordModal"
+            class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center"
+          >
+            <div class="bg-white p-6 rounded-lg w-96">
+              <h3 class="text-lg font-bold mb-4">비밀번호 확인</h3>
+              <input
+                type="password"
+                name="postPassword"
+                id="postPassword"
+                class="w-full p-2 border rounded mb-4"
+                placeholder="글 작성 시 입력한 비밀번호"
+              />
+              <div class="flex justify-end space-x-2">
                 <button
-                  id="mobile-menu-close"
-                  type="button"
-                  class="bg-blue-500 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-200 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  onclick="closePasswordModal()"
+                  class="px-4 py-2 bg-gray-500 text-white rounded"
                 >
-                  <span class="sr-only">메뉴 닫기</span>
-                  <svg
-                    class="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                  취소
+                </button>
+                <button
+                  id="confirmPasswordBtn"
+                  class="px-4 py-2 bg-blue-500 text-white rounded"
+                >
+                  확인
                 </button>
               </div>
-            </div>
-            <div class="mt-6">
-              <nav class="grid gap-y-8">
-                <a
-                  href="notice.html"
-                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
-                >
-                  <span class="ml-3 text-base font-medium text-white"
-                    >공지사항</span
-                  >
-                </a>
-                <a
-                  href="community.html"
-                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
-                >
-                  <span class="ml-3 text-base font-medium text-white"
-                    >커뮤니티</span
-                  >
-                </a>
-                <a
-                  href="petition.html"
-                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
-                >
-                  <span class="ml-3 text-base font-medium text-white"
-                    >청원·제안</span
-                  >
-                </a>
-                <a
-                  href="utility.html"
-                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
-                >
-                  <span class="ml-3 text-base font-medium text-white"
-                    >학급 도우미</span
-                  >
-                </a>
-
-                <a
-                  href="about.html"
-                  class="-m-3 p-3 flex items-center rounded-md hover:bg-blue-400 transition duration-300"
-                >
-                  <span class="ml-3 text-base font-medium text-white"
-                    >소개</span
-                  >
-                </a>
-              </nav>
             </div>
           </div>
         </div>
       </div>
-    </header>
-    <main class="container mx-auto mt-8 px-4">
-      <div
-        id="postContent"
-        class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-8"
-      >
-        <!-- 게시물 내용이 여기에 동적으로 추가됩니다 -->
-      </div>
-
-      <div class="space-y-6 mb-8">
-        <div class="flex space-x-2">
-          <button
-            id="deletePostButton"
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            style="display: none"
-          >
-            게시물 삭제
-          </button>
-          <button
-            id="revealAuthorButton"
-            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
-            style="display: none"
-          >
-            익명 작성자 확인
-          </button>
-        </div>
-
-        <div class="flex items-center">
-          <button
-            id="likeButton"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex items-center"
-          >
-            <svg
-              class="w-5 h-5 mr-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-              ></path>
-            </svg>
-            좋아요 <span id="likeCount" class="ml-2">0</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- 구분선 추가 -->
-      <hr class="my-8 border-t border-gray-300" />
 
       <!-- 댓글 섹션 -->
       <div class="mt-8">
@@ -328,55 +548,188 @@
         <form id="commentForm" class="mb-6">
           <textarea
             id="commentContent"
+            name="commentContent"
             class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows="4"
             placeholder="댓글을 입력하세요"
+            required
           ></textarea>
-          <div class="mt-2 flex items-center">
-            <input type="checkbox" id="isAnonymous" class="mr-2" />
-            <label for="isAnonymous" class="text-sm text-gray-600"
-              >익명으로 작성</label
-            >
-          </div>
-          <button
-            type="submit"
-            class="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          >
-            댓글 작성
-          </button>
-        </form>
-        <div id="commentList" class="space-y-4">
-          <!-- 댓글 목록이 여기에 동적으로 추가됩니다 -->
-        </div>
 
-        <div id="adminControls" style="display: none">
-          <button
-            id="revealAuthorButton"
-            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-2"
-          >
-            익명 작성자 확인
-          </button>
+          <!-- 익명 댓글 입력 필수 수정 -->
+          <div id="anonymousCommentFields" class="hidden mt-4 space-y-4">
+            <div class="flex space-x-4">
+              <input
+                type="text"
+                name="anonymousNick"
+                id="anonymousNick"
+                class="flex-1 px-4 py-2 border rounded"
+                placeholder="닉네임 (미입력시 ㅇㅇ)"
+              />
+              <input
+                type="password"
+                name="anonymousPassword"
+                id="anonymousPassword"
+                class="flex-1 px-4 py-2 border rounded"
+                placeholder="비밀번호"
+              />
+            </div>
+            <div class="text-sm text-gray-500">
+              * 익명 댓글 작성 시 비밀번호는 필수입니다.
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-4">
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                name="isAnonymous"
+                id="isAnonymous"
+                class="mr-2"
+              />
+              <label for="isAnonymous" class="text-sm text-gray-600"
+                >익명으로 작성</label
+              >
+            </div>
+            <button
+              type="submit"
+              class="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+            >
+              글 작성
+            </button>
+          </div>
+        </form>
+
+        <div id="commentList" class="space-y-4">
+          <!-- 댓글 목록이 여기에 동으로 추됩니다 -->
         </div>
       </div>
     </main>
 
-    <footer class="bg-gray-800 text-white py-8">
+    <footer
+      class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-10"
+    >
       <div class="container mx-auto px-6 lg:px-8">
-        <div class="flex justify-center">
+        <!-- 모바일용 푸터 -->
+        <div class="md:hidden space-y-6">
           <div class="text-center">
-            <p class="text-gray-300 mb-2">문의: ksb19558@naver.com</p>
+            <h3 class="text-xl font-bold text-white mb-2">완·대·전</h3>
+            <p class="text-gray-400 text-sm">
+              완도고등학교 학생들을 위한<br />
+              온라인 커뮤니티 플랫폼
+            </p>
+          </div>
+
+          <div class="flex justify-center space-x-4">
             <a
-              href="privacy-policy.html"
-              class="text-blue-400 hover:text-blue-300 transition duration-300"
+              href="pages/notice.html"
+              class="text-gray-400 hover:text-blue-400 text-sm"
+              >공지사항</a
             >
-              개인정보 처리방침
+            <a
+              href="pages/community.html"
+              class="text-gray-400 hover:text-blue-400 text-sm"
+              >커뮤니티</a
+            >
+            <a
+              href="pages/petition.html"
+              class="text-gray-400 hover:text-blue-400 text-sm"
+              >청원·제제안</a
+            >
+          </div>
+
+          <div class="text-center text-sm text-gray-400">
+            <a href="mailto:sungblab@gmail.com" class="hover:text-blue-400">
+              sungblab@gmail.com
             </a>
           </div>
         </div>
-        <div
-          class="border-t border-gray-700 mt-8 pt-8 text-sm text-center text-gray-400"
-        >
-          <p>&copy; 2024 완대전. All rights reserved.</p>
+
+        <!-- 데스크톱용 푸터 -->
+        <div class="hidden md:grid grid-cols-3 gap-8">
+          <!-- 기존 데스크톱 푸터 내용 유지 -->
+          <div class="space-y-3">
+            <h3 class="text-xl font-bold text-white mb-2">완·대·전</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              완도고등학교 학생들을 위한<br />
+              더 나은 학교생활을 만들어가는<br />
+              온라인 커뮤니티 플랫폼
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-lg font-semibold text-white mb-2">바로가기</h4>
+            <ul class="space-y-1.5">
+              <li>
+                <a
+                  href="notice.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >공지사항</a
+                >
+              </li>
+              <li>
+                <a
+                  href="community.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >커뮤니티</a
+                >
+              </li>
+              <li>
+                <a
+                  href="petition.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >청원·제안</a
+                >
+              </li>
+              <li>
+                <a
+                  href="utility.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >학급 도우미</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-lg font-semibold text-white mb-2">문의 및 정책</h4>
+            <div class="space-y-1.5">
+              <p class="flex items-center text-gray-400 text-sm">
+                <i class="fas fa-envelope mr-2"></i>
+                <a
+                  href="mailto:sungblab@gmail.com"
+                  class="hover:text-blue-400 transition-colors duration-300"
+                  >sungblab@gmail.com</a
+                >
+              </p>
+              <p class="flex items-center text-gray-400 text-sm">
+                <i class="fas fa-map-marker-alt mr-2"></i>
+                남 완도군 완도읍 개포로 134
+              </p>
+              <a
+                href="/pages/privacy-policy.html"
+                class="block text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+              >
+                <i class="fas fa-shield-alt mr-2"></i>
+                개인정보 처리방침
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 공통 하단 영역 -->
+        <div class="border-t border-gray-700 mt-8 pt-6">
+          <div class="flex flex-col items-center space-y-3">
+            <p class="text-xs text-gray-400 text-center">
+              &copy; 2024 완도고등학교 학생회. All rights reserved.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+              >
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
@@ -387,365 +740,681 @@
         const mobileMenuClose = document.getElementById("mobile-menu-close");
         const mobileMenu = document.getElementById("mobile-menu");
 
+        // 모바일 메뉴 열기
         mobileMenuButton.addEventListener("click", () => {
-          mobileMenu.classList.toggle("active");
+          mobileMenu.classList.add("active");
         });
 
+        // 모바일 메뉴 닫기
         mobileMenuClose.addEventListener("click", () => {
           mobileMenu.classList.remove("active");
         });
+
+        // 모바일 메뉴 클릭시 메뉴 닫기
+        const mobileMenuLinks = document.querySelectorAll(".mobile-menu-link");
+        mobileMenuLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.remove("active");
+          });
+        });
       });
 
-      const API_BASE_URL =
-        "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app"; // API 서버 주소
+      // 전역 변수 설정
+      const API_BASE_URL = "http://127.0.0.1:3000";
       let currentUser = JSON.parse(localStorage.getItem("user"));
       let postId = new URLSearchParams(window.location.search).get("id");
 
-      // 게시물 상세 정보 가져오기
+      // 유틸리티 함수들
+      function formatDate(date) {
+        const now = new Date();
+        const targetDate = new Date(date);
+        const diff = now - targetDate;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
+        if (minutes < 1) return "방금 전";
+        if (minutes < 60) return `${minutes}분 전`;
+        if (hours < 24) return `${hours}시간 전`;
+        if (days < 7) return `${days}일 전`;
+
+        return targetDate.toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+
+      function formatIPAddress(ip) {
+        if (!ip) return "";
+        // IPv6 형식(::ffff:127.0.0.1)에서 IPv4 부분만 추출
+        const ipv4Match = ip.match(/(?::(\d+\.\d+\.\d+\.\d+))$/);
+        const ipv4 = ipv4Match ? ipv4Match[1] : ip;
+
+        const parts = ipv4.split(".");
+        if (parts.length !== 4) return "";
+        return `${parts[0]}.${parts[1]}`;
+      }
+
+      // 게시글 관련 함수들
       async function fetchPostDetail() {
-        const token = localStorage.getItem("token");
         try {
-          const response = await axios.get(
-            `${API_BASE_URL}/api/posts/${postId}`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          );
-          displayPostDetail(response.data);
+          const token = localStorage.getItem("token");
+          const response = await fetch(`${API_BASE_URL}/api/posts/${postId}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token ? `Bearer ${token}` : "",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error("게시글을 불러오는데 실패했습니다.");
+          }
+
+          const data = await response.json();
+          displayPostDetail(data);
         } catch (error) {
-          console.error(
-            "게시물 상세 정보 가져오기 실패:",
-            error.response ? error.response.data : error
-          );
+          console.error("게시글 불러오기 실패:", error);
+          showError("게시글을 불러오는데 실패했습니다.");
         }
       }
 
       function displayPostDetail(post) {
-        console.log("Received post data:", post); // 디버깅을 위한 로그 추가
+        if (!post) return;
 
-        const postContent = document.getElementById("postContent");
-        postContent.innerHTML = `
-    <h2 class="text-2xl font-bold mb-4">${post.title}</h2>
-    <p class="mb-2">작성자: ${
-      post.isAnonymous ? "익명" : post.author.username
-    }</p>
-    <p class="mb-2">작성일: ${new Date(post.createdAt).toLocaleString()}</p>
-    <p class="mb-4">${post.content}</p>
-  `;
+        const elements = {
+          title: document.getElementById("postTitle"),
+          author: document.getElementById("authorInfo"),
+          date: document.getElementById("postDate"),
+          views: document.getElementById("viewCount"),
+          comments: document.getElementById("commentCount"),
+          content: document.getElementById("postContent"),
+          upvoteBtn: document.getElementById("upvoteButton"),
+          downvoteBtn: document.getElementById("downvoteButton"),
+          score: document.getElementById("score"),
+        };
 
-        const deleteButton = document.getElementById("deletePostButton");
-        const revealAuthorButton =
-          document.getElementById("revealAuthorButton");
-
-        // 현재 사용자가 관리자이거나 게시물 작성자인 경우 삭제 버튼 표시
-        if (currentUser && (currentUser.isAdmin || post.isAuthor)) {
-          console.log("Showing delete button"); // 디버깅을 위한 로그 추가
-          deleteButton.style.display = "inline-block";
-          deleteButton.addEventListener("click", deletePost);
-        } else {
-          console.log("Hiding delete button"); // 디버깅을 위한 로그 추가
-          deleteButton.style.display = "none";
+        // 기본 정보 표시
+        elements.title.textContent = post.title;
+        if (elements.author) {
+          elements.author.textContent = post.isAnonymous
+            ? `${post.anonymousNick || "ㅇㅇ"}(${post.ipAddress || ""})`
+            : post.author?.nickname || "익명";
         }
 
-        // 관리자를 위한 익명 작성자 확인 버튼 (익명 게시물인 경우에만)
-        if (currentUser && currentUser.isAdmin && post.isAnonymous) {
-          revealAuthorButton.style.display = "inline-block";
-          revealAuthorButton.addEventListener("click", () =>
-            revealAuthor(post._id)
-          );
-        } else {
-          revealAuthorButton.style.display = "none";
+        // 나머지 정보 표시
+        if (elements.date)
+          elements.date.textContent = formatDate(post.createdAt);
+        if (elements.views) elements.views.textContent = post.views || 0;
+        if (elements.comments)
+          elements.comments.textContent = post.comments?.length || 0;
+        if (elements.content && post.content) {
+          elements.content.innerHTML = post.content
+            .replace(/\n/g, "<br>")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&amp;/g, "&")
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'");
         }
 
-        document.getElementById("likeCount").textContent = post.likes.length;
+        // 투표 상태 표시
+        if (elements.upvoteBtn) {
+          const upvoteCount = elements.upvoteBtn.querySelector(".vote-count");
+          upvoteCount.textContent = post.upvoteCount || 0;
+          elements.upvoteBtn.classList.toggle("active", post.hasUpvoted);
+        }
+
+        if (elements.downvoteBtn) {
+          const downvoteCount =
+            elements.downvoteBtn.querySelector(".vote-count");
+          downvoteCount.textContent = post.downvoteCount || 0;
+          elements.downvoteBtn.classList.toggle("active", post.hasDownvoted);
+        }
+
+        // 점수 표시 및 스타일 적용
+        if (elements.score) {
+          elements.score.textContent = post.score || 0;
+          if (post.score > 0) {
+            elements.score.className = "text-blue-500 font-bold";
+          } else if (post.score < 0) {
+            elements.score.className = "text-red-500 font-bold";
+          } else {
+            elements.score.className = "text-gray-500";
+          }
+        }
+
+        // 베스트글 표시
+        if (
+          post.isBest &&
+          elements.title &&
+          !elements.title.textContent.startsWith("🏆")
+        ) {
+          elements.title.textContent = `🏆 ${elements.title.textContent}`;
+        }
+
+        setupPostButtons(post);
+        if (post.comments) {
+          displayComments(post.comments);
+        }
       }
 
-      function displayComments(comments) {
-        const commentList = document.getElementById("commentList");
-        commentList.innerHTML = comments
-          .map(
-            (comment) => `
-        <div class="bg-gray-100 p-4 mb-2 rounded">
-          <p>${comment.content}</p>
-          <p class="text-sm text-gray-500">
-            작성자: ${comment.isAnonymous ? "익명" : comment.author.username} |
-            작성일: ${new Date(comment.createdAt).toLocaleString()}
-          </p>
-          ${
-            currentUser &&
-            (currentUser.id === comment.author._id || currentUser.isAdmin)
-              ? `<button class="deleteComment text-red-500" data-id="${comment._id}">삭제</button>`
-              : ""
-          }
-        </div>
-      `
-          )
-          .join("");
+      // 이벤트 리스너 설정 함수 수
+      function setupEventListeners() {
+        // 추천/비추천 버튼
+        const upvoteBtn = document.getElementById("upvoteButton");
+        const downvoteBtn = document.getElementById("downvoteButton");
+        if (upvoteBtn) {
+          upvoteBtn.addEventListener("click", () => handleVote("up"));
+        }
+        if (downvoteBtn) {
+          downvoteBtn.addEventListener("click", () => handleVote("down"));
+        }
 
-        // 이벤트 위임을 사용하여 댓글 삭제 버튼에 이벤트 리스너 추가
-        commentList.addEventListener("click", function (e) {
-          if (e.target.classList.contains("deleteComment")) {
-            deleteComment(e.target.dataset.id);
-          }
-        });
+        // 댓글 폼
+        const commentForm = document.getElementById("commentForm");
+        if (commentForm) {
+          commentForm.addEventListener("submit", submitComment);
+        }
+
+        // 익명 체크박스
+        const isAnonymousCheckbox = document.getElementById("isAnonymous");
+        const anonymousFields = document.getElementById(
+          "anonymousCommentFields"
+        );
+        if (isAnonymousCheckbox && anonymousFields) {
+          isAnonymousCheckbox.addEventListener("change", function (e) {
+            anonymousFields.classList.toggle("hidden", !e.target.checked);
+          });
+        }
+
+        // 목록으로 돌아가는 버튼
+        const backButton = document.querySelector(
+          'button[onclick="history.back()"]'
+        );
+        if (backButton) {
+          backButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            location.href = "community.html";
+          });
+        }
       }
 
-      async function deleteComment(commentId) {
-        if (!confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+      // 에러 표시 함수 추가
+      function showError(message) {
+        const contentElement = document.getElementById("postContent");
+        if (contentElement) {
+          contentElement.innerHTML = `
+                              <div class="text-center py-8">
+                                <p class="text-red-500">${message}</p>
+                                <button onclick="history.back()" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded">
+                                  목록으로 돌아가기
+                                </button>
+                              </div>
+                            `;
+        }
+      }
+
+      // 게시글 버튼 제어 함수 수정
+      function setupPostButtons(post) {
+        const editBtn = document.getElementById("editPostBtn");
+        const deleteBtn = document.getElementById("deletePostBtn");
+
+        if (!editBtn || !deleteBtn) return;
+
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        const isAdmin = currentUser && currentUser.isAdmin;
+
+        const showButtons = () => {
+          editBtn.classList.remove("hidden");
+          deleteBtn.classList.remove("hidden");
+        };
+
+        if (isAdmin) {
+          // 관리는 모든 게시글 수정/삭제 가능
+          showButtons();
+          editBtn.onclick = () =>
+            (location.href = `write-post.html?id=${post._id}`);
+          deleteBtn.onclick = () => deletePost();
+        } else if (post.isAnonymous) {
+          // 익명 게시글
+          showButtons();
+          editBtn.onclick = () => showPasswordModal("edit");
+          deleteBtn.onclick = () => showPasswordModal("delete");
+        } else if (
+          currentUser &&
+          post.author &&
+          currentUser.id === post.author._id
+        ) {
+          // 자신의 게시글
+          showButtons();
+          editBtn.onclick = () =>
+            (location.href = `write-post.html?id=${post._id}`);
+          deleteBtn.onclick = () => deletePost();
+        }
+      }
+
+      // 이벤트 리스너 설정
+      document.addEventListener("DOMContentLoaded", function () {
+        if (!postId) {
+          showError("잘못된 접근입니다.");
           return;
         }
 
-        try {
-          const token = localStorage.getItem("token");
-          const response = await axios.delete(
-            `${API_BASE_URL}/api/comments/${commentId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+        // 댓글 폼 이트 리스너
+        const commentForm = document.getElementById("commentForm");
+        if (commentForm) {
+          commentForm.addEventListener("submit", submitComment);
+        }
+
+        // 익명 체크박스 이벤트 리스너
+        const isAnonymousCheckbox = document.getElementById("isAnonymous");
+        const anonymousFields = document.getElementById(
+          "anonymousCommentFields"
+        );
+        if (isAnonymousCheckbox && anonymousFields) {
+          isAnonymousCheckbox.addEventListener("change", function (e) {
+            anonymousFields.classList.toggle("hidden", !e.target.checked);
+          });
+        }
+
+        setupEventListeners();
+        fetchPostDetail();
+
+        if (currentUser?.isAdmin) {
+          setupAdminControls();
+        }
+
+        // 비로그인 사자 체크
+        if (!localStorage.getItem("token")) {
+          const isAnonymousCheckbox = document.getElementById("isAnonymous");
+          const anonymousFields = document.getElementById(
+            "anonymousCommentFields"
           );
 
-          if (response.status === 200) {
-            alert(response.data.message);
-            fetchComments(); // 댓글 목록 새로고침
+          if (isAnonymousCheckbox && anonymousFields) {
+            isAnonymousCheckbox.checked = true;
+            isAnonymousCheckbox.disabled = true;
+            anonymousFields.classList.remove("hidden");
           }
-        } catch (error) {
-          console.error("댓글 삭제 실패:", error);
-          alert(
-            "댓글 삭제에 실패했습니다. " +
-              (error.response
-                ? error.response.data.message
-                : "알 수 없는 오류가 발생했습니다.")
-          );
         }
-      }
+      });
 
-      async function deletePost() {
-        if (!confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
-          return;
-        }
-
-        try {
-          const token = localStorage.getItem("token");
-          const response = await axios.delete(
-            `${API_BASE_URL}/api/posts/${postId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (response.status === 200) {
-            alert(response.data.message);
-            window.location.href = "community.html"; // 삭제 후 커뮤니티 페이지로 이동
-          }
-        } catch (error) {
-          console.error("게시물 삭제 실패:", error);
-          alert(
-            "게시물 삭제에 실패했습니다. " +
-              (error.response
-                ? error.response.data.message
-                : "알 수 없는 오류가 발생했습니다.")
-          );
-        }
-      }
-
-      async function revealAuthor(postId) {
-        try {
-          const response = await axios.get(
-            `${API_BASE_URL}/api/admin/posts/${postId}/reveal-author`,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            }
-          );
-          alert(
-            `실제 작성자: ${response.data.username} (${response.data.nickname})`
-          );
-        } catch (error) {
-          console.error("작성자 정보 확인 실패:", error);
-          alert("작성자 정보를 확인하는데 실패했습니다.");
-        }
-      }
-
-      // 좋아요 기능
-      async function toggleLike() {
-        try {
-          const response = await axios.post(
-            `${API_BASE_URL}/api/posts/${postId}/like`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            }
-          );
-          document.getElementById("likeCount").textContent =
-            response.data.likes;
-        } catch (error) {
-          console.error("좋아요 처리 실패:", error);
-        }
-      }
-
-      // 댓글 목록 가져오기
-      async function fetchComments() {
-        try {
-          const response = await axios.get(
-            `${API_BASE_URL}/api/posts/${postId}/comments`,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            }
-          );
-          displayComments(response.data);
-        } catch (error) {
-          console.error("댓글 목록 가져오기 실패:", error);
-        }
-      }
-
-      // 댓글 목록 표시 함수 수정
-      function displayComments(comments) {
-        const commentList = document.getElementById("commentList");
-        commentList.innerHTML = comments
-          .map(
-            (comment) => `
-    <div class="bg-gray-100 p-4 mb-2 rounded">
-      <p>${comment.content}</p>
-      <p class="text-sm text-gray-500">
-        작성자: ${comment.isAnonymous ? "익명" : comment.author.username} |
-        작성일: ${new Date(comment.createdAt).toLocaleString()}
-      </p>
-      ${
-        currentUser &&
-        (currentUser.id === comment.author._id || currentUser.isAdmin)
-          ? `<button class="deleteComment text-red-500" data-id="${comment._id}">삭제</button>`
-          : ""
-      }
-    </div>
-  `
-          )
-          .join("");
-
-        // 이벤트 위임을 사용하여 댓글 삭제 버튼에 이벤트 리스너 추가
-        commentList.addEventListener("click", function (e) {
-          if (e.target.classList.contains("deleteComment")) {
-            deleteComment(e.target.dataset.id);
-          }
-        });
-      }
-
-      // 댓글 작성
+      // 댓글 관련 함수들 추가
       async function submitComment(e) {
         e.preventDefault();
         const content = document.getElementById("commentContent").value;
         const isAnonymous = document.getElementById("isAnonymous").checked;
 
+        if (!content.trim()) {
+          alert("댓글 내용을 입력해주세요.");
+          return;
+        }
+
+        const commentData = {
+          content,
+          isAnonymous,
+        };
+
+        if (isAnonymous) {
+          const anonymousNick = document.getElementById("anonymousNick").value;
+          const anonymousPassword =
+            document.getElementById("anonymousPassword").value;
+
+          if (!anonymousPassword) {
+            alert("익명 댓글 작성 시 비밀번호는 필수입니다.");
+            return;
+          }
+
+          commentData.anonymousNick = anonymousNick || "ㅇㅇㅇ";
+          commentData.anonymousPassword = anonymousPassword;
+        }
+
         try {
-          await axios.post(
+          const token = localStorage.getItem("token");
+          const headers = {
+            "Content-Type": "application/json",
+          };
+
+          // 로그인한 사용자인 경우에만 토큰 추가
+          if (!isAnonymous && token) {
+            headers.Authorization = `Bearer ${token}`;
+          }
+
+          const response = await fetch(
             `${API_BASE_URL}/api/posts/${postId}/comments`,
-            { content, isAnonymous },
             {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
+              method: "POST",
+              headers,
+              body: JSON.stringify(commentData),
             }
           );
+
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || "댓글 작성에 실패했습니다.");
+          }
+
+          // 폼 초기화
           document.getElementById("commentContent").value = "";
-          fetchComments();
+          if (isAnonymous) {
+            document.getElementById("anonymousNick").value = "";
+            document.getElementById("anonymousPassword").value = "";
+            document.getElementById("isAnonymous").checked = false;
+            document
+              .getElementById("anonymousCommentFields")
+              .classList.add("hidden");
+          }
+
+          // 댓글 목록 새로고침
+          fetchPostDetail();
         } catch (error) {
-          console.error("댓글 작성 실패:", error);
+          alert(error.message || "댓글 작성 중 오류가 발생했습니다.");
         }
       }
 
-      // 댓글 삭제
+      // 댓글 목록 표시 함수
+      function displayComments(comments) {
+        const commentList = document.getElementById("commentList");
+        if (!commentList) return;
+
+        if (!comments || comments.length === 0) {
+          commentList.innerHTML = `
+            <div class="text-center py-4 text-gray-500">
+              첫 댓글을 작성해보세요.
+            </div>
+          `;
+          return;
+        }
+
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+
+        commentList.innerHTML = comments
+          .map((comment) => {
+            const authorDisplay = comment.isAnonymous
+              ? `${comment.anonymousNick || "ㅇㅇ"}${
+                  comment.ipAddress ? `(${comment.ipAddress})` : ""
+                }`
+              : comment.author?.nickname || "익명";
+
+            // 삭제 버튼 시 조건 수정
+            const canDelete =
+              currentUser?.isAdmin || // 관리자이거나
+              (currentUser &&
+                comment.author &&
+                currentUser.id === comment.author._id) || // 자신의 댓글이거나
+              comment.isAnonymous; // 익명 글인 경우
+
+            const deleteButton = canDelete
+              ? `<button class="text-red-500 hover:text-red-700" onclick="deleteComment('${comment._id}')">삭제</button>`
+              : "";
+
+            return `
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <p class="mb-2">${comment.content}</p>
+                    <p class="text-sm text-gray-500">
+                      <span class="font-medium">${authorDisplay}</span>
+                      <span class="mx-2">|</span>
+                      <span>${formatDate(comment.createdAt)}</span>
+                    </p>
+                  </div>
+                  <div class="flex space-x-2">
+                    ${deleteButton}
+                  </div>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      // 댓글 삭제 함수
       async function deleteComment(commentId) {
         if (!confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
           return;
         }
 
         try {
+          const headers = {
+            "Content-Type": "application/json",
+          };
+
+          // 로그인한 사용자인 경우 토큰 추가
           const token = localStorage.getItem("token");
-          const response = await axios.delete(
+          if (token) {
+            headers.Authorization = `Bearer ${token}`;
+          }
+
+          // 익명 댓글인 경우 비밀번호 입력 받기
+          let password = null;
+          if (!token) {
+            password = prompt("댓글 작성시 입력한 비밀번호를 입력해주세요.");
+            if (!password) return;
+          }
+
+          const response = await fetch(
             `${API_BASE_URL}/api/comments/${commentId}`,
             {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
+              method: "DELETE",
+              headers,
+              body: password ? JSON.stringify({ password }) : undefined,
             }
           );
 
-          if (response.status === 200) {
-            alert(response.data.message);
-            fetchComments();
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || "댓글 삭제에 실패했습니다.");
           }
+
+          // 댓글 목록 새로고침
+          fetchPostDetail();
         } catch (error) {
-          console.error("댓글 삭제 실패:", error);
-          alert(
-            "댓글 삭제에 실패했습니다. " +
-              (error.response
-                ? error.response.data.message
-                : "알 수 없는 오류가 발생했습니다.")
-          );
+          alert(error.message || "댓글 삭제 중 오류가 발생했습니다.");
         }
       }
 
-      // 게시물 삭제 함수
-      async function deletePost() {
-        if (!confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
+      // 익명 체크박스 이벤트 리스너 수정
+      document
+        .getElementById("isAnonymous")
+        .addEventListener("change", function (e) {
+          const anonymousFields = document.getElementById(
+            "anonymousCommentFields"
+          );
+          const anonymousPassword =
+            document.getElementById("anonymousPassword");
+
+          anonymousFields.classList.toggle("hidden", !this.checked);
+
+          // 익명 선택 시 비밀번호 필수 설정
+          if (this.checked) {
+            anonymousPassword.setAttribute("required", "required");
+          } else {
+            anonymousPassword.removeAttribute("required");
+          }
+        });
+
+      // 추천천/비추천 처리 함수
+      async function handleVote(type) {
+        const upvoteBtn = document.getElementById("upvoteButton");
+        const downvoteBtn = document.getElementById("downvoteButton");
+        const scoreElement = document.getElementById("score");
+
+        try {
+          upvoteBtn.disabled = true;
+          downvoteBtn.disabled = true;
+
+          const response = await fetch(
+            `${API_BASE_URL}/api/posts/${postId}/vote`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ type }),
+              credentials: "include",
+            }
+          );
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message);
+          }
+
+          // UI 업데이트
+          const upvoteCount = upvoteBtn.querySelector(".vote-count");
+          const downvoteCount = downvoteBtn.querySelector(".vote-count");
+
+          upvoteCount.textContent = data.upvotes;
+          downvoteCount.textContent = data.downvotes;
+          scoreElement.textContent = data.score;
+
+          // 버튼 상태 업데이트
+          upvoteBtn.classList.toggle("active", type === "up");
+          downvoteBtn.classList.toggle("active", type === "down");
+
+          // 베스트글 표시 업데이트
+          if (data.isBest) {
+            const titleElement = document.getElementById("postTitle");
+            if (titleElement && !titleElement.textContent.startsWith("🏆")) {
+              titleElement.textContent = `🏆 ${titleElement.textContent}`;
+            }
+          }
+
+          // 점수에 따른 상태 변경
+          if (data.score > 0) {
+            scoreElement.className = "text-blue-500 font-bold";
+          } else if (data.score < 0) {
+            scoreElement.className = "text-red-500 font-bold";
+          } else {
+            scoreElement.className = "text-gray-500";
+          }
+        } catch (error) {
+          alert(error.message || "투표 처리 중 오류가 발생했습니다.");
+        } finally {
+          upvoteBtn.disabled = false;
+          downvoteBtn.disabled = false;
+        }
+      }
+
+      // 관리자 컨트롤 설정 함수 수정
+      function setupAdminControls() {
+        const adminControls = document.getElementById("adminControls");
+        if (!adminControls) return;
+
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        if (!currentUser?.isAdmin) return;
+
+        // 익명 게시글인 경우에만 관리자 컨트롤 표시
+        const post = window.currentPost; // 현재 게시글 데이터
+        if (post.isAnonymous) {
+          adminControls.classList.remove("hidden");
+        }
+      }
+
+      // 비밀번호 모달 관련 함수
+      let currentAction = ""; // 'edit' 또는 'delete'
+
+      // 비밀번호 모달 열기
+      function showPasswordModal(action) {
+        currentAction = action;
+        const modal = document.getElementById("passwordModal");
+        const passwordInput = document.getElementById("postPassword");
+
+        modal.classList.remove("hidden");
+        passwordInput.value = "";
+        passwordInput.focus();
+      }
+
+      // 비밀번호 모달 닫기
+      function closePasswordModal() {
+        const modal = document.getElementById("passwordModal");
+        modal.classList.add("hidden");
+        currentAction = "";
+      }
+
+      // 비비밀번호 확인 버튼 이벤트 리스너
+      document
+        .getElementById("confirmPasswordBtn")
+        .addEventListener("click", async () => {
+          const password = document.getElementById("postPassword").value;
+
+          if (!password) {
+            alert("비밀번호를 입력해주세요.");
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `${API_BASE_URL}/api/posts/${postId}/verify-password`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ password }),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("비밀번호가 일치하지 않습니다.");
+            }
+
+            // 비밀번호 확인 성공 후 작업 수행
+            if (currentAction === "edit") {
+              location.href = `write-post.html?id=${postId}&password=${password}`;
+            } else if (currentAction === "delete") {
+              await deletePost(password);
+            }
+
+            closePasswordModal();
+          } catch (error) {
+            alert(error.message || "비밀번호 확인 중 오류가 발생했습니다.");
+          }
+        });
+
+      // 게시글 삭제 함수
+      async function deletePost(password = null) {
+        if (!confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
           return;
         }
 
         try {
-          const token = localStorage.getItem("token");
-          const response = await axios.delete(
-            `${API_BASE_URL}/api/posts/${postId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          const headers = {
+            "Content-Type": "application/json",
+          };
 
-          if (response.status === 200) {
-            alert(response.data.message);
-            window.location.href = "community.html"; // 삭제 후 커뮤니티 페이지로 이동
+          // 로그인한 사용자인 경우 토큰 추가
+          const token = localStorage.getItem("token");
+          if (token) {
+            headers.Authorization = `Bearer ${token}`;
           }
+
+          // 관리자 여부 확인
+          const currentUser = JSON.parse(localStorage.getItem("user"));
+          const isAdmin = currentUser && currentUser.isAdmin;
+
+          // 익명 게시글인 경우 비밀번호 추가 (관리자 아닐 때만)
+          const body = !isAdmin && password ? { password } : undefined;
+
+          const response = await fetch(`${API_BASE_URL}/api/posts/${postId}`, {
+            method: "DELETE",
+            headers,
+            body: body ? JSON.stringify(body) : undefined,
+          });
+
+          if (!response.ok) {
+            throw new Error("게시글 삭제에 실패했습니다.");
+          }
+
+          alert("게시글이 삭제되었습니다.");
+          location.href = "community.html";
         } catch (error) {
-          console.error("게시물 삭제 실패:", error);
-          if (error.response && error.response.status === 403) {
-            alert("게시물 삭제 권한이 없습니다.");
-          } else {
-            alert(
-              "게시물 삭제에 실패했습니다. " +
-                (error.response
-                  ? error.response.data.message
-                  : "알 수 없는 오류가 발생했습니다.")
-            );
-          }
+          alert(error.message || "게시글 삭제 중 오류가 발생했습니다.");
         }
       }
-
-      // 페이지 로드 시 currentUser 설정
-      document.addEventListener("DOMContentLoaded", () => {
-        const userJSON = localStorage.getItem("user");
-        if (userJSON) {
-          currentUser = JSON.parse(userJSON);
-          console.log("Current user:", currentUser); // 디버깅을 위한 로그 추가
-        }
-
-        fetchPostDetail();
-        fetchComments();
-        document
-          .getElementById("likeButton")
-          .addEventListener("click", toggleLike);
-        document
-          .getElementById("commentForm")
-          .addEventListener("submit", submitComment);
-      });
     </script>
   </body>
 </html>

@@ -47,9 +47,10 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
     <meta name="theme-color" content="#ffffff" />
     <link
-      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
       rel="stylesheet"
-      type="text/css"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -57,7 +58,7 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ["Spoqa Han Sans Neo", "sans-serif"],
+              sans: ["Pretendard", "sans-serif"],
             },
           },
         },
@@ -163,8 +164,9 @@
         <p class="mb-4">
           「개인정보보호법」제35조(개인정보의 열람), 제36조(개인정보의
           정정·삭제), 제37조(개인정보의 처리정지 등)의 규정에 의한 요구에 대하여
-          공공기관의 장이 행한 처분 또는 부작위로 인하여 권리 또는 이익의 침해를
-          받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.
+          공공기관의 장이 행한 처분 또는 부처 위로 인하여 권리 또는 이익의
+          침해를 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수
+          있습니다.
         </p>
         <p class="mb-4">
           ※ 행정심판에 대해 자세한 사항은 중앙행정심판위원회(www.simpan.go.kr)
@@ -182,7 +184,7 @@
         <ul class="list-disc pl-6 mb-4">
           <li>이름: 김 성 빈</li>
           <li>직책: 사이트 총 관리자</li>
-          <li>연락처: ksb19558@naver.com</li>
+          <li>연락처: sungblab@gmail.com</li>
         </ul>
       </section>
 
@@ -194,9 +196,132 @@
       </section>
     </main>
 
-    <footer class="bg-gray-800 text-white py-6">
-      <div class="container mx-auto px-4 text-center">
-        <p>&copy; 2024 완대전. All rights reserved.</p>
+    <footer
+      class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-10"
+    >
+      <div class="container mx-auto px-6 lg:px-8">
+        <!-- 모바일용 푸터 -->
+        <div class="md:hidden space-y-6">
+          <div class="text-center">
+            <h3 class="text-xl font-bold text-white mb-2">완·대·전</h3>
+            <p class="text-gray-400 text-sm">
+              완도고등학교 학생들을 위한<br />
+              온라인 커뮤니티 플랫폼
+            </p>
+          </div>
+
+          <div class="flex justify-center space-x-4">
+            <a
+              href="pages/notice.html"
+              class="text-gray-400 hover:text-blue-400 text-sm"
+              >공지사항</a
+            >
+            <a
+              href="pages/community.html"
+              class="text-gray-400 hover:text-blue-400 text-sm"
+              >커뮤니티</a
+            >
+            <a
+              href="pages/petition.html"
+              class="text-gray-400 hover:text-blue-400 text-sm"
+              >청원·제안</a
+            >
+          </div>
+
+          <div class="text-center text-sm text-gray-400">
+            <a href="mailto:sungblab@gmail.com" class="hover:text-blue-400">
+              sungblab@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <!-- 데스크톱용 푸터 -->
+        <div class="hidden md:grid grid-cols-3 gap-8">
+          <!-- 기존 데스크톱 푸터 내용 유지 -->
+          <div class="space-y-3">
+            <h3 class="text-xl font-bold text-white mb-2">완·대·전</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              완도고등학교 학생들을 위한<br />
+              더 나은 학교생활을 만들어가는<br />
+              온라인 커뮤니티 플랫폼
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-lg font-semibold text-white mb-2">바로가기</h4>
+            <ul class="space-y-1.5">
+              <li>
+                <a
+                  href="notice.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >공지사항</a
+                >
+              </li>
+              <li>
+                <a
+                  href="community.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >커뮤니티</a
+                >
+              </li>
+              <li>
+                <a
+                  href="petition.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >청원·제안</a
+                >
+              </li>
+              <li>
+                <a
+                  href="utility.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >학급 도우미</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-lg font-semibold text-white mb-2">문의 및 정책</h4>
+            <div class="space-y-1.5">
+              <p class="flex items-center text-gray-400 text-sm">
+                <i class="fas fa-envelope mr-2"></i>
+                <a
+                  href="mailto:sungblab@gmail.com"
+                  class="hover:text-blue-400 transition-colors duration-300"
+                  >sungblab@gmail.com</a
+                >
+              </p>
+              <p class="flex items-center text-gray-400 text-sm">
+                <i class="fas fa-map-marker-alt mr-2"></i>
+                전남 완도군 완도읍 개포로 134
+              </p>
+              <a
+                href="/pages/privacy-policy.html"
+                class="block text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+              >
+                <i class="fas fa-shield-alt mr-2"></i>
+                개인정보 처리방침
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 공통 하단 영역 -->
+        <div class="border-t border-gray-700 mt-8 pt-6">
+          <div class="flex flex-col items-center space-y-3">
+            <p class="text-xs text-gray-400 text-center">
+              &copy; 2024 완도고등학교 학생회. All rights reserved.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+              >
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   </body>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>글쓰기 - 완대전</title>
+    <meta
+      name="description"
+      content="완도고등학교 학생들을 위한 웹 커뮤니티 사이트입니다."
+    />
+
+    <!-- Open Graph 태그 -->
+    <meta property="og:title" content="완대전" />
+    <meta
+      property="og:description"
+      content="완도고등학교 학생들을 위한 웹 커뮤니티 사이트입니다."
+    />
+    <meta property="og:image" content="https://wdj.kr/content.png" />
+    <meta property="og:url" content="https://wdj.kr/" />
+
+    <!-- 파비콘 및 아이콘 -->
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="/asset/icon/apple-icon-57x57.png"
+    />
+    <!-- ... (기존 아이콘 링크들) ... -->
+
+    <!-- 스타일시트 -->
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Pretendard", "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#E6F0FF",
+                // ... (기존 컬러 설정)
+                900: "#001433",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* 기존 스타일 유지 */
+      #mobile-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background-color: #2563eb;
+        transition: left 0.3s ease-in-out;
+        z-index: 50;
+      }
+
+      #mobile-menu.active {
+        left: 0;
+      }
+
+      .mobile-menu-content {
+        padding: 2rem;
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      .mobile-menu-link {
+        display: block;
+        padding: 1rem;
+        color: white;
+        font-size: 1.125rem;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+      }
+
+      .mobile-menu-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      /* 모바일 메뉴 버튼 스타일 */
+      #mobile-menu-button {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        #mobile-menu-button {
+          display: inline-flex;
+        }
+      }
+
+      /* 모바일 메뉴 닫기 버튼 스타일 */
+      #mobile-menu-close {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s;
+      }
+
+      #mobile-menu-close:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      /* 네비게이션 링크 스타일 */
+      .nav-link {
+        padding: 0.5rem 0;
+        position: relative;
+        display: inline-block;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      /* 글쓰기 폼 스타일 개선 */
+      .write-form {
+        max-width: 900px;
+        margin: 2rem auto;
+        background: white;
+        padding: 2.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        transition: all 0.2s ease;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .anonymous-section {
+        background-color: #f8fafc;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        border: 1px solid #e2e8f0;
+        margin-bottom: 2rem;
+      }
+
+      #content {
+        min-height: 400px;
+        resize: vertical;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .btn {
+        padding: 0.75rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary {
+        background-color: #3b82f6;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background-color: #64748b;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background-color: #475569;
+        transform: translateY(-1px);
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-50">
+    <!-- 헤더 -->
+    <header
+      class="bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg py-2 mb-8 fixed w-full top-0 z-50"
+    >
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-3">
+          <div class="flex justify-start lg:w-0 lg:flex-1">
+            <a
+              href="/index.html"
+              class="text-3xl font-bold text-white hover:text-gray-100 transition-all duration-300 transform hover:scale-105"
+            >
+              완·대·전
+            </a>
+          </div>
+          <nav class="hidden md:flex space-x-8">
+            <a
+              href="notice.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">공지사항</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+            <a
+              href="community.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">커뮤니티</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+            <a
+              href="petition.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">청원·제안</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+            <a
+              href="utility.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">학급 도우미</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+            <a
+              href="about.html"
+              class="nav-link group relative text-base font-medium text-white transition-all duration-300"
+            >
+              <span class="relative z-10">소개</span>
+              <span
+                class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"
+              ></span>
+            </a>
+          </nav>
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-button"
+              class="rounded-lg p-2 inline-flex items-center justify-center text-white hover:bg-blue-500/50 transition-all duration-300"
+              aria-label="메뉴 열기"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="md:hidden">
+        <div class="mobile-menu-content">
+          <div class="flex justify-between items-center mb-8">
+            <a href="/index.html" class="text-2xl font-bold text-white"
+              >완완·대·전</a
+            >
+            <button
+              id="mobile-menu-close"
+              class="p-2 rounded-lg text-white hover:bg-blue-500/50 transition-all duration-300"
+              aria-label="메뉴 닫기"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <nav class="space-y-4">
+            <a href="notice.html" class="mobile-menu-link">공지사항</a>
+            <a href="community.html" class="mobile-menu-link">커뮤니티</a>
+            <a href="petition.html" class="mobile-menu-link">청원·제안</a>
+            <a href="utility.html" class="mobile-menu-link">학급 도우미</a>
+            <a href="about.html" class="mobile-menu-link">소개</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="w-full sm:container mx-auto mt-24 mb-16 px-4 sm:px-8">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">글쓰기</h1>
+      </div>
+
+      <form id="writePostForm" class="bg-white p-6 rounded-lg shadow-md">
+        <div class="form-group">
+          <label class="block text-gray-700 font-semibold mb-2" for="title"
+            >제목</label
+          >
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+            required
+            placeholder="제목을 입력하세요"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="block text-gray-700 font-semibold mb-2" for="content"
+            >내용</label
+          >
+          <textarea
+            id="content"
+            name="content"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors min-h-[400px]"
+            required
+            placeholder="내용을 입력하세요"
+          ></textarea>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+          <div class="flex items-center mb-4">
+            <input
+              type="checkbox"
+              id="isAnonymous"
+              name="isAnonymous"
+              class="w-4 h-4 text-blue-600"
+            />
+            <label for="isAnonymous" class="ml-2 text-gray-700 font-medium"
+              >익명으로 작성</label
+            >
+          </div>
+
+          <div id="anonymousOptions" class="space-y-4">
+            <div class="form-group">
+              <label
+                for="anonymousNick"
+                class="block text-gray-700 font-medium mb-2"
+              >
+                익명 닉네임
+                <span class="text-sm text-gray-500"
+                  >(미입력시 'ㅇㅇ'로 표시)</span
+                >
+              </label>
+              <input
+                type="text"
+                id="anonymousNick"
+                name="anonymousNick"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+                maxlength="10"
+              />
+            </div>
+
+            <div class="form-group">
+              <label
+                for="anonymousPassword"
+                class="block text-gray-700 font-medium mb-2"
+              >
+                비밀번호
+                <span class="text-sm text-gray-500">(글 수정/삭제시 필요)</span>
+              </label>
+              <input
+                type="password"
+                id="anonymousPassword"
+                name="anonymousPassword"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+                minlength="4"
+                maxlength="12"
+              />
+              <p class="text-sm text-gray-500 mt-1">4~12자리 입력</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-4">
+          <button
+            type="button"
+            onclick="history.back()"
+            class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+          >
+            취소
+          </button>
+          <button
+            type="submit"
+            class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            작성완료
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <!-- 알림 모달 추가 (body 태그 안, footer 위에 추가) -->
+    <div
+      id="alertModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+        <div class="text-lg font-semibold mb-4" id="alertTitle"></div>
+        <p class="text-gray-600 mb-6" id="alertMessage"></p>
+        <div class="flex justify-end">
+          <button
+            onclick="closeAlert()"
+            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          >
+            확인
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer
+      class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-10"
+    >
+      <div class="container mx-auto px-6 lg:px-8">
+        <!-- 모바일용 푸터 -->
+        <div class="md:hidden space-y-6">
+          <div class="text-center">
+            <h3 class="text-xl font-bold text-white mb-2">완·대·전</h3>
+            <p class="text-gray-400 text-sm">
+              완도고등학교 학생들을 위한<br />
+              온라인 커뮤니티 플랫폼
+            </p>
+          </div>
+
+          <div class="flex justify-center space-x-4">
+            <a
+              href="pages/notice.html"
+              class="text-gray-400 hover:text-blue-400 text-sm"
+              >공지사항</a
+            >
+            <a
+              href="pages/community.html"
+              class="text-gray-400 hover:text-blue-400 text-sm"
+              >커뮤니티</a
+            >
+            <a
+              href="pages/petition.html"
+              class="text-gray-400 hover:text-blue-400 text-sm"
+              >청원·제안</a
+            >
+          </div>
+
+          <div class="text-center text-sm text-gray-400">
+            <a href="mailto:sungblab@gmail.com" class="hover:text-blue-400">
+              sungblab@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <!-- 데스크톱용 푸터 -->
+        <div class="hidden md:grid grid-cols-3 gap-8">
+          <!-- 기존 데스크톱 푸터 내용 유지 -->
+          <div class="space-y-3">
+            <h3 class="text-xl font-bold text-white mb-2">완·대·전</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              완도고등학교 학생들을 위한<br />
+              더 나은 학교생활을 만들어가는<br />
+              온라인 커뮤니티 플랫폼
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-lg font-semibold text-white mb-2">바로가기</h4>
+            <ul class="space-y-1.5">
+              <li>
+                <a
+                  href="notice.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >공지사항</a
+                >
+              </li>
+              <li>
+                <a
+                  href="community.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >커뮤니티</a
+                >
+              </li>
+              <li>
+                <a
+                  href="petition.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >청원·제안</a
+                >
+              </li>
+              <li>
+                <a
+                  href="utility.html"
+                  class="text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+                  >학급 도우미</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-lg font-semibold text-white mb-2">문의 및 정책</h4>
+            <div class="space-y-1.5">
+              <p class="flex items-center text-gray-400 text-sm">
+                <i class="fas fa-envelope mr-2"></i>
+                <a
+                  href="mailto:sungblab@gmail.com"
+                  class="hover:text-blue-400 transition-colors duration-300"
+                  >sungblab@gmail.com</a
+                >
+              </p>
+              <p class="flex items-center text-gray-400 text-sm">
+                <i class="fas fa-map-marker-alt mr-2"></i>
+                전남 완도군 완도읍 개포로 134
+              </p>
+              <a
+                href="/pages/privacy-policy.html"
+                class="block text-gray-400 hover:text-blue-400 transition-colors duration-300 text-sm"
+              >
+                <i class="fas fa-shield-alt mr-2"></i>
+                개인정보 처리방침
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 공통 하단 영역 -->
+        <div class="border-t border-gray-700 mt-8 pt-6">
+          <div class="flex flex-col items-center space-y-3">
+            <p class="text-xs text-gray-400 text-center">
+              &copy; 2024 완도고등학교 학생회. All rights reserved.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+              >
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // 모바일 메뉴 관련 스크립트 개선
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenuClose = document.getElementById("mobile-menu-close");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const body = document.body;
+
+        function toggleMobileMenu(show) {
+          if (show) {
+            mobileMenu.classList.add("active");
+            body.style.overflow = "hidden"; // 메뉴 열릴 때 스크롤 방지
+          } else {
+            mobileMenu.classList.remove("active");
+            body.style.overflow = ""; // 메뉴 닫힐 때 스크롤 복원
+          }
+        }
+
+        // 메뉴 열기
+        mobileMenuButton?.addEventListener("click", () => {
+          toggleMobileMenu(true);
+        });
+
+        // 메뉴 닫기
+        mobileMenuClose?.addEventListener("click", () => {
+          toggleMobileMenu(false);
+        });
+
+        // 메뉴 외부 클릭시 닫기
+        document.addEventListener("click", (e) => {
+          if (
+            mobileMenu.classList.contains("active") &&
+            !mobileMenu.contains(e.target) &&
+            !mobileMenuButton.contains(e.target)
+          ) {
+            toggleMobileMenu(false);
+          }
+        });
+
+        // ESC 키로 메뉴 닫기
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && mobileMenu.classList.contains("active")) {
+            toggleMobileMenu(false);
+          }
+        });
+
+        // 모바일 메뉴 링크 클릭시 메뉴 닫기
+        const mobileMenuLinks = document.querySelectorAll(".mobile-menu-link");
+        mobileMenuLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            toggleMobileMenu(false);
+          });
+        });
+      });
+
+      // 기존 글쓰기 관련 스크립트
+      const API_BASE_URL = "http://127.0.0.1:3000";
+      let currentUser = null;
+
+      // 사용자 정보 가져오기 함수
+      async function fetchUserInfo() {
+        const token = localStorage.getItem("token");
+        if (token) {
+          try {
+            const response = await fetch(`${API_BASE_URL}/api/user`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            if (response.ok) {
+              currentUser = await response.json();
+            }
+          } catch (error) {
+            console.error("사용자 정보 가져오기 실패:", error);
+          }
+        }
+      }
+
+      // 페이지 로드 시 실행
+      document.addEventListener("DOMContentLoaded", async function () {
+        const token = localStorage.getItem("token");
+        const isAnonymousCheckbox = document.getElementById("isAnonymous");
+        const anonymousOptions = document.getElementById("anonymousOptions");
+        const anonymousPassword = document.getElementById("anonymousPassword");
+
+        // 로그인 상태에 따른 UI 조정
+        if (token) {
+          // 로그인한 사용자는 익명 체크박스 비활성화하고 체크 해제
+          isAnonymousCheckbox.checked = false;
+          isAnonymousCheckbox.disabled = true;
+          anonymousOptions.classList.add("hidden");
+          anonymousPassword.required = false; // 로그인 사용자는 비밀번호 필수 해제
+        } else {
+          // 비로그인 사용자는 익명으로 강제
+          isAnonymousCheckbox.checked = true;
+          isAnonymousCheckbox.disabled = true;
+          anonymousOptions.classList.remove("hidden");
+          anonymousPassword.required = true; // 비로그인 사용자는 비밀번호 필수
+        }
+
+        // 폼 제출 이벤트 리스너 수정
+        document
+          .getElementById("writePostForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            try {
+              const formData = {
+                title: document.getElementById("title").value.trim(),
+                content: document.getElementById("content").value.trim(),
+                isAnonymous: document.getElementById("isAnonymous").checked,
+              };
+
+              // 비로그인 사용자인 경우 추가 데이터
+              if (!localStorage.getItem("token")) {
+                formData.anonymousNick =
+                  document.getElementById("anonymousNick").value.trim() ||
+                  "ㅇㅇ";
+                formData.anonymousPassword =
+                  document.getElementById("anonymousPassword").value;
+
+                if (!formData.anonymousPassword) {
+                  alert("비밀번호를 입력해주세요.");
+                  return;
+                }
+              }
+
+              const headers = {
+                "Content-Type": "application/json",
+              };
+
+              // 로그인한 사용자인 경우 토큰 추가
+              const token = localStorage.getItem("token");
+              if (token) {
+                headers.Authorization = `Bearer ${token}`;
+              }
+
+              const response = await fetch(`${API_BASE_URL}/api/posts`, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(formData),
+                credentials: "include",
+              });
+
+              const result = await response.json();
+
+              if (!response.ok) {
+                throw new Error(
+                  result.message || "게시글 작성에 실패했습니다."
+                );
+              }
+
+              alert("게시글이 작성되었습니다.");
+              window.location.href = "community.html";
+            } catch (error) {
+              console.error("게시글 작성 중 오류:", error);
+              alert(error.message || "게시글 작성 중 오류가 발생했습니다.");
+            }
+          });
+      });
+
+      // 알림 관련 함수 추가
+      function showAlert(title, message, callback) {
+        const modal = document.getElementById("alertModal");
+        const titleEl = document.getElementById("alertTitle");
+        const messageEl = document.getElementById("alertMessage");
+        const button = modal.querySelector("button");
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+
+        if (callback) {
+          button.onclick = () => {
+            closeAlert();
+            callback();
+          };
+        } else {
+          button.onclick = closeAlert;
+        }
+      }
+
+      function closeAlert() {
+        const modal = document.getElementById("alertModal");
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        modal.querySelector("button").onclick = closeAlert;
+      }
+
+      // URL 파라미터에서 수정 모드 확인
+      const urlParams = new URLSearchParams(window.location.search);
+      const postId = urlParams.get("id");
+      const password = urlParams.get("password");
+      const isEditMode = !!postId;
+
+      // 게시글 데이터 로드
+      async function loadPostData() {
+        try {
+          const headers = {
+            "Content-Type": "application/json",
+          };
+
+          // 비밀번호가 있는 경우 추가
+          if (password) {
+            headers["X-Post-Password"] = password;
+          }
+
+          // 로그인한 사용자의 경우 토큰 추가
+          const token = localStorage.getItem("token");
+          if (token) {
+            headers.Authorization = `Bearer ${token}`;
+          }
+
+          const response = await fetch(`${API_BASE_URL}/api/posts/${postId}`, {
+            headers,
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(
+              errorData.message || "게시글을 불러올 수 없습니다."
+            );
+          }
+
+          const post = await response.json().catch(() => {
+            throw new Error("응답 데이터를 파싱할 수 없습니다.");
+          });
+
+          if (!post) {
+            throw new Error("게시글 데이터가 없습니다.");
+          }
+
+          // 폼에 데이터 설정
+          document.getElementById("title").value = post.title || "";
+          document.getElementById("content").value = post.content || "";
+
+          // 익명 게시글인 경우
+          if (post.isAnonymous) {
+            document.getElementById("isAnonymous").checked = true;
+            document.getElementById("anonymousNick").value =
+              post.anonymousNick || "";
+            document
+              .getElementById("anonymousOptions")
+              .classList.remove("hidden");
+          }
+
+          // 페이지 타이틀 변경
+          document.querySelector("h1").textContent = "글 수정";
+          document.querySelector('button[type="submit"]').textContent =
+            "수정완료";
+        } catch (error) {
+          console.error("게시글 로드 중 오류:", error);
+          showAlert(
+            "오류",
+            error.message || "게시글을 불러오는 중 오류가 발생했습니다.",
+            () => {
+              history.back();
+            }
+          );
+        }
+      }
+
+      // 수정 모드인 경우 데이터 로드
+      if (isEditMode) {
+        loadPostData();
+      }
+    </script>
+  </body>
+</html>

@@ -9,363 +9,591 @@
       rel="stylesheet"
     />
     <link
-      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
       rel="stylesheet"
-      type="text/css"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
     />
     <style>
       body {
-        font-family: "Spoqa Han Sans Neo", "sans-serif";
+        font-family: "Pretendard", "sans-serif";
+        background: linear-gradient(to bottom, #0f172a, #1e293b);
+      }
+
+      /* 사이드바 스타일 */
+      .sidebar {
+        background-color: rgba(17, 24, 39, 0.95);
+        backdrop-filter: blur(8px);
+        border-right: 1px solid rgba(75, 85, 99, 0.3);
+      }
+
+      /* 카드 스타일 */
+      .stat-card {
+        background-color: rgba(17, 24, 39, 0.95);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(75, 85, 99, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      /* 버튼 스타일 */
+      .admin-btn {
+        transition: all 0.3s ease;
+      }
+
+      .admin-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      /* 테이블 스타일 */
+      .user-list-item {
+        background-color: rgba(31, 41, 55, 0.95);
+        border: 1px solid rgba(75, 85, 99, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .user-list-item:hover {
+        background-color: rgba(55, 65, 81, 0.95);
       }
     </style>
   </head>
-  <body class="bg-gray-900 text-white min-h-screen">
-    <div class="flex h-screen bg-gray-900">
-      <!-- 사이드바 -->
-      <aside class="bg-gray-800 text-white w-64 flex flex-col">
-        <div class="p-4">
-          <h1 class="text-2xl font-bold text-blue-400">WDJ 관리자 대시보드</h1>
-        </div>
-        <nav class="flex-1 overflow-y-auto">
-          <a
-            href="#"
-            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500"
-            >대시보드</a
-          >
-          <a
-            href="#"
-            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500"
-            >사용자 관리</a
-          >
-          <a
-            href="#"
-            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500"
-            >빈칸</a
-          >
-        </nav>
-        <div class="p-4">
+  <body class="min-h-screen">
+    <main class="w-full overflow-x-hidden overflow-y-auto">
+      <div class="container mx-auto px-6 py-8">
+        <div class="flex justify-between items-center mb-8">
+          <h3 class="text-3xl font-bold text-gray-100">관리자 대시보드</h3>
           <button
             id="logoutBtn"
-            class="w-full bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-200"
+            class="admin-btn bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700"
           >
             로그아웃
           </button>
         </div>
-      </aside>
 
-      <!-- 메인 콘텐츠 -->
-      <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-900">
-        <div class="container mx-auto px-6 py-8">
-          <h3 class="text-gray-300 text-3xl font-bold mb-6">대시보드</h3>
-
-          <!-- 통계 그리드 -->
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
-          >
-            <!-- 사용자 수 통계 -->
-            <div class="bg-gray-800 shadow rounded-lg p-4">
-              <div class="flex items-center">
-                <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
-                  <svg
-                    class="h-8 w-8 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
-                </div>
-                <div class="ml-4">
-                  <h4 class="text-lg font-semibold text-gray-300">사용자</h4>
-                  <div class="text-3xl font-bold text-white" id="userCount">
-                    0
-                  </div>
+        <!-- 통계 카드 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div class="stat-card rounded-lg p-6">
+            <div class="flex items-center">
+              <div class="p-3 rounded-lg bg-blue-600">
+                <svg
+                  class="h-8 w-8 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold text-gray-300">전체 사용자</h4>
+                <div class="text-3xl font-bold text-white" id="userCount">
+                  0
                 </div>
               </div>
             </div>
-            <!-- 필요에 따라 더 많은 통계 상자를 여기에 추가하세요 -->
           </div>
+          <!-- 추가 통계 카드들... -->
+        </div>
 
-          <!-- 사용자 관리 및 콘텐츠 관리 -->
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="bg-gray-800 shadow rounded-lg p-6">
-              <h2 class="text-2xl font-semibold mb-4 text-gray-300">
-                사용자 관리
-              </h2>
-              <div id="userList" class="space-y-4">
-                <!-- 사용자 목록이 여기에 동적으로 추가됩니다 -->
+        <!-- 사용자 관리 섹션 -->
+        <div class="grid grid-cols-1 gap-8">
+          <div class="stat-card rounded-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-2xl font-semibold text-gray-100">사용자 관리</h2>
+              <div class="flex space-x-4">
+                <input
+                  type="text"
+                  id="userSearch"
+                  placeholder="이름/학번/이메일 검색..."
+                  class="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500"
+                />
+                <select
+                  id="userFilter"
+                  class="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500"
+                >
+                  <option value="all">전체 보기</option>
+                  <option value="admin">관리자</option>
+                  <option value="user">일반 사용자</option>
+                  <option value="pending">승인 대기</option>
+                </select>
               </div>
             </div>
-            <div class="bg-gray-800 shadow rounded-lg p-6">
-              <h2 class="text-2xl font-semibold mb-4 text-gray-300">
-                승인 대기 중인 사용자
-              </h2>
-              <div id="pendingUserList" class="space-y-4">
-                <!-- 승인 대기 중인 사용자 목록이 여기에 동적으로 추가됩니다 -->
+
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="text-left border-b border-gray-700">
+                    <th class="p-3">
+                      <input
+                        type="checkbox"
+                        id="selectAll"
+                        class="rounded bg-gray-700 border-gray-600"
+                      />
+                    </th>
+                    <th class="p-3 text-gray-300">학번</th>
+                    <th class="p-3 text-gray-300">이름</th>
+                    <th class="p-3 text-gray-300">이메일</th>
+                    <th class="p-3 text-gray-300">상태</th>
+                    <th class="p-3 text-gray-300">권한</th>
+                    <th class="p-3 text-gray-300">리</th>
+                  </tr>
+                </thead>
+                <tbody id="userList">
+                  <!-- 사용자 목록이 여기에 동적으로 추가됩니다 -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-4 flex justify-between items-center">
+              <div class="flex space-x-2">
+                <button
+                  id="bulkDelete"
+                  class="admin-btn bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                >
+                  선택 삭제
+                </button>
+                <button
+                  id="bulkApprove"
+                  class="admin-btn bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                >
+                  선택 승인
+                </button>
+              </div>
+              <div class="flex items-center space-x-4">
+                <select
+                  id="pageSize"
+                  class="bg-gray-800 text-gray-300 px-3 py-2 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500"
+                >
+                  <option value="10">10개씩</option>
+                  <option value="20">20개씩</option>
+                  <option value="50">50개씩</option>
+                </select>
+                <div id="pagination" class="flex space-x-2">
+                  <!-- 페이지네이션이 여기에 동적으로 추가됩니다 -->
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const token = localStorage.getItem("token");
         if (!token) {
-          window.location.href = "login.html";
+          window.location.href = "admin-login.html";
           return;
         }
 
-        function fetchAndDisplayUsers() {
-          fetch(
-            "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/users",
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          )
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("관리자 권한이 없습니다.");
+        // 상태 변수들
+        let currentPage = 1;
+        let pageSize = 10;
+        let currentFilter = "all";
+        let currentSearch = "";
+        let selectedUsers = new Set();
+
+        // 전역 함수 선언
+        window.deleteUser = async function (userId) {
+          if (!confirm("이 사용자를 삭제하시겠습니까?")) return;
+
+          try {
+            const response = await fetch(
+              `http://127.0.0.1:3000/api/users/${userId}`,
+              {
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
               }
-              return response.json();
-            })
-            .then((users) => {
-              const userList = document.getElementById("userList");
-              userList.innerHTML = "";
-              users.forEach((user) => {
-                const userElement = document.createElement("div");
-                userElement.className =
-                  "flex justify-between items-center bg-gray-700 p-3 rounded";
-                userElement.innerHTML = `
-                  <span class="font-medium text-gray-300">${user.username} (${
-                  user.realName
-                })</span>
-                  <div>
-                    <button class="bg-red-600 text-white px-3 py-1 rounded mr-2 delete-user hover:bg-red-700 transition duration-300" data-id="${
-                      user._id
-                    }">삭제</button>
-                    <button class="bg-yellow-600 text-white px-3 py-1 rounded mr-2 toggle-admin hover:bg-yellow-700 transition duration-300" data-id="${
-                      user._id
-                    }" data-is-admin="${user.isAdmin}">
-                      ${user.isAdmin ? "관리자 해제" : "관리자로 지정"}
-                    </button>
-                    <button class="bg-blue-600 text-white px-3 py-1 rounded reset-password hover:bg-blue-700 transition duration-300" data-id="${
-                      user._id
-                    }">
-                      비밀번호 초기화
-                    </button>
-                  </div>
-                `;
-                userList.appendChild(userElement);
-              });
+            );
 
-              document.getElementById("userCount").textContent = users.length;
+            if (!response.ok) {
+              throw new Error("사용자 삭제 중 오류가 발생했습니다.");
+            }
 
-              addUserManagementListeners();
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert(error.message);
-              window.location.href = "/front-end/pages/admin-login.html";
-            });
+            const data = await response.json();
+            alert(data.message);
+            fetchUsers();
+          } catch (error) {
+            console.error("Error:", error);
+            alert(error.message);
+          }
+        };
+
+        window.toggleAdmin = async function (userId, currentStatus) {
+          if (
+            !confirm(
+              `이 사용자의 관리자 권한을 ${
+                currentStatus ? "해제" : "부여"
+              }하시겠습니까?`
+            )
+          )
+            return;
+
+          try {
+            const response = await fetch(
+              `http://127.0.0.1:3000/api/users/${userId}/admin`,
+              {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  isAdmin: !currentStatus,
+                }),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("관리자 권한 변경 중 오류가 발생했습니다.");
+            }
+
+            const data = await response.json();
+            alert(data.message);
+            fetchUsers();
+          } catch (error) {
+            console.error("Error:", error);
+            alert(error.message);
+          }
+        };
+
+        // 날짜 포맷팅 함수 수정
+        function formatDate(date) {
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const day = String(date.getDate()).padStart(2, "0");
+          const hours = String(date.getHours()).padStart(2, "0");
+          const minutes = String(date.getMinutes()).padStart(2, "0");
+
+          return `${year}-${month}-${day} ${hours}:${minutes}`;
         }
 
-        function fetchAndDisplayPendingUsers() {
-          fetch(
-            "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/users/pending",
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          )
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  "승인 대기 중인 사용자를 가져오는데 실패했습니다."
-                );
-              }
-              return response.json();
-            })
-            .then((pendingUsers) => {
-              const pendingUserList =
-                document.getElementById("pendingUserList");
-              pendingUserList.innerHTML = "";
-              pendingUsers.forEach((user) => {
-                const userElement = document.createElement("div");
-                userElement.className =
-                  "flex justify-between items-center bg-gray-700 p-3 rounded";
-                userElement.innerHTML = `
-                  <span class="font-medium text-gray-300">${user.username} (${user.realName})</span>
-                  <button class="bg-green-600 text-white px-3 py-1 rounded approve-user hover:bg-green-700 transition duration-300" data-id="${user._id}">
-                    승인
+        // 사용자 목록 더더링 함수 수정
+        function renderUsers(users) {
+          const tbody = document.getElementById("userList");
+          tbody.innerHTML = "";
+
+          users.forEach((user) => {
+            const tr = document.createElement("tr");
+            tr.className = "border-b border-gray-700 hover:bg-gray-800";
+
+            tr.innerHTML = `
+              <td class="p-3">
+                <input type="checkbox" class="user-checkbox rounded bg-gray-700 border-gray-600"
+                  value="${user._id}" ${
+              selectedUsers.has(user._id) ? "checked" : ""
+            }>
+              </td>
+              <td class="p-3 text-gray-300">${user.username}</td>
+              <td class="p-3 text-gray-300">${user.realName}</td>
+              <td class="p-3 text-gray-300">${user.email}</td>
+              <td class="p-3">
+                <span class="px-2 py-1 rounded-full text-xs ${
+                  user.isApproved
+                    ? "bg-green-500 text-white"
+                    : "bg-yellow-500 text-white"
+                }">
+                  ${user.isApproved ? "승인됨" : "대기중"}
+                </span>
+              </td>
+              <td class="p-3">
+                <span class="px-2 py-1 rounded-full text-xs ${
+                  user.isAdmin
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-500 text-white"
+                }">
+                  ${user.isAdmin ? "관리자" : "일반"}
+                </span>
+              </td>
+              <td class="p-3">
+                <div class="flex space-x-2">
+                  <button class="admin-btn bg-red-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-700"
+                    onclick="deleteUser('${user._id}')">
+                    삭제
                   </button>
-                `;
-                pendingUserList.appendChild(userElement);
-              });
-
-              addUserApprovalListeners();
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert(error.message);
-            });
+                  <button class="admin-btn bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-yellow-700"
+                    onclick="toggleAdmin('${user._id}', ${user.isAdmin})">
+                    ${user.isAdmin ? "관리자 해제" : "관리자 지정"}
+                  </button>
+                </div>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
         }
 
-        function addUserManagementListeners() {
-          document.querySelectorAll(".delete-user").forEach((button) => {
-            button.addEventListener("click", function () {
-              const userId = this.getAttribute("data-id");
-              if (confirm("이 사용자를 삭제하시겠습니까?")) {
-                deleteUser(userId);
+        // 사용자 목록 회 함수
+        async function fetchUsers() {
+          try {
+            const response = await fetch(
+              `http://127.0.0.1:3000/api/admin/users/search?page=${currentPage}&limit=${pageSize}&filter=${currentFilter}&search=${currentSearch}`,
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("관리자 권한이 없습니다.");
+            }
+
+            const data = await response.json();
+            renderUsers(data.users);
+            renderPagination(data.totalPages);
+            document.getElementById("userCount").textContent = data.total;
+          } catch (error) {
+            console.error("Error:", error);
+            alert(error.message);
+          }
+        }
+
+        // 페이지네이션 렌더링 함수
+        function renderPagination(totalPages) {
+          const pagination = document.getElementById("pagination");
+          pagination.innerHTML = "";
+
+          // 이전 페이지 버튼
+          if (currentPage > 1) {
+            addPageButton("이전", currentPage - 1);
+          }
+
+          // 페이지 번호 버튼들
+          for (let i = 1; i <= totalPages; i++) {
+            if (
+              i === 1 ||
+              i === totalPages ||
+              (i >= currentPage - 2 && i <= currentPage + 2)
+            ) {
+              addPageButton(i, i, i === currentPage);
+            } else if (i === currentPage - 3 || i === currentPage + 3) {
+              addPageButton("...", i, false, true);
+            }
+          }
+
+          // 다음 페이지 버튼
+          if (currentPage < totalPages) {
+            addPageButton("다음", currentPage + 1);
+          }
+        }
+
+        function addPageButton(
+          text,
+          page,
+          isActive = false,
+          isDisabled = false
+        ) {
+          const button = document.createElement("button");
+          button.className = `px-3 py-1 rounded-lg text-sm ${
+            isActive
+              ? "bg-blue-600 text-white"
+              : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+          }`;
+          button.textContent = text;
+          if (!isDisabled) {
+            button.onclick = () => {
+              currentPage = page;
+              fetchUsers();
+            };
+          }
+          document.getElementById("pagination").appendChild(button);
+        }
+
+        // 이벤트 리스트 설정
+        document.getElementById("userSearch").addEventListener(
+          "input",
+          debounce(function (e) {
+            currentSearch = e.target.value;
+            currentPage = 1;
+            fetchUsers();
+          }, 300)
+        );
+
+        document
+          .getElementById("userFilter")
+          .addEventListener("change", function (e) {
+            currentFilter = e.target.value;
+            currentPage = 1;
+            fetchUsers();
+          });
+
+        document
+          .getElementById("pageSize")
+          .addEventListener("change", function (e) {
+            pageSize = Number(e.target.value);
+            currentPage = 1;
+            fetchUsers();
+          });
+
+        // 일괄 처리 버튼 이벤트
+        document
+          .getElementById("bulkDelete")
+          .addEventListener("click", async function () {
+            if (selectedUsers.size === 0) {
+              alert("선택된 사용자가 없습니다.");
+              return;
+            }
+
+            if (
+              confirm(
+                `선택한 ${selectedUsers.size}명의 사용자를 삭제하시겠습니까?`
+              )
+            ) {
+              await bulkAction("delete");
+            }
+          });
+
+        document
+          .getElementById("bulkApprove")
+          .addEventListener("click", async function () {
+            if (selectedUsers.size === 0) {
+              alert("선택된 사용자가 없습니다.");
+              return;
+            }
+
+            if (
+              confirm(
+                `선택한 ${selectedUsers.size}명의 사용자를 승인하시겠습니까?`
+              )
+            ) {
+              await bulkAction("approve");
+            }
+          });
+
+        // 전체 선택 체크박스
+        document
+          .getElementById("selectAll")
+          .addEventListener("change", function (e) {
+            const checkboxes = document.querySelectorAll(".user-checkbox");
+            checkboxes.forEach((checkbox) => {
+              checkbox.checked = e.target.checked;
+              if (e.target.checked) {
+                selectedUsers.add(checkbox.value);
+              } else {
+                selectedUsers.delete(checkbox.value);
               }
             });
           });
 
-          document.querySelectorAll(".toggle-admin").forEach((button) => {
-            button.addEventListener("click", function () {
-              const userId = this.getAttribute("data-id");
-              const isAdmin = this.getAttribute("data-is-admin") === "true";
-              toggleAdminStatus(userId, !isAdmin);
-            });
+        // 유틸리티 함수들
+        function debounce(func, wait) {
+          let timeout;
+          return function executedFunction(...args) {
+            const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+          };
+        }
+
+        // 일괄 처리 함수
+        async function bulkAction(action) {
+          try {
+            const response = await fetch(
+              "http://127.0.0.1:3000/api/admin/users/bulk",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  action,
+                  userIds: Array.from(selectedUsers),
+                }),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("일괄 처리 중 오류가 발생했습니다.");
+            }
+
+            const data = await response.json();
+            alert(data.message);
+            selectedUsers.clear();
+            document.getElementById("selectAll").checked = false;
+            fetchUsers();
+          } catch (error) {
+            console.error("Error:", error);
+            alert(error.message);
+          }
+        }
+
+        // 체크박스 이벤트 리스트
+        document.addEventListener("click", function (e) {
+          if (e.target.classList.contains("user-checkbox")) {
+            if (e.target.checked) {
+              selectedUsers.add(e.target.value);
+            } else {
+              selectedUsers.delete(e.target.value);
+            }
+
+            // 전체 선택 체크박스 상태 업데이트
+            const allCheckboxes = document.querySelectorAll(".user-checkbox");
+            const selectAllCheckbox = document.getElementById("selectAll");
+            selectAllCheckbox.checked =
+              allCheckboxes.length > 0 &&
+              Array.from(allCheckboxes).every((cb) => cb.checked);
+          }
+        });
+
+        // 로그아웃 함수 수정
+        document
+          .getElementById("logoutBtn")
+          .addEventListener("click", function () {
+            if (confirm("로그아웃 하시겠습니까?")) {
+              localStorage.removeItem("token");
+              window.location.href = "admin-login.html";
+            }
           });
 
-          document.querySelectorAll(".reset-password").forEach((button) => {
-            button.addEventListener("click", function () {
-              const userId = this.getAttribute("data-id");
-              if (confirm("이 사용자의 비밀번호를 초기화하시겠습니까?")) {
-                resetPassword(userId);
+        // 통계 데이터 가져오기
+        async function fetchStatistics() {
+          try {
+            const response = await fetch(
+              "http://127.0.0.1:3000/api/admin/statistics",
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
               }
-            });
-          });
-        }
+            );
 
-        function addUserApprovalListeners() {
-          document.querySelectorAll(".approve-user").forEach((button) => {
-            button.addEventListener("click", function () {
-              const userId = this.getAttribute("data-id");
-              approveUser(userId);
-            });
-          });
-        }
-
-        function deleteUser(userId) {
-          fetch(
-            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/users/${userId}`,
-            {
-              method: "DELETE",
-              headers: { Authorization: `Bearer ${token}` },
+            if (!response.ok) {
+              throw new Error("통계 데이터를 가져오는데 실패했습니다.");
             }
-          )
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("사용자 삭제에 실패했습니다.");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              alert(data.message);
-              fetchAndDisplayUsers();
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert(error.message);
-            });
+
+            const data = await response.json();
+            updateStatistics(data);
+          } catch (error) {
+            console.error("Error:", error);
+          }
         }
 
-        function toggleAdminStatus(userId, newAdminStatus) {
-          fetch(
-            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/users/${userId}/admin`,
-            {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({ isAdmin: newAdminStatus }),
-            }
-          )
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("관리자 상태 변경에 실패했습니다.");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              alert(data.message);
-              fetchAndDisplayUsers();
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert(error.message);
-            });
+        // 통계 업데이트 함수
+        function updateStatistics(data) {
+          document.getElementById("userCount").textContent =
+            data.totalUsers || 0;
+          // 추가 통계 시
         }
 
-        function approveUser(userId) {
-          fetch(
-            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/users/${userId}/approve`,
-            {
-              method: "PATCH",
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          )
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("사용자 승인에 실패했습니다.");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              alert(data.message);
-              fetchAndDisplayPendingUsers();
-              fetchAndDisplayUsers();
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert(error.message);
-            });
-        }
-
-        function resetPassword(userId) {
-          fetch(
-            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/users/${userId}/reset-password`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({ newPassword: "1234" }),
-            }
-          )
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("비밀번호 초기화에 실패했습니다.");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              alert(data.message || "비밀번호가 성공적으로 초기화되었습니다.");
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert(error.message);
-            });
-        }
+        // 초기화 시 통계 데이터도 가져오기
+        fetchStatistics();
 
         // 초기 로드
-        fetchAndDisplayUsers();
-        fetchAndDisplayPendingUsers();
-
-        // 로그아웃 버튼 리스너
-        document.getElementById("logoutBtn").addEventListener("click", () => {
-          localStorage.removeItem("token");
-          window.location.href = "/front-end/pages/admin-login.html";
-        });
+        fetchUsers();
       });
     </script>
   </body>
