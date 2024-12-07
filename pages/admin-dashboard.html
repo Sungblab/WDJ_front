@@ -393,7 +393,7 @@
             }
           }
 
-          // 다음 페이지 버튼
+          // ��음 페이지 버튼
           if (currentPage < totalPages) {
             addPageButton("다음", currentPage + 1);
           }
@@ -601,14 +601,14 @@
           // 추가 통계 시
         }
 
-        // 초기화 시 통계 데이터도 가져오기
+        // 초기화 시 통계 데이터도 가져오���
         fetchStatistics();
 
         // 초기 로드
         fetchUsers();
 
         // 비밀번호 초기화 함수 추가
-        async function resetPassword(userId) {
+        window.resetPassword = async function (userId) {
           if (
             !confirm(
               "해당 사용자의 비밀번호를 초기화하시겠습니까?\n초기화 후 임시 비밀번호는 1234입니다."
@@ -639,7 +639,7 @@
             console.error("Error:", error);
             alert(error.message);
           }
-        }
+        };
       });
     </script>
   </body>
