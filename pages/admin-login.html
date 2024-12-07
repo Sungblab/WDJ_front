@@ -104,7 +104,7 @@
 
           try {
             const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/login",
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/auth/admin/login",
               {
                 method: "POST",
                 headers: {
@@ -114,17 +114,19 @@
               }
             );
 
-            const data = await response.json();
-
-            if (response.ok) {
-              localStorage.setItem("adminToken", data.token);
-              window.location.href = "admin-dashboard.html";
-            } else {
-              alert(data.message || "Login failed.");
+            if (!response.ok) {
+              const errorData = await response.json().catch(() => ({
+                message: "서버 연결에 실패했습니다.",
+              }));
+              throw new Error(errorData.message);
             }
+
+            const data = await response.json();
+            localStorage.setItem("token", data.token);
+            window.location.href = "admin-dashboard.html";
           } catch (error) {
             console.error("Error:", error);
-            alert("An error occurred while logging in.");
+            alert(error.message || "로그인 �� 오류가 발생했습니다.");
           }
         });
     </script>
