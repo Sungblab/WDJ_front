@@ -338,115 +338,114 @@
     </header>
 
     <main class="w-full sm:container mx-auto mt-24 mb-16 px-4 sm:px-8">
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold">익명 게시판</h1>
-      </div>
-
-      <!-- 커뮤니티 규정 -->
-      <section class="mb-8 bg-yellow-100 p-4 rounded">
-        <h2 class="text-xl font-semibold mb-2">커뮤니티 규정</h2>
-        <ol class="list-decimal list-inside">
-          <li>서로를 존중하고 예의를 지켜주세요.</li>
-          <li>불법적인 내용이나 음란물을 게시하지 마세요.</li>
-          <li>개인정보 보호에 유의해주세요.</li>
-          <li>저작권을 침해하는 콘텐츠를 게시하지 마세요.</li>
-          <li>광고성 게시물은 자제해주세요.</li>
-        </ol>
-      </section>
-
-      <!-- 검색 기능 -->
-      <div class="mb-6">
-        <form id="searchForm" class="flex flex-col sm:flex-row gap-4">
-          <div class="flex-1">
+      <div class="mb-4 sm:mb-8">
+        <div class="flex justify-between items-center mb-3 sm:mb-6">
+          <h1 class="text-xl sm:text-3xl font-bold">익명 게시판</h1>
+        </div>
+        <form id="searchForm" class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+          <div class="flex-1 relative">
             <input
               type="text"
               id="searchInput"
               placeholder="검색어를 입력하세요"
-              class="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+              class="w-full p-2 border rounded focus:outline-none focus:border-blue-500 text-sm sm:text-base pr-12"
             />
+            <button
+              type="submit"
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-blue-500 transition-colors"
+            >
+              <i class="fas fa-search text-lg"></i>
+            </button>
           </div>
           <div class="sm:w-32">
             <select
               id="searchType"
-              class="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+              class="w-full p-2 border rounded focus:outline-none focus:border-blue-500 text-sm sm:text-base"
             >
-              <option value="all">제목+내용</option>
-              <option value="title">제목만</option>
-              <option value="content">내용만</option>
+              <option value="title">제목</option>
               <option value="author">글쓴이</option>
             </select>
           </div>
-          <button
-            type="submit"
-            class="w-full sm:w-24 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            검색
-          </button>
         </form>
       </div>
 
-      <!-- 정렬 옵션 설정 -->
-      <div class="flex justify-between items-center mb-6">
-        <div class="flex space-x-4">
-          <select
-            id="sortOption"
-            class="border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-            onchange="handleSort(this.value)"
-          >
-            <option value="latest">최신순</option>
-            <option value="oldest">오래된순</option>
-            <option value="best">추천순</option>
-            <option value="views">조회순</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- 베스트글 섹션 수정 -->
-      <div id="bestPosts" class="mb-8">
-        <h2 class="text-xl font-bold mb-4 flex items-center">
-          <span class="text-2xl mr-2">🏆</span> 주간 베스트
-          <span class="text-sm text-gray-500 ml-2"
-            >(지난 7일간 추천수 TOP 4)</span
-          >
-        </h2>
-        <div class="space-y-4" id="bestPostsList">
-          <!-- 베스트 게시글이 여기에 동적으로 추가됩니다 -->
-        </div>
-      </div>
-
-      <!-- 글쓰기 버튼 및 표시 개수 설정 -->
-      <div class="flex justify-between items-center mb-6">
-        <div class="flex items-center space-x-4">
-          <button
-            id="writePostBtn"
-            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
-          >
-            글쓰기
-          </button>
+      <!-- 정렬 옵션 설정 및 글쓰기 버튼 섹션 수정 -->
+      <div
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2 sm:gap-0"
+      >
+        <!-- 왼쪽 옵션들 -->
+        <div class="flex items-center justify-between w-full sm:w-auto">
           <div class="flex items-center space-x-2">
-            <label class="text-sm text-gray-600">표시:</label>
+            <select
+              id="sortOption"
+              class="border rounded px-2 py-1 text-xs sm:text-sm focus:outline-none focus:border-blue-500"
+              onchange="handleSort(this.value)"
+            >
+              <option value="latest">최신순</option>
+              <option value="oldest">오래된순</option>
+              <option value="best">추천순</option>
+              <option value="views">조회순</option>
+            </select>
+
             <select
               id="postsPerPage"
-              class="border rounded px-2 py-1 text-sm focus:outline-none focus:border-blue-500"
+              class="border rounded px-2 py-1 text-xs sm:text-sm focus:outline-none focus:border-blue-500"
             >
               <option value="15">15개</option>
               <option value="30">30개</option>
               <option value="50">50개</option>
             </select>
+
+            <!-- 총 게시글 수를 같은 줄에 배치 -->
+            <span class="text-xs sm:text-sm text-gray-600 ml-2">
+              총 <span id="totalPosts" class="font-semibold">0</span>개의 글
+            </span>
           </div>
         </div>
-        <div class="text-sm text-gray-600">
-          총 <span id="totalPosts" class="font-semibold">0</span>개의 글
+
+        <!-- 글쓰기 버튼을 PC에서는 오른쪽, 모바일에서는 아래에 배치 -->
+        <button
+          id="writePostBtn"
+          class="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg font-semibold transition-colors text-xs sm:text-sm ml-auto"
+        >
+          글쓰기
+        </button>
+      </div>
+
+      <!-- 베스트글과 일반 게시글 사이 간격 줄이기 -->
+      <div id="bestPosts" class="mb-2 sm:mb-4">
+        <h2
+          class="text-lg sm:text-2xl font-bold mb-3 sm:mb-6 flex items-center px-2"
+        >
+          <span class="text-xl sm:text-3xl mr-2">🏆</span> 주간 베스트
+        </h2>
+        <div class="space-y-3 sm:space-y-6" id="bestPostsList">
+          <!-- 베스트 게시글이 여기에 동적으로 추가됩니다 -->
+        </div>
+
+        <!-- 구분선 간격 줄이기 -->
+        <div class="relative mt-2 sm:mt-4 mb-2 sm:mb-4">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center">
+            <span class="bg-gray-100 px-3 text-xs sm:text-sm text-gray-500"
+              >일반 게시글</span
+            >
+          </div>
         </div>
       </div>
 
       <!-- 게시글 목록 -->
-      <div id="postList" class="space-y-4">
+      <div id="postList" class="space-y-2 sm:space-y-4">
         <!-- 게시글이 여기에 동적으로 추가됩니다 -->
       </div>
 
       <!-- 페이지네이션 -->
-      <div id="pagination" class="mt-8 flex justify-center space-x-2">
+      <div
+        id="pagination"
+        class="mt-10 flex justify-center space-x-3 sm:space-x-2"
+      >
         <!-- 페이지 버튼이 여기에 동적으로 추가됩니다 -->
       </div>
     </main>
@@ -523,7 +522,7 @@
             <a
               href="pages/petition.html"
               class="text-gray-400 hover:text-blue-400 text-sm"
-              >청원·제안</a
+              >청청원·제안</a
             >
           </div>
 
@@ -640,8 +639,7 @@
       });
 
       // 전역 변수 및 상수 정의
-      const API_BASE_URL =
-        "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app";
+      const API_BASE_URL = "http://127.0.0.1:3000";
       let postsPerPage = 15;
       let currentPage = 1;
 
@@ -784,7 +782,7 @@
             minute: "2-digit",
           });
         } catch (error) {
-          console.error("날짜 포맷 오류:", error);
+          console.error("날짜 포포맷 오류:", error);
           return "";
         }
       }
@@ -800,21 +798,21 @@
           bestPostsList.innerHTML = data.bestPosts
             .map(
               (post) => `
-                <div class="bg-yellow-50 p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer border-l-4 border-yellow-400" 
+                <div class="bg-yellow-50 p-3 sm:p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer border-l-4 border-yellow-400" 
                      onclick="location.href='post-detail.html?id=${post._id}'">
                   <div class="flex justify-between items-start">
-                    <h3 class="text-lg font-semibold text-gray-900">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900">
                       🏆 ${post.title}
-                      <span class="ml-2 text-sm font-bold text-blue-500">+${
+                      <span class="ml-2 text-xs sm:text-sm font-bold text-blue-500">+${
                         post.score || 0
                       }</span>
                     </h3>
-                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                    <div class="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm text-gray-500">
                       <span><i class="far fa-eye"></i> ${post.views || 0}</span>
                       <span><i class="far fa-comment"></i> ${
                         post.comments?.length || 0
                       }</span>
-                      <div class="flex items-center space-x-2">
+                      <div class="flex items-center space-x-1">
                         <span class="text-blue-500"><i class="fas fa-arrow-up"></i> ${
                           post.upvotes || 0
                         }</span>
@@ -824,7 +822,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="mt-2 text-sm text-gray-600">
+                  <div class="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600">
                     <span class="font-medium">${
                       post.author?.nickname || "익명"
                     }</span>
@@ -866,14 +864,14 @@
           postList.innerHTML = data.posts
             .map(
               (post) => `
-              <div class="bg-white p-4 rounded-lg shadow hover:shadow-md transition-all duration-200 cursor-pointer mb-4" 
+              <div class="bg-white p-3 sm:p-4 rounded-lg shadow hover:shadow-md transition-all duration-200 cursor-pointer mb-2 sm:mb-4" 
                    onclick="location.href='post-detail.html?id=${post._id}'">
                 <div class="flex justify-between items-start">
-                  <h3 class="text-lg font-semibold text-gray-900">
+                  <h3 class="text-base sm:text-lg font-semibold text-gray-900">
                     ${post.title}
                     ${
                       post.score > 0
-                        ? `<span class="ml-2 text-sm font-bold ${
+                        ? `<span class="ml-2 text-xs sm:text-sm font-bold ${
                             post.score >= 10 ? "text-red-500" : "text-blue-500"
                           }">
                         +${post.score}
@@ -881,7 +879,7 @@
                         : ""
                     }
                   </h3>
-                  <div class="flex items-center space-x-4 text-sm text-gray-500">
+                  <div class="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm text-gray-500">
                     <span><i class="far fa-eye"></i> ${post.views || 0}</span>
                     <span><i class="far fa-comment"></i> ${
                       post.comments?.length || 0
@@ -896,7 +894,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="mt-2 text-sm text-gray-600">
+                <div class="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600">
                   <span class="font-medium">${
                     post.author?.nickname || "익명"
                   }</span>
@@ -959,7 +957,7 @@
           const postList = document.getElementById("postList");
           const bestPostsContainer = document.getElementById("bestPosts");
 
-          // 게시글 필터링 함수
+          // 게시글 필필터링 함수
           function filterPost(post, query, type) {
             query = query.toLowerCase();
             switch (type) {
@@ -990,7 +988,7 @@
 
           const data = await response.json();
 
-          // 검색 조건에 맞는 게시글 필터링
+          // 검색 조건에 맞는 시글 필터링
           const filteredBestPosts = data.bestPosts.filter((post) =>
             filterPost(post, searchQuery, searchType)
           );
@@ -1008,7 +1006,7 @@
             totalPosts: filteredPosts.length,
           });
 
-          // 검색 결과 수 표시
+          // 검색 결과 표시
           const totalPosts = document.getElementById("totalPosts");
           totalPosts.textContent = `검색결과: ${filteredPosts.length}개`;
         } catch (error) {
@@ -1069,11 +1067,11 @@
           });
 
           document.getElementById("writePostModal").classList.add("hidden");
-          alert("게시글이 성공적으로 작성되었습니다.");
+          alert("게시글이 성적으로 작성되었습니다.");
           fetchPosts(); // 게시글 목록 새로고침
         } catch (error) {
           console.error("글 작성 중 오류 발생:", error);
-          alert("글 작성 중 오류가 발생했습니다.");
+          alert("글 작성 중 오류가 발생했습니다. 다시 시도해주세요.");
         }
       }
 
@@ -1090,7 +1088,7 @@
         }
       }
 
-      // 로그인 상태 확인 및 사용자 정보 가져오기
+      // 로그인 상태 확인 및 용자 정보 가져오기
       async function checkLoginStatus() {
         const token = localStorage.getItem("token");
         if (token) {
@@ -1124,7 +1122,7 @@
         // 나머지 이벤트 리스너들...
       });
 
-      // 페이지 로드 시 실행
+      // 페이지 로드드 시 실행
       window.onload = function () {
         checkLoginStatus();
         fetchPosts();
