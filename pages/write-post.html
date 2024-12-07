@@ -651,7 +651,7 @@
           }
         });
 
-        // ESC 키로 메뉴 닫기
+        // ESC 키��� 메뉴 닫기
         document.addEventListener("keydown", (e) => {
           if (e.key === "Escape" && mobileMenu.classList.contains("active")) {
             toggleMobileMenu(false);
@@ -761,7 +761,7 @@
               if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(
-                  errorData.message || "게시글 작성에 실패했습���다."
+                  errorData.message || "게시글 작성에 실패했습니다."
                 );
               }
 
@@ -887,7 +887,7 @@
         loadPostData();
       }
 
-      // 이미지 업로드 관련 스크립트 추가
+      // 이미지 업로드 관련 스크립트 �정
       document
         .getElementById("imageUploadBtn")
         .addEventListener("click", () => {
@@ -911,8 +911,7 @@
             });
 
             if (!response.ok) {
-              const errorData = await response.json();
-              throw new Error(errorData.message || "이미지 업로드 실패");
+              throw new Error("이미지 업로드에 실패했습니다.");
             }
 
             const data = await response.json();
@@ -929,7 +928,7 @@
             imgPreview.innerHTML = `
             <img src="${data.url}" class="h-20 w-20 object-cover rounded" />
             <button type="button" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs" 
-              onclick="removeImage(this)">×</button>
+              onclick="removeImage(this, '${data.url}')">×</button>
           `;
             previewDiv.appendChild(imgPreview);
           } catch (error) {
@@ -938,9 +937,9 @@
           }
         });
 
-      function removeImage(button) {
+      // 이미지 제거 함수 추가
+      function removeImage(button, imgUrl) {
         const imgContainer = button.parentElement;
-        const imgUrl = imgContainer.querySelector("img").src;
 
         // 에디터에서 이미지 태그 제거
         const content = document.getElementById("content");
