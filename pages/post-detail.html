@@ -943,7 +943,7 @@
         }
       }
 
-      // 에러 표시 함수 추가
+      // 에러 ��시 함수 추가
       function showError(message) {
         const contentElement = document.getElementById("postContent");
         if (contentElement) {
@@ -1193,7 +1193,7 @@
           // 익명 댓글인 경우 비밀번호 입력 받기
           let password = null;
           if (!token) {
-            password = prompt("댓글 작성시 입력한 비밀번호를 입력해주세요.");
+            password = prompt("댓�� 작성시 입력한 비밀번호를 입력해주세요.");
             if (!password) return;
           }
 
@@ -1272,7 +1272,7 @@
           downvoteCount.textContent = data.downvotes;
           scoreElement.textContent = data.score;
 
-          // 버튼 상태 업데이트
+          // 버튼 상태 업데이���
           upvoteBtn.classList.toggle("active", type === "up");
           downvoteBtn.classList.toggle("active", type === "down");
 
@@ -1414,6 +1414,33 @@
           location.href = "community.html";
         } catch (error) {
           alert(error.message || "게시글 삭제 중 오류가 발생했습니다.");
+        }
+      }
+
+      // API 호출 시 에러 처리 개선
+      async function submitPost(e) {
+        e.preventDefault();
+
+        try {
+          const response = await fetch(`${API_BASE_URL}/api/posts`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(postData),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "게시글 작성에 실패했습니다.");
+          }
+
+          const data = await response.json();
+          // 성공 처리...
+        } catch (error) {
+          console.error("게시글 작성 중 오류:", error);
+          alert(error.message || "게시글 작성 중 오류가 발생했습니다.");
         }
       }
     </script>
