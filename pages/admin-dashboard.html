@@ -209,7 +209,7 @@
 
           try {
             const response = await fetch(
-              `http://127.0.0.1:3000/api/users/${userId}`,
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/users/${userId}`,
               {
                 method: "DELETE",
                 headers: {
@@ -243,7 +243,7 @@
 
           try {
             const response = await fetch(
-              `http://127.0.0.1:3000/api/users/${userId}/admin`,
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/users/${userId}/admin`,
               {
                 method: "PATCH",
                 headers: {
@@ -338,7 +338,7 @@
         async function fetchUsers() {
           try {
             const response = await fetch(
-              `http://127.0.0.1:3000/api/admin/users/search?page=${currentPage}&limit=${pageSize}&filter=${currentFilter}&search=${currentSearch}`,
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/users/search?page=${currentPage}&limit=${pageSize}&filter=${currentFilter}&search=${currentSearch}`,
               {
                 headers: { Authorization: `Bearer ${token}` },
               }
@@ -502,7 +502,7 @@
         async function bulkAction(action) {
           try {
             const response = await fetch(
-              "http://127.0.0.1:3000/api/admin/users/bulk",
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/users/bulk",
               {
                 method: "POST",
                 headers: {
@@ -563,7 +563,7 @@
         async function fetchStatistics() {
           try {
             const response = await fetch(
-              "http://127.0.0.1:3000/api/admin/statistics",
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/statistics",
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
