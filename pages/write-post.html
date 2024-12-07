@@ -761,7 +761,7 @@
               if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(
-                  errorData.message || "게시글 작성에 실패했습니다."
+                  errorData.message || "게시글 작성에 실패했습���다."
                 );
               }
 
@@ -887,7 +887,7 @@
         loadPostData();
       }
 
-      // 이미지 업로드 �련 스크립트 추가
+      // 이미지 업로드 관련 스크립트 추가
       document
         .getElementById("imageUploadBtn")
         .addEventListener("click", () => {
@@ -900,18 +900,6 @@
           const file = e.target.files[0];
           if (!file) return;
 
-          // 파일 크기 �크
-          if (file.size > 5 * 1024 * 1024) {
-            alert("파일 크기는 5MB를 초과할 수 없습니다.");
-            return;
-          }
-
-          // 이미지 파일 ��크
-          if (!file.type.startsWith("image/")) {
-            alert("이미지 파일만 업로드 가능합니다.");
-            return;
-          }
-
           try {
             const formData = new FormData();
             formData.append("image", file);
@@ -919,10 +907,12 @@
             const response = await fetch(`${API_BASE_URL}/api/upload`, {
               method: "POST",
               body: formData,
+              credentials: "include",
             });
 
             if (!response.ok) {
-              throw new Error("이미지 업로드 실패");
+              const errorData = await response.json();
+              throw new Error(errorData.message || "이미지 업로드 실패");
             }
 
             const data = await response.json();
@@ -943,8 +933,8 @@
           `;
             previewDiv.appendChild(imgPreview);
           } catch (error) {
-            alert("이미지 업로드 �� 오류가 발생했습니다.");
-            console.error(error);
+            console.error("이미지 업로드 오류:", error);
+            alert(error.message || "이미지 업로드 중 오류가 발생했습니다.");
           }
         });
 
@@ -952,12 +942,12 @@
         const imgContainer = button.parentElement;
         const imgUrl = imgContainer.querySelector("img").src;
 
-        // 에디터에서 이�지 태그 제거
+        // 에디터에서 이미지 태그 제거
         const content = document.getElementById("content");
         const imageTag = `![이미지](${imgUrl})`;
         content.value = content.value.replace(imageTag, "");
 
-        // 미리보기 제�
+        // 미리보기 제거
         imgContainer.remove();
       }
     </script>
