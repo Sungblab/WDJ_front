@@ -852,7 +852,13 @@
         if (elements.comments)
           elements.comments.textContent = post.comments?.length || 0;
         if (elements.content && post.content) {
-          elements.content.innerHTML = post.content
+          // Markdown 이미지 태�를 HTML img 태그로 변환
+          const content = post.content.replace(
+            /!\[이미지\]\((.*?)\)/g,
+            '<img src="$1" class="max-w-full h-auto my-4 rounded-lg shadow-lg" alt="첨부 이미지" />'
+          );
+
+          elements.content.innerHTML = content
             .replace(/\n/g, "<br>")
             .replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">")
