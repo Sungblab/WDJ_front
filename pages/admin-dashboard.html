@@ -685,9 +685,12 @@
             const tr = document.createElement("tr");
             tr.className = "border-b border-gray-700 hover:bg-gray-800";
 
+            // 이미지 URL 수정
+            const imageUrl = `/uploads/${image}`; // 상대 경로로 변경
+
             tr.innerHTML = `
       <td class="p-3">
-        <img src="https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/uploads/${image}" 
+        <img src="${imageUrl}" 
              alt="${image}" 
              class="h-16 w-16 object-cover rounded">
       </td>
