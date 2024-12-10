@@ -185,15 +185,16 @@
             </div>
           </div>
         </div>
-        <!-- 이미지 관리 섹션 -->
+        <!-- 이미지 관리 섹션 수정 -->
         <div class="stat-card rounded-lg p-6 mt-8">
           <h2 class="text-2xl font-semibold text-gray-100 mb-6">이미지 관리</h2>
           <div class="overflow-x-auto">
             <table class="w-full">
               <thead>
                 <tr class="text-left border-b border-gray-700">
-                  <th class="p-3 text-gray-300">이미지</th>
                   <th class="p-3 text-gray-300">파일명</th>
+                  <th class="p-3 text-gray-300">업로드 날짜</th>
+                  <th class="p-3 text-gray-300">링크</th>
                   <th class="p-3 text-gray-300">관리</th>
                 </tr>
               </thead>
@@ -676,7 +677,6 @@
           }
         };
 
-        // renderImages 함수 수정
         function renderImages(images) {
           const tbody = document.getElementById("imageList");
           tbody.innerHTML = "";
@@ -685,19 +685,24 @@
             const tr = document.createElement("tr");
             tr.className = "border-b border-gray-700 hover:bg-gray-800";
 
-            // 이미지 URL 수정
-            const imageUrl = `/uploads/${image}`; // 상대 경로로 변경
+            const date = new Date(image.createdAt);
+            const formattedDate = `${date.getFullYear()}-${String(
+              date.getMonth() + 1
+            ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
             tr.innerHTML = `
+      <td class="p-3 text-gray-300">${image.filename}</td>
+      <td class="p-3 text-gray-300">${formattedDate}</td>
       <td class="p-3">
-        <img src="${imageUrl}" 
-             alt="${image}" 
-             class="h-16 w-16 object-cover rounded">
+        <a href="https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app${image.url}" 
+           target="_blank" 
+           class="text-blue-400 hover:text-blue-300">
+          이미지 보기
+        </a>
       </td>
-      <td class="p-3 text-gray-300">${image}</td>
       <td class="p-3">
         <button class="admin-btn bg-red-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-700"
-          onclick="deleteImage('${image}')">
+          onclick="deleteImage('${image.filename}')">
           삭제
         </button>
       </td>
