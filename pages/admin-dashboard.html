@@ -676,7 +676,7 @@
           }
         };
 
-        // 이미지 목록 렌더링 함수
+        // renderImages 함수 수정
         function renderImages(images) {
           const tbody = document.getElementById("imageList");
           tbody.innerHTML = "";
@@ -686,17 +686,19 @@
             tr.className = "border-b border-gray-700 hover:bg-gray-800";
 
             tr.innerHTML = `
-        <td class="p-3">
-          <img src="/uploads/${image}" alt="${image}" class="h-16 w-16 object-cover">
-        </td>
-        <td class="p-3 text-gray-300">${image}</td>
-        <td class="p-3">
-          <button class="admin-btn bg-red-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-700"
-            onclick="deleteImage('${image}')">
-            삭제
-          </button>
-        </td>
-      `;
+      <td class="p-3">
+        <img src="https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/uploads/${image}" 
+             alt="${image}" 
+             class="h-16 w-16 object-cover rounded">
+      </td>
+      <td class="p-3 text-gray-300">${image}</td>
+      <td class="p-3">
+        <button class="admin-btn bg-red-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-700"
+          onclick="deleteImage('${image}')">
+          삭제
+        </button>
+      </td>
+    `;
             tbody.appendChild(tr);
           });
         }
