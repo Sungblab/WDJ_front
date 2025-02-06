@@ -732,8 +732,8 @@
           }
         }
 
-        // 이미지 삭제 함수
-        async function deleteImage(filename) {
+        // deleteImage 함수를 전역으로 만들기
+        window.deleteImage = async function(filename) {
           if (!confirm(`이미지 '${filename}'을(를) 삭제하시겠습니까?`)) return;
 
           try {
@@ -748,7 +748,7 @@
             );
 
             if (!response.ok) {
-              throw new Error("이미지 삭제 중 오류가 �����했습니다.");
+              throw new Error("이미지 삭제 중 오류가 발생했습니다.");
             }
 
             const data = await response.json();
@@ -758,7 +758,9 @@
             console.error("Error:", error);
             alert(error.message);
           }
-        }
+        };
+
+        // 초기화 시 이미지 목록도 가져오기
         fetchImages();
       });
     </script>
