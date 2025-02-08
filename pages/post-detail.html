@@ -768,7 +768,7 @@
       });
 
       // 전역 변수 설정
-      const API_BASE_URL = "http://116.123.74.248";
+      const API_BASE_URL = "https://116.123.74.248";
       let currentUser = JSON.parse(localStorage.getItem("user"));
       let postId = new URLSearchParams(window.location.search).get("id");
 
@@ -1328,44 +1328,56 @@
         const post = window.currentPost;
         if (post && post.isAnonymous) {
           adminControls.classList.remove("hidden");
-          
+
           // IP 보기 버튼 이벤트 리스너
-          document.getElementById("viewRealIP").addEventListener("click", async () => {
-            try {
-              const token = localStorage.getItem("token");
-              const response = await fetch(`${API_BASE_URL}/api/posts/${postId}/ip`, {
-                headers: {
-                  Authorization: `Bearer ${token}`
-                }
-              });
-              
-              if (!response.ok) throw new Error("IP 조회 실패");
-              
-              const data = await response.json();
-              alert(`작성자 IP: ${data.ipAddress}`);
-            } catch (error) {
-              alert("IP 조회 중 오류가 발생했습니다.");
-            }
-          });
+          document
+            .getElementById("viewRealIP")
+            .addEventListener("click", async () => {
+              try {
+                const token = localStorage.getItem("token");
+                const response = await fetch(
+                  `${API_BASE_URL}/api/posts/${postId}/ip`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+
+                if (!response.ok) throw new Error("IP 조회 실패");
+
+                const data = await response.json();
+                alert(`작성자 IP: ${data.ipAddress}`);
+              } catch (error) {
+                alert("IP 조회 중 오류가 발생했습니다.");
+              }
+            });
 
           // 작성자 정보 보기 버튼 이벤트 리스너
-          document.getElementById("viewRealAuthor").addEventListener("click", async () => {
-            try {
-              const token = localStorage.getItem("token");
-              const response = await fetch(`${API_BASE_URL}/api/posts/${postId}/author`, {
-                headers: {
-                  Authorization: `Bearer ${token}`
-                }
-              });
-              
-              if (!response.ok) throw new Error("작성자 정보 조회 실패");
-              
-              const data = await response.json();
-              alert(`작성자 정보:\n닉네임: ${data.nickname}\n아이디: ${data.username}`);
-            } catch (error) {
-              alert("작성자 정보 조회 중 오류가 발생했습니다.");
-            }
-          });
+          document
+            .getElementById("viewRealAuthor")
+            .addEventListener("click", async () => {
+              try {
+                const token = localStorage.getItem("token");
+                const response = await fetch(
+                  `${API_BASE_URL}/api/posts/${postId}/author`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+
+                if (!response.ok) throw new Error("작성자 정보 조회 실패");
+
+                const data = await response.json();
+                alert(
+                  `작성자 정보:\n닉네임: ${data.nickname}\n아이디: ${data.username}`
+                );
+              } catch (error) {
+                alert("작성자 정보 조회 중 오류가 발생했습니다.");
+              }
+            });
         }
       }
 

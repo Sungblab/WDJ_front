@@ -758,19 +758,22 @@
           }
 
           try {
-            const response = await fetch("http://116.123.74.248/api/register", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                username,
-                realName,
-                nickname,
-                password,
-                email,
-              }),
-            });
+            const response = await fetch(
+              "https://116.123.74.248/api/register",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  username,
+                  realName,
+                  nickname,
+                  password,
+                  email,
+                }),
+              }
+            );
 
             const data = await response.json();
 
@@ -828,7 +831,9 @@
       const termsModal = document.getElementById("termsModal");
       const privacyModal = document.getElementById("privacyModal");
       const termsLink = document.querySelector('a[href="#"]'); // 이용약관 링크
-      const privacyLinks = document.querySelectorAll('a[href="/pages/privacy-policy.html"]'); // 개인정보처리방침 링크들
+      const privacyLinks = document.querySelectorAll(
+        'a[href="/pages/privacy-policy.html"]'
+      ); // 개인정보처리방침 링크들
       const modalCloseButtons = document.querySelectorAll(".modal-close");
 
       function openModal(modal) {
@@ -854,7 +859,7 @@
       });
 
       // 개인정보처리방침 링크들 클릭 시
-      privacyLinks.forEach(link => {
+      privacyLinks.forEach((link) => {
         link.addEventListener("click", (e) => {
           e.preventDefault();
           openModal(privacyModal);
@@ -903,7 +908,7 @@
       confirmPassword.addEventListener("input", validatePassword);
 
       // 폼 제출 전 최종 유효성 검사
-      signupForm.addEventListener("submit", function(e) {
+      signupForm.addEventListener("submit", function (e) {
         if (password.value !== confirmPassword.value) {
           e.preventDefault();
           alert("비밀번호가 일치하지 않습니다.");
@@ -918,16 +923,16 @@
       const checkboxes = [agreeTerms, agreePrivacy];
 
       function updateAgreeAll() {
-        agreeAll.checked = checkboxes.every(checkbox => checkbox.checked);
+        agreeAll.checked = checkboxes.every((checkbox) => checkbox.checked);
       }
 
-      agreeAll.addEventListener("change", function() {
-        checkboxes.forEach(checkbox => {
+      agreeAll.addEventListener("change", function () {
+        checkboxes.forEach((checkbox) => {
           checkbox.checked = this.checked;
         });
       });
 
-      checkboxes.forEach(checkbox => {
+      checkboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", updateAgreeAll);
       });
     </script>

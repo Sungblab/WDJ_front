@@ -214,8 +214,12 @@
       }
 
       @keyframes progress {
-        from { transform: scaleX(0); }
-        to { transform: scaleX(1); }
+        from {
+          transform: scaleX(0);
+        }
+        to {
+          transform: scaleX(1);
+        }
       }
 
       #progress-bar {
@@ -358,20 +362,31 @@
         id="login-message"
         class="fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50 hidden"
       >
-        <div class="bg-white rounded-lg shadow-xl p-6 mx-4 sm:mx-0 max-w-sm w-full transform transition-all">
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 mx-4 sm:mx-0 max-w-sm w-full transform transition-all"
+        >
           <div class="flex items-center mb-4">
             <div class="flex-shrink-0">
-              <i class="fas fa-exclamation-circle text-yellow-500 text-2xl mr-3"></i>
+              <i
+                class="fas fa-exclamation-circle text-yellow-500 text-2xl mr-3"
+              ></i>
             </div>
             <div>
-              <h3 class="text-lg font-medium text-gray-900">로그인이 필요합니다</h3>
-              <p class="text-sm text-gray-500 mt-1">잠시 후 메인 페이지로 이동합니다.</p>
+              <h3 class="text-lg font-medium text-gray-900">
+                로그인이 필요합니다
+              </h3>
+              <p class="text-sm text-gray-500 mt-1">
+                잠시 후 메인 페이지로 이동합니다.
+              </p>
             </div>
           </div>
           <div class="mt-4">
             <div class="bg-gray-100 rounded-lg p-3">
               <div class="animate-pulse w-full bg-gray-300 h-1 rounded-full">
-                <div class="w-full h-full bg-yellow-500 rounded-full transition-all duration-3000 origin-left scale-x-0" id="progress-bar"></div>
+                <div
+                  class="w-full h-full bg-yellow-500 rounded-full transition-all duration-3000 origin-left scale-x-0"
+                  id="progress-bar"
+                ></div>
               </div>
             </div>
           </div>
@@ -648,16 +663,16 @@
           if (!token) {
             // 로그인 메시지 모달 표시
             const progressBar = document.getElementById("progress-bar");
-            
+
             loginMessage.classList.remove("hidden");
             progressBar.style.transform = "scaleX(1)";
             progressBar.style.transition = "transform 3s linear";
-            
+
             // 페이지 컨텐츠 숨기기
             newPetitionSection.style.display = "none";
             document.getElementById("petition-lists").style.display = "none";
             adminMenu.style.display = "none";
-            
+
             // 3초 후 메인 페이지로 리다이렉트
             setTimeout(() => {
               window.location.href = "/index.html";
@@ -666,7 +681,7 @@
           }
 
           try {
-            const response = await fetch("http://116.123.74.248/api/user", {
+            const response = await fetch("https://116.123.74.248/api/user", {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -712,7 +727,7 @@
 
           try {
             const response = await fetch(
-              "http://116.123.74.248/api/petitions",
+              "https://116.123.74.248/api/petitions",
               {
                 method: "POST",
                 headers: {
@@ -749,7 +764,7 @@
 
           try {
             const response = await fetch(
-              `http://116.123.74.248/api/petitions?status=${status}`,
+              `https://116.123.74.248/api/petitions?status=${status}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -838,7 +853,7 @@
               const token = localStorage.getItem("token");
               try {
                 const response = await fetch(
-                  `http://116.123.74.248/api/petitions/${petitionId}/support`,
+                  `https://116.123.74.248/api/petitions/${petitionId}/support`,
                   {
                     method: "POST",
                     headers: {
@@ -867,7 +882,7 @@
               if (confirm("정말로 이 청원을 삭제하시겠습니까?")) {
                 try {
                   const response = await fetch(
-                    `http://116.123.74.248/api/petitions/${petitionId}`,
+                    `https://116.123.74.248/api/petitions/${petitionId}`,
                     {
                       method: "DELETE",
                       headers: {
@@ -905,7 +920,7 @@
                 const token = localStorage.getItem("token");
                 try {
                   const response = await fetch(
-                    `http://116.123.74.248/api/petitions/${petitionId}/status`,
+                    `https://116.123.74.248/api/petitions/${petitionId}/status`,
                     {
                       method: "PATCH",
                       headers: {
