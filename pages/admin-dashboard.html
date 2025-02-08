@@ -219,7 +219,7 @@
         async function validateToken() {
           try {
             const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app//api/admin/validate",
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/validate",
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -254,7 +254,7 @@
 
           try {
             const response = await fetch(
-              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app//api/users/${userId}`,
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/users/${userId}`,
               {
                 method: "DELETE",
                 headers: {
@@ -288,7 +288,7 @@
 
           try {
             const response = await fetch(
-              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app//api/users/${userId}/admin`,
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/users/${userId}/admin`,
               {
                 method: "PATCH",
                 headers: {
@@ -387,7 +387,7 @@
         async function fetchUsers() {
           try {
             const response = await fetch(
-              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app//api/admin/users/search?page=${currentPage}&limit=${pageSize}&filter=${currentFilter}&search=${currentSearch}`,
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/users/search?page=${currentPage}&limit=${pageSize}&filter=${currentFilter}&search=${currentSearch}`,
               {
                 headers: { Authorization: `Bearer ${token}` },
               }
@@ -551,7 +551,7 @@
         async function bulkAction(action) {
           try {
             const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app//api/admin/users/bulk",
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/users/bulk",
               {
                 method: "POST",
                 headers: {
@@ -612,7 +612,7 @@
         async function fetchStatistics() {
           try {
             const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app//api/admin/statistics",
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/statistics",
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -655,7 +655,7 @@
 
           try {
             const response = await fetch(
-              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app//api/admin/users/${userId}/reset-password`,
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/admin/users/${userId}/reset-password`,
               {
                 method: "POST",
                 headers: {
@@ -694,7 +694,7 @@
       <td class="p-3 text-gray-300">${image.filename}</td>
       <td class="p-3 text-gray-300">${formattedDate}</td>
       <td class="p-3">
-        <a href="https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/${image.url}" 
+        <a href="https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app${image.url}" 
            target="_blank" 
            class="text-blue-400 hover:text-blue-300">
           이미지 보기
@@ -714,7 +714,7 @@
         async function fetchImages() {
           try {
             const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app//api/images",
+              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/images",
               {
                 headers: { Authorization: `Bearer ${token}` },
               }
@@ -738,7 +738,7 @@
 
           try {
             const response = await fetch(
-              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app//api/images/${filename}`,
+              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/images/${filename}`,
               {
                 method: "DELETE",
                 headers: {
