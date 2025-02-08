@@ -828,47 +828,107 @@
       const termsModal = document.getElementById("termsModal");
       const privacyModal = document.getElementById("privacyModal");
       const termsLink = document.querySelector('a[href="#"]'); // 이용약관 링크
-      const privacyLink = document.querySelector(
-        'a[href="/pages/privacy-policy.html"]'
-      ); // 개인정보처리방침 링크
+      const privacyLinks = document.querySelectorAll('a[href="/pages/privacy-policy.html"]'); // 개인정보처리방침 링크들
       const modalCloseButtons = document.querySelectorAll(".modal-close");
+
+      function openModal(modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal(modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        document.body.style.overflow = "auto";
+      }
+
+      function closeAllModals() {
+        [termsModal, privacyModal].forEach(closeModal);
+      }
 
       // 이용약관 링크 클릭 시
       termsLink.addEventListener("click", (e) => {
         e.preventDefault();
-        termsModal.classList.remove("hidden");
-        termsModal.classList.add("flex");
-        document.body.style.overflow = "hidden";
+        openModal(termsModal);
       });
 
-      // 개인정보처리방침 링크 클릭 시
-      privacyLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        privacyModal.classList.remove("hidden");
-        privacyModal.classList.add("flex");
-        document.body.style.overflow = "hidden";
+      // 개인정보처리방침 링크들 클릭 시
+      privacyLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openModal(privacyModal);
+        });
       });
 
       // 모달 닫기 버튼 클릭 시
       modalCloseButtons.forEach((button) => {
         button.addEventListener("click", () => {
-          termsModal.classList.add("hidden");
-          termsModal.classList.remove("flex");
-          privacyModal.classList.add("hidden");
-          privacyModal.classList.remove("flex");
-          document.body.style.overflow = "auto";
+          closeAllModals();
         });
+      });
+
+      // ESC 키로 모달 닫기
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeAllModals();
+        }
       });
 
       // 모달 외부 영역 클릭 시 닫기
       [termsModal, privacyModal].forEach((modal) => {
         modal.addEventListener("click", (e) => {
           if (e.target === modal) {
-            modal.classList.add("hidden");
-            modal.classList.remove("flex");
-            document.body.style.overflow = "auto";
+            closeModal(modal);
           }
         });
+      });
+
+      // 비밀번호 확인 실시간 검증 개선
+      const password = document.getElementById("password");
+      const confirmPassword = document.getElementById("confirmPassword");
+      const signupForm = document.getElementById("signupForm");
+
+      function validatePassword() {
+        if (password.value !== confirmPassword.value) {
+          confirmPassword.setCustomValidity("비밀번호가 일치하지 않습니다.");
+          confirmPassword.classList.add("border-red-500");
+        } else {
+          confirmPassword.setCustomValidity("");
+          confirmPassword.classList.remove("border-red-500");
+        }
+      }
+
+      password.addEventListener("input", validatePassword);
+      confirmPassword.addEventListener("input", validatePassword);
+
+      // 폼 제출 전 최종 유효성 검사
+      signupForm.addEventListener("submit", function(e) {
+        if (password.value !== confirmPassword.value) {
+          e.preventDefault();
+          alert("비밀번호가 일치하지 않습니다.");
+          confirmPassword.focus();
+        }
+      });
+
+      // 체크박스 관련 코드 개선
+      const agreeAll = document.getElementById("agreeAll");
+      const agreeTerms = document.getElementById("agreeTerms");
+      const agreePrivacy = document.getElementById("agreePrivacy");
+      const checkboxes = [agreeTerms, agreePrivacy];
+
+      function updateAgreeAll() {
+        agreeAll.checked = checkboxes.every(checkbox => checkbox.checked);
+      }
+
+      agreeAll.addEventListener("change", function() {
+        checkboxes.forEach(checkbox => {
+          checkbox.checked = this.checked;
+        });
+      });
+
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", updateAgreeAll);
       });
     </script>
   </body>
