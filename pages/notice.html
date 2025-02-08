@@ -578,14 +578,11 @@
         const token = localStorage.getItem("token");
         if (token) {
           try {
-            const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/user",
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
+            const response = await fetch("http://116.123.74.248/api/user", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
             if (response.ok) {
               const userData = await response.json();
               isAdmin = userData.isAdmin;
@@ -603,7 +600,7 @@
         try {
           const token = localStorage.getItem("token");
           const response = await fetch(
-            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices?page=${page}&limit=${limit}`,
+            `http://116.123.74.248/api/notices?page=${page}&limit=${limit}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -721,7 +718,7 @@
         try {
           const token = localStorage.getItem("token");
           const response = await fetch(
-            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices/${id}`,
+            `http://116.123.74.248/api/notices/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -850,8 +847,8 @@
 
         try {
           const url = noticeId
-            ? `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices/${noticeId}`
-            : "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices";
+            ? `http://116.123.74.248/api/notices/${noticeId}`
+            : "http://116.123.74.248/api/notices";
 
           const response = await fetch(url, {
             method: noticeId ? "PUT" : "POST",
@@ -881,7 +878,7 @@
         try {
           const token = localStorage.getItem("token");
           const response = await fetch(
-            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices/${id}`,
+            `http://116.123.74.248/api/notices/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -920,7 +917,7 @@
         try {
           const token = localStorage.getItem("token");
           const response = await fetch(
-            `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/notices/${id}`,
+            `http://116.123.74.248/api/notices/${id}`,
             {
               method: "DELETE",
               headers: {
