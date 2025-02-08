@@ -1175,7 +1175,7 @@
           try {
             const token = localStorage.getItem("token");
             const response = await fetch(
-              "https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/petitions?status=active&limit=3",
+              "http://116.123.74.248api/petitions?status=active&limit=3",
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -1349,7 +1349,7 @@
           try {
             const requestDate = timetableCurrentDate.toISOString().split('T')[0].replace(/-/g, '');
             const response = await fetch(
-              `https://port-0-wdj-back-lz9cd9taff85e9dc.sel4.cloudtype.app/api/timetable?grade=${grade}&classNum=${classNum}&date=${requestDate}`
+              `http://116.123.74.248api/timetable?grade=${grade}&classNum=${classNum}&date=${requestDate}`
             );
 
             const data = await response.json();
