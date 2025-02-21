@@ -863,7 +863,7 @@
         if (elements.comments)
           elements.comments.textContent = post.comments?.length || 0;
         if (elements.content && post.content) {
-          // Markdown 이미지 태그를 HTML img 태그로 변환
+          // Markdown 이미지 태그를 HTML img 태그로 변환하고 오류 처리 추가
           const content = post.content.replace(
             /!\[이미지\]\((.*?)\)/g,
             '<img src="$1" class="max-w-full h-auto my-4 rounded-lg shadow-lg" alt="첨부 이미지" loading="lazy" onerror="this.onerror=null; this.src=\'/asset/icon/image-error.png\';" />'
