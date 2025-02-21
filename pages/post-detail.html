@@ -869,10 +869,15 @@
             /!\[이미지\]\((.*?)\)/g,
             (match, url) => {
               console.log("Found image URL:", url);
-              // URL이 유효한지 확인
-              const imageUrl = url.startsWith("http")
+              // URL이 이미 pub-xxxxx.r2.dev 형식인지 확인
+              const imageUrl = url.includes("pub-")
                 ? url
-                : `${API_BASE_URL}${url}`;
+                : url.replace(
+                    /https:\/\/.*?\.r2\.cloudflarestorage\.com\/wdj\//,
+                    "https://pub-40e7aec0694f464e99cae0accf466424.r2.dev/"
+                  );
+              console.log("Converted URL:", imageUrl);
+
               return `<img 
                 src="${imageUrl}" 
                 class="max-w-full h-auto my-4 rounded-lg shadow-lg" 
