@@ -869,8 +869,12 @@
             /!\[이미지\]\((.*?)\)/g,
             (match, url) => {
               console.log("Found image URL:", url);
+              // URL이 유효한지 확인
+              const imageUrl = url.startsWith("http")
+                ? url
+                : `${API_BASE_URL}${url}`;
               return `<img 
-                src="${url}" 
+                src="${imageUrl}" 
                 class="max-w-full h-auto my-4 rounded-lg shadow-lg" 
                 alt="첨부 이미지" 
                 loading="lazy" 
