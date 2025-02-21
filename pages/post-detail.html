@@ -869,17 +869,15 @@
             /!\[이미지\]\((.*?)\)/g,
             (match, url) => {
               console.log("Found image URL:", url);
-              // 캐시 방지용 타임스탬프는 제거하고 CORS 관련 속성만 추가
               return `<img 
                 src="${url}" 
                 class="max-w-full h-auto my-4 rounded-lg shadow-lg" 
                 alt="첨부 이미지" 
                 loading="lazy" 
                 onerror="this.onerror=null; console.error('Image load failed:', this.src); this.src='https://wdj.kr/asset/icon/image-error.png';" 
-                crossorigin="anonymous"
               />`
                 .replace(/\s+/g, " ")
-                .trim(); // 줄바꿈과 여러 공백을 하나의 공백으로 변경
+                .trim();
             }
           );
 
