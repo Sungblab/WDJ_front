@@ -200,17 +200,16 @@
         transition: transform 0.3s ease;
       }
 
-      .nav-link:hover::after {
+      /* active 클래스가 있을 때만 밑줄 표시 */
+      .nav-link.active::after {
         transform: scaleX(1);
         transform-origin: left;
       }
 
-      .nav-link.active::after {
+      /* hover 효과는 active 클래스가 없을 때만 적용 */
+      .nav-link:not(.active):hover::after {
         transform: scaleX(1);
-      }
-
-      .nav-link:hover {
-        transform: translateY(-1px);
+        transform-origin: left;
       }
 
       /* 모바일에서 리스트 아이템 텍스트 크기 조정 */
@@ -1305,12 +1304,19 @@
 
         // 현재 페이지 URL 가져오기
         const currentPath = window.location.pathname;
+        const normalizedPath = currentPath === '/' ? '/index.html' : currentPath;
 
         // 모든 네비게이션 링크에 대해
         document.querySelectorAll(".nav-link").forEach((link) => {
-          // 링크의 href와 현재 페이지 경로가 일치하면 active 클래스 추가
-          if (link.getAttribute("href").includes(currentPath)) {
+          const linkPath = link.getAttribute("href");
+          // index.html로 끝나는 경우와 루트 경로(/)인 경우를 모두 처리
+          if (
+            linkPath === normalizedPath ||
+            (linkPath === '/index.html' && (currentPath === '/' || currentPath === '/index.html'))
+          ) {
             link.classList.add("active");
+          } else {
+            link.classList.remove("active");
           }
         });
 
