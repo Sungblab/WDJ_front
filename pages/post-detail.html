@@ -863,27 +863,23 @@
         if (elements.comments)
           elements.comments.textContent = post.comments?.length || 0;
         if (elements.content && post.content) {
-          console.log("Original content:", post.content);
-
           const content = post.content.replace(
             /!\[이미지\]\((.*?)\)/g,
             (match, url) => {
-              console.log("Found image URL:", url);
-              // URL이 이미 pub-xxxxx.r2.dev 형식인지 확인
+              // URL을 R2 Public URL 형식으로 변환
               const imageUrl = url.includes("pub-")
                 ? url
                 : url.replace(
                     /https:\/\/.*?\.r2\.cloudflarestorage\.com\/wdj\//,
                     "https://pub-40e7aec0694f464e99cae0accf466424.r2.dev/"
                   );
-              console.log("Converted URL:", imageUrl);
 
               return `<img 
                 src="${imageUrl}" 
                 class="max-w-full h-auto my-4 rounded-lg shadow-lg" 
                 alt="첨부 이미지" 
                 loading="lazy" 
-                onerror="this.onerror=null; console.error('Image load failed:', this.src); this.src='https://wdj.kr/asset/icon/image-error.png';" 
+                onerror="this.onerror=null; this.src='https://wdj.kr/asset/icon/image-error.png';" 
               />`
                 .replace(/\s+/g, " ")
                 .trim();
@@ -900,8 +896,6 @@
 
           // 줄바꿈 처리는 마지막에 수행
           elements.content.innerHTML = decodedContent.replace(/\n/g, "<br>");
-
-          console.log("Final HTML:", elements.content.innerHTML);
         }
 
         // 투표 상태 표시
